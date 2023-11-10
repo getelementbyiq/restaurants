@@ -1,0 +1,21 @@
+.background-image {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  object-fit: contain;
+}
+
+.overlay {
+  content: "";
+  background: rgba(
+    0,
+    0,
+    0,
+    0.2
+  ); /* Hier können Sie die Hintergrundfarbe und die Deckkraft einstellen */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
