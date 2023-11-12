@@ -41,7 +41,7 @@ import OwnerHeaderWithRestaurant from "./OwnerHeaderWithRestaurant";
 import OwnerHeaderWithoutRestaurant from "./OwnerHeaderWithoutRestaurant";
 import { AddBoxTwoTone } from "@mui/icons-material";
 
-const OwnerHeader = (props) => {
+const OwnerHeaderFirst = (props) => {
   const dispatch = useDispatch();
   const createRestaurantData = useSelector(
     (state) => state.createRestaurant.restaurantData
@@ -76,9 +76,6 @@ const OwnerHeader = (props) => {
     dispatch(setOpenThird(!openThird));
   };
 
-  const handleGoToMain = () => {
-    navigate("/main");
-  };
   const [mainButtonAligment, setMainButtonAlignmet] = useState("left");
 
   const toggleOpen = (toggleValue) => {
@@ -114,34 +111,7 @@ const OwnerHeader = (props) => {
           }}
         >
           <Box sx={{ display: "flex", gap: "8px" }}>
-            {localData && (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "32px",
-                  background: "rgba(239, 239, 239, 0.15)",
-                  backdropFilter: "blur(7.5px)",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    mx: "8px",
-                    color: "#fff",
-                    marginRight: openThird ? "16px" : "8px",
-                  }}
-                >
-                  <IconButton onClick={handleGoToMain}>
-                    <img src={MainIconNonActive} alt="" />
-                  </IconButton>
-                </Box>
-              </Box>
-            )}
-            {show && (
+            {!show && (
               <IconButton
                 onClick={handleAddButtonClick}
                 sx={{
@@ -159,7 +129,7 @@ const OwnerHeader = (props) => {
                 />
               </IconButton>
             )}
-            {!show && (
+            {show && (
               <Box
                 sx={{
                   borderRadius: "32px",
@@ -181,7 +151,7 @@ const OwnerHeader = (props) => {
                       onClick={() => toggleOpen(setOpenFirst(!openFirst))}
                     >
                       <Avatar
-                        src={localData.logo}
+                        src={URL.createObjectURL(blob)}
                         sx={{
                           border: openFirst ? "1px solid #5FD6DD" : "none",
                         }}
@@ -189,31 +159,13 @@ const OwnerHeader = (props) => {
                     </IconButton>
                   </ToggleButtonGroup>
                   <Typography sx={{ color: openFirst ? "#5FD6DD" : "#fff" }}>
-                    {localData.name}
+                    {createRestaurantData.name}
                   </Typography>
-                  <IconButton>
-                    <Avatar
-                      src={Message}
-                      sx={{ width: "24px", height: "24px" }}
-                    />
-                  </IconButton>
-                  <IconButton>
-                    <Avatar
-                      src={Callender}
-                      sx={{ width: "24px", height: "24px" }}
-                    />
-                  </IconButton>
-                  <IconButton>
-                    <Avatar
-                      src={Comments}
-                      sx={{ width: "24px", height: "24px" }}
-                    />
-                  </IconButton>
                 </Box>
               </Box>
             )}
 
-            {!show && (
+            {show && (
               <Box
                 sx={{
                   display: "flex",
@@ -236,137 +188,27 @@ const OwnerHeader = (props) => {
                 >
                   <IconButton onClick={handleOpenThird}>
                     {openThird ? (
-                      <img src={LocationActive} alt="" />
+                      <Grid
+                        sx={{
+                          display: "flex",
+                          gap: "8px",
+                          transition: "300ms",
+                        }}
+                      >
+                        <img src={LocationActive} alt="" />
+
+                        <Grid>
+                          <Typography sx={{ color: "#fff" }}>
+                            {createRestaurantData.street}{" "}
+                            {createRestaurantData.houseNumber},{" "}
+                            {createRestaurantData.city}
+                          </Typography>
+                        </Grid>
+                      </Grid>
                     ) : (
                       <img src={LocationNoneActive} alt="" />
                     )}
                   </IconButton>
-                  {openThird && (
-                    <Grid>
-                      <Typography>
-                        {localData.street} {localData.houseNumber},{" "}
-                        {localData.city}
-                      </Typography>
-                    </Grid>
-                  )}
-                </Box>
-              </Box>
-            )}
-            {/* followers componente */}
-            {!show && (
-              <Box
-                sx={{
-                  display: "flex",
-                  borderRadius: "32px",
-                  background: "rgba(239, 239, 239, 0.15)",
-
-                  backdropFilter: "blur(7.5px)",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {!openThird && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      height: "36px",
-                      alignItems: "flex-end",
-                      ml: "16px",
-                      gap: "4px",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: "4px",
-                        height: "4px",
-                        borderRadius: "50%",
-                        background: "#fff",
-                      }}
-                    ></Box>
-                    <Box
-                      sx={{
-                        width: "4px",
-                        height: "4px",
-                        borderRadius: "50%",
-                        background: "#fff",
-                      }}
-                    ></Box>
-                    <Box
-                      sx={{
-                        width: "4px",
-                        height: "4px",
-                        borderRadius: "50%",
-                        background: "#fff",
-                      }}
-                    ></Box>
-                  </Box>
-                )}
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    mx: "8px",
-                    gap: "4px",
-                  }}
-                >
-                  {!openThird && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        mx: "8px",
-                        gap: "4px",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          overflow: "hidden",
-                          width: 36,
-                          height: 36,
-                          borderRadius: "50%",
-                        }}
-                      >
-                        <img src={TestUser3} style={{ width: 36 }} alt="" />
-                      </Box>
-                      <Box
-                        sx={{
-                          overflow: "hidden",
-                          width: 36,
-                          height: 36,
-                          borderRadius: "50%",
-                        }}
-                      >
-                        <img src={TestUser2} style={{ width: 36 }} alt="" />
-                      </Box>
-                      <Box
-                        sx={{
-                          overflow: "hidden",
-                          width: "36px",
-                          height: "36px",
-                          borderRadius: "50%",
-                        }}
-                      >
-                        <img src={TestUser1} style={{ width: "36px" }} alt="" />
-                      </Box>
-                    </Box>
-                  )}
-                  <Box
-                    sx={{
-                      height: "40px",
-                      borderRadius: "32px",
-                      color: "#fff  ",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexDirection: "column",
-                      mr: "8px",
-                      ml: "8px",
-                    }}
-                  >
-                    <Typography>Follow</Typography>
-                    <Typography>12K</Typography>
-                  </Box>
                 </Box>
               </Box>
             )}
@@ -383,4 +225,4 @@ const OwnerHeader = (props) => {
   );
 };
 
-export default OwnerHeader;
+export default OwnerHeaderFirst;

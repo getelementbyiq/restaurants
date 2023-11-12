@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const DragAndDrop = ({ onDrop }) => {
+const DragAndDropBg = ({ onDrop }) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -40,7 +40,7 @@ const DragAndDrop = ({ onDrop }) => {
           : "rgba(95, 214, 221, 0.90)" || selectedFile
           ? "rgba(95, 214, 221, 0.50)"
           : "rgba(95, 214, 221, 0.90)",
-        borderRadius: "4px 28px 28px 28px",
+        borderRadius: "28px 28px 28px 28px",
         width: "100%",
         height: "95px",
         marginBottom: "8px",
@@ -66,7 +66,7 @@ const DragAndDrop = ({ onDrop }) => {
             alignItems: "center",
           }}
         >
-          Drop your files here
+          Drag and drop your Background here
         </div>
       ) : (
         <div
@@ -76,11 +76,11 @@ const DragAndDrop = ({ onDrop }) => {
             alignItems: "center",
           }}
         >
-          Drag and drop files here
+          Drag and drop your Background here
         </div>
       )}
     </div>
   );
 };
 
-export default DragAndDrop;
+export default DragAndDropBg;

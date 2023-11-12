@@ -15,25 +15,53 @@ import { getUserById } from "../../Redux/thunks/getUserById";
 
 //Import Icons
 import Add from "../../assets/icons/add.svg";
-import OwnerHeader from "./OwnerHeader";
 import UserHeader from "./UserHeader";
 import AdminHeader from "./AdminHeader";
+import OwnerHeader from "./OwnerHeader";
+import { setRestaurantField } from "../../Redux/slices/createLocalSlice";
+import OwnerHeaderWithoutRestaurant from "./OwnerHeaderWithoutRestaurant";
+import OwnerHeaderFirst from "./OwnerHeaderFirst";
 
 const Header = (props) => {
-  const navigate = useNavigate();
-  const { user, logout } = UserAuth();
+  const dispatch = useDispatch();
+  const { user } = UserAuth();
+  const localData = useSelector((state) => state.localData);
+  const isCreated = useSelector((state) => state.restaurantIsCreated);
+  const userId = user.uid;
   const currentUserData = useSelector((state) => state.userById);
   const userData = currentUserData.user;
+  console.log("userId", userId);
+  console.log("userData", userData);
+  console.log("currentUserData", currentUserData);
+  const navigate = useNavigate();
 
-  console.log("userData from Header", userData);
-  console.log("currentUserData from Header", currentUserData);
+  useEffect(() => {
+    if (userId) {
+      dispatch(getUserById(userId));
+      dispatch(
+        setRestaurantField({
+          field: "userId",
+          value: userId,
+        })
+      );
+    }
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    if (userData) {
+    }
+  }, [userData]);
 
   const goTo = () => {
     navigate("/main");
   };
 
   return userData && userData.userType === "ownerUser" ? (
-    <OwnerHeader />
+    localData ? (
+      <OwnerHeader />
+    ) : (
+      <OwnerHeaderFirst />
+    )
   ) : (
     <UserHeader />
   );

@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../Redux/thunks/getUserById";
 import MainPageOwner from "../Owner/MainPage";
 import MainPageNUser from "../NUser/MainPage";
+import { setRestaurantField } from "../../Redux/slices/createLocalSlice";
 
 const Main = (props) => {
   const dispatch = useDispatch();
   const { user } = UserAuth();
+
+  const isCreated = useSelector((state) => state.restaurantIsCreated);
   const userId = user.uid;
   const currentUserData = useSelector((state) => state.userById);
   const userData = currentUserData.user;
@@ -19,6 +22,12 @@ const Main = (props) => {
   useEffect(() => {
     if (userId) {
       dispatch(getUserById(userId));
+      dispatch(
+        setRestaurantField({
+          field: "userId",
+          value: userId,
+        })
+      );
     }
   }, [dispatch, userId]);
 

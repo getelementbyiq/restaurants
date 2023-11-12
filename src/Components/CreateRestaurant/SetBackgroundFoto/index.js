@@ -5,7 +5,7 @@ import {
   setField,
   setRestaurantField,
 } from "../../../Redux/slices/createLocalSlice";
-import DragAndDrop from "../../DragAndDrop";
+import DragAndDrop from "../../DragAndDropLogo";
 import { setOpenSecond } from "../../../Redux/functions/slices/OpenSecond";
 import { setOpenFirst } from "../../../Redux/functions/slices/OpenFirst";
 import { setOpenThird } from "../../../Redux/functions/slices/OpenThird";

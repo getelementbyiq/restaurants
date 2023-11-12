@@ -13,6 +13,8 @@ import { Provider } from "react-redux";
 import store from "./Redux/store";
 import Main from "./Pages/MainPage";
 import ProtectedRoute from "./Protection/ProtectedRoute/index";
+import CreateLocal from "./Pages/CreateLocal";
+import Local from "./Pages/Local";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +26,22 @@ const Root = createBrowserRouter(
         element={
           <ProtectedRoute>
             <Main />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="createLocal"
+        element={
+          <ProtectedRoute>
+            <CreateLocal />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="restaurants/:id"
+        element={
+          <ProtectedRoute>
+            <Local />
           </ProtectedRoute>
         }
       />

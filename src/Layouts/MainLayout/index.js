@@ -8,6 +8,8 @@ import "./index.css";
 
 const MainLayout = (props) => {
   const show = useSelector((state) => state.show);
+  const localData = useSelector((state) => state.localData);
+
   const createRestaurantData = useSelector(
     (state) => state.createRestaurant.restaurantData
   );
@@ -15,20 +17,39 @@ const MainLayout = (props) => {
   const backgroundURL = show ? URL.createObjectURL(blob) : "";
 
   return (
-    <Box
-      className={show ? "background-image" : ""}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-        backgroundImage: show ? `url(${backgroundURL})` : "none",
-      }}
-    >
-      {show && <Box className="overlay"></Box>}
-      <Header />
-      <Outlet />
-      <Footer />
-    </Box>
+    <>
+      {localData.background ? (
+        <Box
+          className={"background-image"}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+            backgroundImage: `url(${localData.background})`,
+          }}
+        >
+          {show && <Box className="overlay"></Box>}
+          <Header />
+          <Outlet />
+          <Footer />
+        </Box>
+      ) : (
+        <Box
+          className={show ? "background-image" : ""}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+            backgroundImage: show ? `url(${backgroundURL})` : "none",
+          }}
+        >
+          {show && <Box className="overlay"></Box>}
+          <Header />
+          <Outlet />
+          <Footer />
+        </Box>
+      )}
+    </>
   );
 };
 
