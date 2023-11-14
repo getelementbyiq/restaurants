@@ -15,6 +15,7 @@ import Main from "./Pages/MainPage";
 import ProtectedRoute from "./Protection/ProtectedRoute/index";
 import CreateLocal from "./Pages/CreateLocal";
 import Local from "./Pages/Local";
+import Items from "./Pages/Items";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,14 @@ const Root = createBrowserRouter(
         element={
           <ProtectedRoute>
             <Local />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="createItems"
+        element={
+          <ProtectedRoute>
+            <Items />
           </ProtectedRoute>
         }
       />

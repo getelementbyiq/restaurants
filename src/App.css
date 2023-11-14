@@ -36,3 +36,32 @@
     transform: rotate(360deg);
   }
 }
+
+/* .MuiInput-root {
+  border-bottom: 1px solid #fff !important;
+} */
+
+.css-17d5dsg-MuiInputBase-root-MuiInput-root:after {
+  border-bottom: 2px solid white !important;
+}
+.css-17d5dsg-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid white !important;
+}
+.css-1863v6h-MuiInputBase-root-MuiInput-root:after {
+  border-bottom: 1px solid white !important;
+}
+.css-1863v6h-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid white !important;
+}
+.css-7obqij-MuiInputBase-root-MuiInput-root:after {
+  border-bottom: 1px solid white !important;
+}
+.css-7obqij-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid white !important;
+}
+.css-11ozwpm-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid white !important;
+}
+.css-MuiInputBase-root-MuiInput-root:after {
+  border-bottom: 1px solid white !important;
+}

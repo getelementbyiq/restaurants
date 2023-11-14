@@ -26,6 +26,10 @@ const initialState = {
     followers: "",
     createdAt,
     userId: null,
+    menu: {
+      food: {},
+      drinks: {},
+    },
   },
 };
 
@@ -37,12 +41,26 @@ const createLocalSlice = createSlice({
       const { field, value } = action.payload;
       state.restaurantData[field] = value;
     },
+    setMenuCategory: (state, action) => {
+      const { categoryType, categoryData } = action.payload;
+      state.restaurantData.menu[categoryType] = categoryData;
+    },
+
+    deleteMenuCategory: (state, action) => {
+      const { categoryType, categoryName } = action.payload;
+      delete state.restaurantData.menu[categoryType][categoryName];
+    },
 
     reset: (state) => initialState,
   },
 });
 
-export const { setRestaurantField, uploadImagesToFirestore, reset } =
-  createLocalSlice.actions;
+export const {
+  setRestaurantField,
+  uploadImagesToFirestore,
+  setMenuCategory,
+  deleteMenuCategory,
+  reset,
+} = createLocalSlice.actions;
 
 export default createLocalSlice.reducer;

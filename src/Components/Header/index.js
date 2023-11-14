@@ -27,7 +27,7 @@ const Header = (props) => {
   const { user } = UserAuth();
   const localData = useSelector((state) => state.localData);
   const isCreated = useSelector((state) => state.restaurantIsCreated);
-  const userId = user.uid;
+  const userId = user?.uid;
   const currentUserData = useSelector((state) => state.userById);
   const userData = currentUserData.user;
   console.log("userId", userId);

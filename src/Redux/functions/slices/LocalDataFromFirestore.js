@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const localDataSlice = createSlice({
   name: "localData",
-  initialState: false, // Initialer Status auf "false"
+  initialState: {}, // Initialer Status auf "false"
   reducers: {
     setLocalData: (state, action) => {
-      return action.payload;
+      return { ...state, ...action.payload };
     },
   },
 });

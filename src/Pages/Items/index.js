@@ -9,8 +9,9 @@ import { Box } from "@mui/material";
 import CreateMenu from "../../Components/CreateMenu";
 import MenuDash from "../../Components/MenuDash";
 import { setMenuCategory } from "../../Redux/slices/createLocalSlice";
+import ItemsData from "../../Components/ItemsData";
 
-const Local = (props) => {
+const Items = (props) => {
   const dispatch = useDispatch();
   // Verwende useParams, um den Restaurantnamen aus der URL zu extrahieren
   const { id } = useParams();
@@ -98,11 +99,6 @@ const Local = (props) => {
     }
   }, [id]);
 
-  // Wenn die Daten noch geladen werden, zeige eine Ladeanzeige an
-  if (!restaurantData) {
-    return <div>Loading...</div>;
-  }
-
   // Zeige die Restaurantdaten an
   return (
     <Box
@@ -114,12 +110,11 @@ const Local = (props) => {
         gap: "16px",
       }}
     >
-      <CreateMenu />
-      <MenuDash />
+      <ItemsData />
     </Box>
   );
 };
 
-Local.propTypes = {};
+Items.propTypes = {};
 
-export default Local;
+export default Items;

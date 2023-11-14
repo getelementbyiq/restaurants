@@ -17,10 +17,6 @@ import { UserAuth } from "../../Auth/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../Redux/thunks/getUserById";
 
-import TestUser1 from "../../assets/img/7f5df839-b88a-4199-9bb7-7b44335c91a8.jpg";
-import TestUser2 from "../../assets/img/cropped-IMG_20221106_124633(1).jpg";
-import TestUser3 from "../../assets/img/Изображение WhatsApp 2023-02-08 в 17.09.02.jpg";
-
 //Import Icons
 import Add from "../../assets/icons/add.svg";
 import Message from "../../assets/icons/sms.svg";
