@@ -65,3 +65,12 @@
 .css-MuiInputBase-root-MuiInput-root:after {
   border-bottom: 1px solid white !important;
 }
+
+::-webkit-scrollbar {
+  width: 10px; /* Breite der Scrollleiste */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Farbe des Scrollbalken-Thumb */
+  border-radius: 5px; /* Abrundung des Scrollbalken-Thumb */
+}

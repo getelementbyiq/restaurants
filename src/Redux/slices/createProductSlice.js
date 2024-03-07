@@ -49,11 +49,11 @@ const createProductSlice = createSlice({
       }
     },
 
-    reset: (state) => initialState,
+    resetCreateProduct: (state) => initialState,
   },
 });
 
-export const { setProductField, setItem, deleteItem, reset } =
+export const { setProductField, setItem, deleteItem, resetCreateProduct } =
   createProductSlice.actions;
 
 export default createProductSlice.reducer;

@@ -84,7 +84,7 @@ const SignUp = () => {
 
       dispatch(setUser(user));
 
-      await navigate("/main");
+      await navigate("/");
     } catch (error) {
       setError(error.message);
       console.log(error.message);
@@ -94,7 +94,7 @@ const SignUp = () => {
   return (
     <Box>
       <Box>
-        <Typography variant="h3">Sign up for a free account</Typography>
+        <Typography variant="h3">Sign Up for Owner</Typography>
       </Box>
       <form onSubmit={handleSubmit(handleReg)}>
         <Box>

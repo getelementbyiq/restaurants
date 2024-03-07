@@ -4,12 +4,16 @@ import { createSlice } from "@reduxjs/toolkit";
 const categoryDashSlice = createSlice({
   name: "categoryDash",
   initialState: {
+    all: "all",
     add: "add",
     settings: "settings",
     actions: "actions",
-    active: "add",
+    active: "alls",
   }, // Initialer Status auf "false"
   reducers: {
+    setAllProductsActive: (state, action) => {
+      state.active = action.payload;
+    },
     setAddProductsActive: (state, action) => {
       state.active = "add";
     },
@@ -22,7 +26,11 @@ const categoryDashSlice = createSlice({
   },
 });
 
-export const { setAddProductsActive, setSettingsActive, setActionsActive } =
-  categoryDashSlice.actions;
+export const {
+  setAllProductsActive,
+  setAddProductsActive,
+  setSettingsActive,
+  setActionsActive,
+} = categoryDashSlice.actions;
 
 export default categoryDashSlice.reducer;

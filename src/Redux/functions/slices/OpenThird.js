@@ -1,16 +1,16 @@
 // addStatusSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
-const openThirdSlice = createSlice({
-  name: "openThird",
+const searchResultSlice = createSlice({
+  name: "searchResult",
   initialState: false, // Initialer Status auf "false"
   reducers: {
-    setOpenThird: (state, action) => {
+    setSearchResult: (state, action) => {
       return action.payload;
     },
   },
 });
 
-export const { setOpenThird } = openThirdSlice.actions;
+export const { setSearchResult } = searchResultSlice.actions;
 
-export default openThirdSlice.reducer;
+export default searchResultSlice.reducer;

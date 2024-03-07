@@ -5,13 +5,14 @@ import {
   setField,
   setRestaurantField,
 } from "../../../Redux/slices/createLocalSlice";
-import DragAndDrop from "../../DragAndDropLogo";
-import { setOpenFirst } from "../../../Redux/functions/slices/OpenFirst";
+import DragAndDrop from "../../BackgroundInput";
+// import { setOpenFirst } from "../../../Redux/functions/slices/OpenFirst";
 import { setOpenSecond } from "../../../Redux/functions/slices/OpenSecond";
+import FileInput from "../../BackgroundInput";
 
 const SetNameLogo = (props) => {
   const dispatch = useDispatch();
-  const openFirst = useSelector((state) => state.openFirst);
+  // const openFirst = useSelector((state) => state.openFirst);
   const openSecond = useSelector((state) => state.openSecond);
 
   const createRestaurantData = useSelector(
@@ -19,10 +20,10 @@ const SetNameLogo = (props) => {
   );
 
   const handlePrevButtonClick = () => {
-    dispatch(setOpenFirst(!openFirst)); // Um den Status umzuschalten
+    // dispatch(setOpenFirst(!openFirst)); // Um den Status umzuschalten
   };
   const handleNextButtonClick = () => {
-    dispatch(setOpenFirst(!openFirst));
+    // dispatch(setOpenFirst(!openFirst));
     dispatch(setOpenSecond(!openSecond)); // Um den Status umzuschalten
   };
 
@@ -41,7 +42,14 @@ const SetNameLogo = (props) => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        // border: "1px solid red",
+        width: "40%",
+        justifyContent: "center",
+      }}
+    >
       <form>
         <Box
           sx={{
@@ -49,16 +57,16 @@ const SetNameLogo = (props) => {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-            maxWidth: "391px",
-            background: "rgba(239, 239, 239, 0.15)",
-            backdropFilter: "blur(7.5px)",
-            borderRadius: "4px 28px 28px 28px",
-            padding: "8px",
-            position: "relative",
-            zIndex: 1,
+            background: "rgba(225, 225, 225, 0.2)",
+            backdropFilter: "blur(3.5px)",
+            borderRadius: "32px",
+            paddingX: "32px",
+            py: "16px",
+            flexGrow: "1",
+            width: "400px",
           }}
         >
-          <DragAndDrop onDrop={handleLogoDrop} />
+          <FileInput onDrop={handleLogoDrop} />
 
           <Box
             sx={{
@@ -70,55 +78,28 @@ const SetNameLogo = (props) => {
           >
             <TextField
               fullWidth
-              placeholder="Name of Restaurant"
+              placeholder={
+                createRestaurantData?.name
+                  ? createRestaurantData.name
+                  : "Name of Restaurant"
+              }
               sx={{ fontSize: "16px" }}
               InputLabelProps={{
-                style: { color: "#fff" },
+                style: { color: "#444444" },
               }}
               InputProps={{
                 style: {
                   borderRadius: "32px",
                   background: "#fff",
                   fontSize: "16px",
-                  background: "rgba(239, 239, 239, 0.15)",
-                  backdropFilter: "blur(7.5px)",
-                  color: "#fff",
+                  background: "#fff",
+                  // backdropFilter: "blur(7.5px)",
+                  color: "#444444",
+                  paddingRight: "24px",
                 },
               }}
               onChange={(e) => handleFieldChange("name", e.target.value)}
             />
-            <Box sx={{ display: "flex", gap: "8px", mb: "16px" }}>
-              <Button
-                onClick={handlePrevButtonClick}
-                sx={{
-                  flexGrow: 1,
-                  borderRadius: "32px",
-                  height: "56px",
-                  color: "#fff",
-                  "&:hover": {
-                    color: "#00E0ED",
-                  },
-                }}
-              >
-                prev
-              </Button>
-              <Button
-                onClick={handleNextButtonClick}
-                sx={{
-                  width: "258px",
-                  background: "rgba(95, 214, 221, 0.50)",
-                  backdropFilter: "blur(7.5px)",
-                  borderRadius: "32px",
-                  height: "56px",
-                  color: "#fff",
-                  "&:hover": {
-                    background: "#00E0ED",
-                  },
-                }}
-              >
-                next
-              </Button>
-            </Box>
           </Box>
         </Box>
       </form>

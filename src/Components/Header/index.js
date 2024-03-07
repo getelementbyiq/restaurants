@@ -15,7 +15,7 @@ import { getUserById } from "../../Redux/thunks/getUserById";
 
 //Import Icons
 import Add from "../../assets/icons/add.svg";
-import UserHeader from "./UserHeader";
+import UserHeader from "./SideBar";
 import AdminHeader from "./AdminHeader";
 import OwnerHeader from "./OwnerHeader";
 import { setRestaurantField } from "../../Redux/slices/createLocalSlice";
@@ -34,6 +34,7 @@ const Header = (props) => {
   console.log("userData", userData);
   console.log("currentUserData", currentUserData);
   const navigate = useNavigate();
+  console.log("-----------user", user);
 
   useEffect(() => {
     if (userId) {
@@ -56,15 +57,10 @@ const Header = (props) => {
     navigate("/main");
   };
 
-  return userData && userData.userType === "ownerUser" ? (
-    localData ? (
-      <OwnerHeader />
-    ) : (
-      <OwnerHeaderFirst />
-    )
-  ) : (
+  return;
+  <Box>
     <UserHeader />
-  );
+  </Box>;
 };
 
 Header.propTypes = {};

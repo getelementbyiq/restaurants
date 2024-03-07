@@ -1,16 +1,16 @@
 // addStatusSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
-const openFirstSlice = createSlice({
-  name: "openFrist",
-  initialState: false, // Initialer Status auf "false"
+const createRestaurantStateSlice = createSlice({
+  name: "searchResult",
+  initialState: "first", // Initialer Status auf "false"
   reducers: {
-    setOpenFirst: (state, action) => {
+    setCreateRestaurantState: (state, action) => {
       return action.payload;
     },
   },
 });
 
-export const { setOpenFirst } = openFirstSlice.actions;
+export const { setCreateRestaurantState } = createRestaurantStateSlice.actions;
 
-export default openFirstSlice.reducer;
+export default createRestaurantStateSlice.reducer;

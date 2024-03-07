@@ -9,7 +9,7 @@ import { setHaveRestaurant } from "../../Redux/functions/slices/haveRestaurant";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { db } from "../../firebase";
-import DragAndDropLogo from "../../Components/DragAndDropLogo";
+import DragAndDropLogo from "../../Components/BackgroundInput";
 import DragAndDropBg from "../../Components/DragAndDropBg";
 import CreateNewLocation from "../../Components/CreateNewLocation";
 import Art from "../../Components/Art";

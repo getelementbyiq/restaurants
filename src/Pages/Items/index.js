@@ -1,120 +1,223 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
-import { collection, doc, getDoc, getDocs, orderBy } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import { setLocalData } from "../../Redux/functions/slices/LocalDataFromFirestore";
-import { useDispatch } from "react-redux";
-import { Box } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, IconButton, TextField } from "@mui/material";
 import CreateMenu from "../../Components/CreateMenu";
 import MenuDash from "../../Components/MenuDash";
 import { setMenuCategory } from "../../Redux/slices/createLocalSlice";
 import ItemsData from "../../Components/ItemsData";
+import { setProductField } from "../../Redux/slices/createProductSlice";
+import { setSearchResult } from "../../Redux/functions/slices/OpenThird";
 
-const Items = (props) => {
-  const dispatch = useDispatch();
-  // Verwende useParams, um den Restaurantnamen aus der URL zu extrahieren
+const AddItemsToProduct = (props) => {
   const { id } = useParams();
+  const itemsInputRef = useRef(null);
+  const [itemsValue, setItemsValue] = useState("");
+  const [textFieldValue, setTextFieldValue] = useState("");
+  const [itemsFromFirebase, setItemsFromFirebase] = useState("");
+  const dispatch = useDispatch();
 
-  // State, um die Restaurantdaten zu speichern
-  const [restaurantData, setRestaurantData] = useState(null);
-
-  // Funktion zum Abrufen aller Kategorietypen
-  const fetchAllCategories = async (id) => {
-    const categoryTypes = ["food", "drinks"];
-
-    for (const categoryType of categoryTypes) {
-      await fetchCategoriesFromFirestore(id, categoryType);
-    }
-  };
-  const fetchCategoriesFromFirestore = async (id, categoryType) => {
-    try {
-      const categoriesQuery = await getDocs(
-        collection(db, "restaurants", id, categoryType),
-        orderBy("createdAt", "asc")
-      );
-
-      console.log(
-        "Unsortierte Daten:----------------------------------------------------------",
-        categoriesQuery.docs.map((doc) => doc.data())
-      );
-
-      const categories = {};
-      categoriesQuery.forEach((doc) => {
-        categories[doc.id] = doc.data().name;
-      });
-      console.log(
-        "Sortierte Daten:--------------------------------------------------------",
-        categories
-      );
-
-      dispatch(
-        setLocalData({
-          menu: {
-            ...{ [categoryType]: categories },
-          },
-        })
-      );
-      dispatch(
-        setMenuCategory({
-          categoryType,
-          categoryData: categories,
-        })
-      );
-
-      return categories;
-    } catch (error) {
-      console.error("Fehler beim Abrufen der Kategorien aus Firestore:", error);
-      return {};
-    }
-  };
+  const product = useSelector((state) => state.createProduct.productData);
+  const productItems = product.items;
+  const storedItems = JSON.parse(localStorage.getItem("items")) || [];
+  const storedItemsArray = Object.values(storedItems);
+  // Verwende useParams, um den Restaurantnamen aus der URL zu extrahieren
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    // Funktion, um die Restaurantdaten aus Firebase abzurufen
-    const fetchRestaurantData = async () => {
+    console.log("searchValue:", searchValue);
+    console.log("storedItems:", storedItems);
+    // Lokale Suche in den gespeicherten Items
+    if (searchValue === "") {
+      setSearchResults([]);
+      console.log("aus dem Create Product");
+      // Setze searchResults zurück, wenn searchValue leer ist
+    } else {
+      const results = storedItemsArray.filter((item) =>
+        item.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setSearchResults(results);
+      dispatch(setSearchResult(results));
+    }
+  }, [searchValue]);
+
+  const handleItemsSelect = (value) => {
+    setItemsValue(value);
+    const updatedItems = { ...productItems, [value]: value };
+    dispatch(setProductField({ field: "items", value: updatedItems }));
+    setItemsValue(""); // Items-Wert zurücksetzen
+    itemsInputRef.current.value = "";
+    setSearchResults([]);
+  };
+
+  const handleAddItem = async () => {
+    const value = itemsValue;
+    if (value) {
       try {
-        // Erstelle eine Referenz zum Restaurant-Dokument in Firebase
-        const restaurantDocRef = collection(db, "restaurants");
+        const storedItems = JSON.parse(localStorage.getItem("items")) || [];
 
-        // Rufe die Daten des Restaurants aus Firebase ab
-        const restaurantDocSnapshot = await getDoc(doc(restaurantDocRef, id));
+        // Überprüfen, ob das Element bereits im Local Storage vorhanden ist
+        const isItemInStorage = storedItems.some(
+          (item) => item.toLowerCase() === value.toLowerCase()
+        );
 
-        // Wenn das Restaurant existiert, setze die Daten im State
-        if (restaurantDocSnapshot.exists()) {
-          setRestaurantData(restaurantDocSnapshot.data());
-          dispatch(setLocalData(restaurantDocSnapshot.data()));
+        if (!isItemInStorage) {
+          const itemsRef = collection(db, "ItemsCollection");
+          const docRef = await addDoc(itemsRef, {
+            name: value,
+            lowercaseName: value.toLowerCase(),
+          });
+          // Das Element zum Redux-Store hinzufügen
+          const updatedItems = Array.isArray(productItems)
+            ? [...productItems, value]
+            : [value];
+          dispatch(setProductField({ field: "items", value: updatedItems }));
+
+          // Das Element zum Local Storage hinzufügen
+          localStorage.setItem(
+            "items",
+            JSON.stringify([...storedItems, value])
+          );
+          setSearchResults([]); // Vorschläge zurücksetzen
+
+          // Zurücksetzen
+          setTextFieldValue("");
+          setItemsValue("");
+          console.error("Erfolgreich Hochgeladen");
         } else {
-          // Handle den Fall, dass das Restaurant nicht gefunden wurde
-          console.error("Restaurant nicht gefunden");
+          console.log("Das Element ist bereits im Local Storage vorhanden.");
+
+          // Das Element zum Redux-Store hinzufügen
+          const updatedItems = Array.isArray(productItems)
+            ? [...productItems, value]
+            : [value];
+          dispatch(setProductField({ field: "items", value: updatedItems }));
+
+          // Zurücksetzen
+          setSearchResults([]); // Vorschläge zurücksetzen
+
+          setTextFieldValue("");
+          setItemsValue("");
+
+          console.log("ist im redux Gespeichert");
         }
       } catch (error) {
-        console.error("Fehler beim Abrufen der Restaurantdaten:", error);
+        console.error("Fehler beim Speichern in Firestore", error);
       }
-    };
-
-    // Rufe die Restaurantdaten ab, wenn der Restaurantname vorhanden ist
-    if (id) {
-      fetchRestaurantData();
-      fetchAllCategories(id);
     }
-  }, [id]);
-
+  };
   // Zeige die Restaurantdaten an
   return (
-    <Box
-      sx={{
-        height: "90vh",
-        px: "28px",
-        mt: "8px",
-        display: "flex",
-        gap: "16px",
-      }}
-    >
-      <ItemsData />
+    <Box sx={{ display: "flex", flexGrow: "1" }}>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex" }}>
+          {/* <Input
+              fullWidth
+              sx={{ color: "#363636" }}
+              placeholder="Items"
+              inputRef={itemsInputRef}
+              onChange={(e) => {
+                setItemsValue(e.target.value);
+                setSearchValue(e.target.value);
+              }}
+              list="itemSuggestions"
+            /> */}
+          <TextField
+            name="Items"
+            fullWidth
+            inputRef={itemsInputRef}
+            size="small"
+            list="itemSuggestions"
+            placeholder={"Items"}
+            sx={{ fontSize: "16px" }}
+            InputLabelProps={{
+              style: { color: "#444444" },
+            }}
+            InputProps={{
+              style: {
+                borderRadius: "32px",
+                background: "#fff",
+                fontSize: "16px",
+                background: "#fff",
+                // backdropFilter: "blur(7.5px)",
+                color: "#444444",
+              },
+            }}
+            onChange={(e) => {
+              setItemsValue(e.target.value);
+              setSearchValue(e.target.value);
+            }}
+          />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <IconButton onClick={handleAddItem}>+</IconButton>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexGrow: "1",
+            overflow: "hidden",
+            maxHeight: "130px",
+            // border: "1px solid red",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              overflowY: "auto",
+              maxWidth: "250px",
+              // flexGrow: 1,
+              gap: "4px",
+              mt: "8px",
+              mb: "8px",
+              overflow: "auto",
+            }}
+          >
+            {searchResults &&
+              searchResults.map((item, index) => (
+                <Box sx={{ display: "block" }}>
+                  <Box
+                    sx={{
+                      px: "8px",
+                      py: "4px",
+                      borderRadius: "32px",
+                      background: "#363636",
+                      color: "#fff",
+                    }}
+                    key={index}
+                    onClick={() => handleItemsSelect(item)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {item}
+                  </Box>
+                </Box>
+              ))}
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };
 
-Items.propTypes = {};
+AddItemsToProduct.propTypes = {};
 
-export default Items;
+export default AddItemsToProduct;

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import DragAndDropLogo from "../DragAndDropLogo";
+import DragAndDropLogo from "../BackgroundInput";
 import DragAndDropBg from "../DragAndDropBg";
 import { setIsCreated } from "../../Redux/functions/slices/RestaurantIsCreated";
 import { setHaveRestaurant } from "../../Redux/functions/slices/haveRestaurant";
@@ -11,7 +11,7 @@ import { db } from "../../firebase";
 import { setRestaurantField } from "../../Redux/slices/createLocalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setOpenFirst } from "../../Redux/functions/slices/OpenFirst";
+// import { setOpenFirst } from "../../Redux/functions/slices/OpenFirst";
 import { setLocalData } from "../../Redux/functions/slices/LocalDataFromFirestore";
 
 const CreateNewLocation = (props) => {
@@ -123,7 +123,7 @@ const CreateNewLocation = (props) => {
       dispatch(setIsCreated(!isCreated));
 
       dispatch(setHaveRestaurant());
-      dispatch(setOpenFirst(!openFirst));
+      // dispatch(setOpenFirst(!openFirst));
       console.log("Restaurantdaten erfolgreich in Firestore hochgeladen.");
 
       const id = restaurantId;

@@ -33,7 +33,7 @@ const SignIn = () => {
         <Box>
           <img src="" alt="" />
         </Box>
-        <Typography variant="h3">Sign in to find a courier. </Typography>
+        <Typography variant="h3">Sign for Owner. </Typography>
       </Box>
       <form onSubmit={handleSubmit(handleLog)}>
         <Box>

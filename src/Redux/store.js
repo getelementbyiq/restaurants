@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userByIdReducer from "./slices/userByIdSlice";
-import openFirstReducer from "./functions/slices/OpenFirst";
+import createRestaurantStateReducer from "./functions/slices/OpenFirst";
 import createLocalReducer from "./slices/createLocalSlice";
 import openSecondReducer from "./functions/slices/OpenSecond";
 import openThirdReducer from "./functions/slices/OpenThird";
@@ -16,6 +16,16 @@ import setSelectedCategoryReducer from "./functions/slices/SetSelectedCategory";
 import categoryDashReducer from "./functions/slices/Category/AddProducts";
 import createProductReducer from "./slices/createProductSlice";
 import createItemsListReducer from "./slices/ItemsList";
+import fetchProductsReducer from "./slices/fetchProducts";
+import settingsProductReducer from "./functions/slices/SettingsProduct";
+import isCommentReducer from "./functions/slices/IsComment";
+import userAllReducer from "./slices/userByIdSliceAll";
+import restaurantsReducer from "./slices/restaurantsSlice";
+import searchResultReducer from "./functions/slices/OpenThird";
+import oneRestaurantDataReducer from "./slices/onerestaurantData";
+import isClickedReducer from "./slices/isClicked";
+import productRefReducer from "./slices/productRefSlice";
+import localNavStateReducer from "./functions/slices/LocalNavState";
 
 const store = configureStore(
   {
@@ -24,7 +34,6 @@ const store = configureStore(
       createRestaurant: createLocalReducer,
       //functions states creation of restaurant step by step
       show: showReducer,
-      openFirst: openFirstReducer,
       openSecond: openSecondReducer,
       openThird: openThirdReducer,
       openForth: openForthReducer,
@@ -38,6 +47,17 @@ const store = configureStore(
       categoryDash: categoryDashReducer,
       createProduct: createProductReducer,
       createItemsList: createItemsListReducer,
+      fetchProducts: fetchProductsReducer,
+      settingsProduct: settingsProductReducer,
+      isComment: isCommentReducer,
+      userAll: userAllReducer,
+      createRestaurantState: createRestaurantStateReducer,
+      restaurants: restaurantsReducer,
+      searchResult: searchResultReducer,
+      oneRestaurantData: oneRestaurantDataReducer,
+      isClicked: isClickedReducer,
+      productRef: productRefReducer,
+      localNavState: localNavStateReducer,
     },
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

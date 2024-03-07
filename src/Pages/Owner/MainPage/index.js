@@ -1,5 +1,12 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Icon,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SetBackGround from "../../../Components/CreateRestaurant/SetBackgroundFoto";
 import SetNameLogo from "../../../Components/CreateRestaurant/NameLogo";
@@ -12,29 +19,34 @@ import { db } from "../../../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { setIsCreated } from "../../../Redux/functions/slices/RestaurantIsCreated";
 import { setHaveRestaurant } from "../../../Redux/functions/slices/haveRestaurant";
+import { setCreateRestaurantState } from "../../../Redux/functions/slices/OpenFirst";
+import CreateRestaurantHeader from "../../../Components/CreateRestaurantHeader";
 
 const MainPageOwner = (props) => {
   const createRestaurantData = useSelector(
     (state) => state.createRestaurant.restaurantData
   );
-
+  // const blob = new Blob([createRestaurantData?.background]);
   console.log(
     "restaurant data from Mainpage owner----<<<<<<<<<<",
     createRestaurantData
   );
 
   const dispatch = useDispatch();
-  const show = useSelector((state) => state.show);
-  const openFirst = useSelector((state) => state.openFirst);
-  const openSecond = useSelector((state) => state.openSecond);
-  const openThird = useSelector((state) => state.openThird);
-  const openForth = useSelector((state) => state.openForth);
+
   const isCreated = useSelector((state) => state.isCreated);
-  const haveRestaurant = useSelector((state) => state.haveRestaurant);
 
-  console.log("ist created vorher üüüüüüüüüü", isCreated);
-  console.log("hat ein restaurant vorher äääääääää", haveRestaurant);
+  const createrestaurantState = useSelector(
+    (state) => state.createRestaurantState
+  );
 
+  const backgroundImage = useMemo(() => {
+    if (createRestaurantData && createRestaurantData.background) {
+      const blob = new Blob([createRestaurantData.background]);
+      return `url(${URL.createObjectURL(blob)})`;
+    }
+    return "none";
+  }, [createRestaurantData]);
   // const handleUpload = async () => {
   //   if (
   //     createRestaurantData &&
@@ -101,16 +113,135 @@ const MainPageOwner = (props) => {
       );
     }
   };
+  const handleRegisterState = (txt) => {
+    dispatch(setCreateRestaurantState(txt));
+  };
 
   return (
-    <Box sx={{ px: "40px", height: "89vh" }}>
-      {openFirst && <SetNameLogo />}
-      {openSecond && <SetBackGround />}
-      {openThird && <SetAddress />}
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Art />
+    <Box
+      sx={{
+        px: "40px",
+        display: "flex",
+        // border: "1px solid red",
+        flexDirection: "column",
+        gap: "16px",
+        backgroundImage: backgroundImage,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        borderRadius: "32px",
+        py: "32px",
+        height: "100%",
+      }}
+    >
+      <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+        <Box
+          onClick={() => handleRegisterState("first")}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            px: "32px",
+            py: "8px",
+            borderRadius: "44px",
+            // border: "1px solid red",
+            width: "15%",
+            background:
+              createrestaurantState === "first" ? "#333333" : "#FAFAFA",
+            color: createrestaurantState === "first" ? "#fff" : "#333333",
+          }}
+        >
+          <Typography>Name & Logo</Typography>
+        </Box>
+        <Box
+          onClick={() => handleRegisterState("second")}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            px: "32px",
+            py: "8px",
+            borderRadius: "44px",
+            // border: "1px solid #E9E9E9",
+            width: "15%",
+            background:
+              createrestaurantState === "second" ? "#333333" : "#FAFAFA",
+            color: createrestaurantState === "second" ? "#fff" : "#333333",
+          }}
+        >
+          <Typography>Background</Typography>
+        </Box>
+        <Box
+          onClick={() => handleRegisterState("third")}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            px: "32px",
+            py: "8px",
+            borderRadius: "44px",
+            // border: "1px solid #E9E9E9",
+            width: "15%",
+            background:
+              createrestaurantState === "third" ? "#333333" : "#FAFAFA",
+            color: createrestaurantState === "third" ? "#fff" : "#333333",
+          }}
+        >
+          <Typography>Adresse</Typography>
+        </Box>
+        <Box
+          onClick={() => handleRegisterState("seo")}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            px: "32px",
+            py: "8px",
+            borderRadius: "44px",
+            // border: "1px solid #E9E9E9",
+            width: "15%",
+            background: createrestaurantState === "seo" ? "#333333" : "#FAFAFA",
+            color: createrestaurantState === "seo" ? "#fff" : "#333333",
+          }}
+        >
+          <Typography>SEO</Typography>
+        </Box>
       </Box>
-      <Button onClick={handleUpload}>Create restaurant</Button>
+
+      <Box
+        sx={{
+          display: "flex",
+          // border: "1px solid red",
+          pb: "24px",
+          pt: "16px",
+          // background: "#fff",
+          borderRadius: "32px",
+          flexGrow: "1",
+          flexDirection: "column",
+          gap: "32px",
+          // backgroundImage: `url(${URL.createObjectURL(blob)})`,
+          // backgroundRepeat: "no-repeat",
+          // backgroundSize: "cover",
+          background: "rgba(239, 239, 239, 0.4)",
+          backdropFilter: "blur(3.5px)",
+        }}
+      >
+        <CreateRestaurantHeader />
+        <Box
+          sx={{
+            display: "flex",
+            // border: "1px solid red",
+            justifyContent: "center",
+            flexGrow: "1",
+          }}
+        >
+          {createrestaurantState === "first" && <SetNameLogo />}
+          {createrestaurantState === "second" && <SetBackGround />}
+          {createrestaurantState === "third" && <SetAddress />}
+          {createrestaurantState === "seo" && <Art />}
+        </Box>
+      </Box>
+
+      {/* <Button onClick={handleUpload}>Create restaurant</Button> */}
     </Box>
   );
 };

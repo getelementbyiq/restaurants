@@ -5,10 +5,10 @@ import {
   setField,
   setRestaurantField,
 } from "../../../Redux/slices/createLocalSlice";
-import DragAndDrop from "../../DragAndDropLogo";
+import DragAndDrop from "../../BackgroundInput";
 import { setOpenSecond } from "../../../Redux/functions/slices/OpenSecond";
-import { setOpenFirst } from "../../../Redux/functions/slices/OpenFirst";
-import { setOpenThird } from "../../../Redux/functions/slices/OpenThird";
+// import { setOpenFirst } from "../../../Redux/functions/slices/OpenFirst";
+import FileInput from "../../BackgroundInput";
 
 const SetBackGround = (props) => {
   const dispatch = useDispatch();
@@ -20,12 +20,11 @@ const SetBackGround = (props) => {
   const openSecond = useSelector((state) => state.openSecond);
   const openThird = useSelector((state) => state.openThird);
   const handlePrevButtonClick = () => {
-    dispatch(setOpenSecond(!openSecond)); // Um den Status umzuschalten
-    dispatch(setOpenFirst(!openFirst)); // Um den Status umzuschalten
+    // dispatch(setOpenSecond(!openSecond)); // Um den Status umzuschalten
+    // dispatch(setOpenFirst(!openFirst)); // Um den Status umzuschalten
   };
   const handleNextButtonClick = () => {
     dispatch(setOpenSecond(!openSecond)); // Um den Status umzuschalten
-    dispatch(setOpenThird(!openThird)); // Um den Status umzuschalten
     console.log("open third from set Background -----------", openThird);
   };
 
@@ -40,7 +39,14 @@ const SetBackGround = (props) => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        // border: "1px solid red",
+        width: "40%",
+        justifyContent: "center",
+      }}
+    >
       <form>
         <Box
           sx={{
@@ -48,57 +54,16 @@ const SetBackGround = (props) => {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-            maxWidth: "391px",
-            background: "rgba(239, 239, 239, 0.15)",
-            backdropFilter: "blur(7.5px)",
-            borderRadius: "4px 28px 28px 28px",
-            padding: "8px",
-            transform: "translateX(150px)",
+            background: "rgba(225, 225, 225, 0.2)",
+            backdropFilter: "blur(3.5px)",
+            borderRadius: "32px",
+            paddingX: "32px",
+            py: "16px",
+            flexGrow: "1",
+            width: "400px",
           }}
         >
-          <DragAndDrop onDrop={handleLogoDrop} />
-
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px",
-              width: "96%",
-            }}
-          >
-            <Box sx={{ display: "flex", gap: "8px", mb: "16px" }}>
-              <Button
-                onClick={handlePrevButtonClick}
-                sx={{
-                  flexGrow: 1,
-                  borderRadius: "32px",
-                  height: "56px",
-                  color: "#fff",
-                  "&:hover": {
-                    color: "#00E0ED",
-                  },
-                }}
-              >
-                prev
-              </Button>
-              <Button
-                onClick={handleNextButtonClick}
-                sx={{
-                  width: "258px",
-                  background: "rgba(95, 214, 221, 0.50)",
-                  backdropFilter: "blur(7.5px)",
-                  borderRadius: "32px",
-                  height: "56px",
-                  color: "#fff",
-                  "&:hover": {
-                    background: "#00E0ED",
-                  },
-                }}
-              >
-                next
-              </Button>
-            </Box>
-          </Box>
+          <FileInput onDrop={handleLogoDrop} />
         </Box>
       </form>
     </Box>

@@ -21,6 +21,7 @@ const initialState = {
     street: "",
     houseNumber: "",
     city: "",
+    cityArea: "",
     plz: "",
     art: "",
     followers: "",
@@ -51,7 +52,7 @@ const createLocalSlice = createSlice({
       delete state.restaurantData.menu[categoryType][categoryName];
     },
 
-    reset: (state) => initialState,
+    resetCreateRestaurant: (state) => initialState,
   },
 });
 
@@ -60,7 +61,7 @@ export const {
   uploadImagesToFirestore,
   setMenuCategory,
   deleteMenuCategory,
-  reset,
+  resetCreateRestaurant,
 } = createLocalSlice.actions;
 
 export default createLocalSlice.reducer;

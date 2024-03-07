@@ -5,28 +5,23 @@ import {
   setField,
   setRestaurantField,
 } from "../../../Redux/slices/createLocalSlice";
-import DragAndDrop from "../../DragAndDropLogo";
+import DragAndDrop from "../../BackgroundInput";
 import { setOpenFirst } from "../../../Redux/functions/slices/OpenFirst";
 import { setOpenSecond } from "../../../Redux/functions/slices/OpenSecond";
-import { setOpenThird } from "../../../Redux/functions/slices/OpenThird";
 
 const SetAddress = (props) => {
   const dispatch = useDispatch();
   const openFirst = useSelector((state) => state.openFirst);
   const openSecond = useSelector((state) => state.openSecond);
-  const openThird = useSelector((state) => state.openThird);
 
   const createRestaurantData = useSelector(
     (state) => state.createRestaurant.restaurantData
   );
 
   const handlePrevButtonClick = () => {
-    dispatch(setOpenThird(!openThird));
     dispatch(setOpenSecond(!openSecond)); // Um den Status umzuschalten
   };
-  const handleNextButtonClick = () => {
-    dispatch(setOpenThird(!openThird));
-  };
+  const handleNextButtonClick = () => {};
 
   console.log("create restaurant", createRestaurantData);
 
@@ -49,7 +44,14 @@ const SetAddress = (props) => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        // border: "1px solid red",
+        width: "40%",
+        justifyContent: "center",
+      }}
+    >
       <form>
         <Box
           sx={{
@@ -57,15 +59,14 @@ const SetAddress = (props) => {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-            maxWidth: "391px",
-            background: "rgba(239, 239, 239, 0.15)",
-            backdropFilter: "blur(7.5px)",
-            borderRadius: "4px 28px 28px 28px",
-            padding: "8px",
-            position: "relative",
-            transform: "translateX(220px)",
-
-            zIndex: 1,
+            background: "rgba(225, 225, 225, 0.2)",
+            backdropFilter: "blur(3.5px)",
+            borderRadius: "32px",
+            paddingX: "32px",
+            py: "16px",
+            flexGrow: "1",
+            width: "400px",
+            gap: "8px",
           }}
         >
           <TextField
@@ -74,16 +75,16 @@ const SetAddress = (props) => {
             placeholder="Street"
             sx={{ fontSize: "16px" }}
             InputLabelProps={{
-              style: { color: "#fff" },
+              style: { color: "#444444" },
             }}
             InputProps={{
               style: {
                 borderRadius: "32px",
                 background: "#fff",
                 fontSize: "16px",
-                background: "rgba(239, 239, 239, 0.15)",
-                backdropFilter: "blur(7.5px)",
-                color: "#fff",
+                background: "#fff",
+                // backdropFilter: "blur(7.5px)",
+                color: "#444444",
               },
             }}
             onChange={(e) => handleFieldChange("street", e.target.value)}
@@ -94,71 +95,41 @@ const SetAddress = (props) => {
             placeholder="House Number"
             sx={{ fontSize: "16px" }}
             InputLabelProps={{
-              style: { color: "#fff" },
+              style: { color: "#444444" },
             }}
             InputProps={{
               style: {
                 borderRadius: "32px",
                 background: "#fff",
                 fontSize: "16px",
-                background: "rgba(239, 239, 239, 0.15)",
+                background: "#fff",
+                // background: "rgba(239, 239, 239, 0.15)",
                 backdropFilter: "blur(7.5px)",
-                color: "#fff",
+                color: "#444444",
               },
             }}
             onChange={(e) => handleFieldChange("houseNumber", e.target.value)}
           />
           <TextField
             fullWidth
-            placeholder="city"
+            placeholder="City"
             sx={{ fontSize: "16px" }}
             InputLabelProps={{
-              style: { color: "#fff" },
+              style: { color: "#444444" },
             }}
             InputProps={{
               style: {
                 borderRadius: "32px",
                 background: "#fff",
                 fontSize: "16px",
-                background: "rgba(239, 239, 239, 0.15)",
-                backdropFilter: "blur(7.5px)",
-                color: "#fff",
+                background: "#fff",
+                // background: "rgba(239, 239, 239, 0.15)",
+                // backdropFilter: "blur(7.5px)",
+                color: "#444444",
               },
             }}
             onChange={(e) => handleFieldChange("city", e.target.value)}
           />
-          <Box sx={{ display: "flex", gap: "8px", mb: "16px" }}>
-            <Button
-              onClick={handlePrevButtonClick}
-              sx={{
-                flexGrow: 1,
-                borderRadius: "32px",
-                height: "56px",
-                color: "#fff",
-                "&:hover": {
-                  color: "#00E0ED",
-                },
-              }}
-            >
-              prev
-            </Button>
-            <Button
-              onClick={handleNextButtonClick}
-              sx={{
-                width: "258px",
-                background: "rgba(95, 214, 221, 0.50)",
-                backdropFilter: "blur(7.5px)",
-                borderRadius: "32px",
-                height: "56px",
-                color: "#fff",
-                "&:hover": {
-                  background: "#00E0ED",
-                },
-              }}
-            >
-              next
-            </Button>
-          </Box>
         </Box>
       </form>
     </Box>

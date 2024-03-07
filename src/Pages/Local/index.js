@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
-import { collection, doc, getDoc, getDocs, orderBy } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import { setLocalData } from "../../Redux/functions/slices/LocalDataFromFirestore";
 import { useDispatch } from "react-redux";
@@ -19,6 +27,60 @@ const Local = (props) => {
   const [restaurantData, setRestaurantData] = useState(null);
 
   // Funktion zum Abrufen aller Kategorietypen
+
+  useEffect(() => {
+    // Überprüfe, ob der Local Storage leer ist
+    const storedItems = JSON.parse(localStorage.getItem("items")) || [];
+    console.log("from Local Itemscollection ");
+
+    if (storedItems.length === 0) {
+      // Der Local Storage ist leer, führe den einmaligen Fetch aus
+      const fetchItems = async () => {
+        try {
+          const itemsRef = collection(db, "ItemsCollection");
+          const snapshot = await getDocs(itemsRef);
+
+          const items = [];
+          snapshot.forEach((doc) => {
+            items.push(doc.data().name);
+          });
+
+          // Aktualisiere den Local Storage
+          localStorage.setItem("items", JSON.stringify(items));
+        } catch (error) {
+          console.error("Fehler beim Abrufen der Items aus Firestore", error);
+        }
+      };
+
+      // Führe den einmaligen Fetch aus
+      fetchItems();
+    } else {
+      // Der Local Storage ist nicht leer, füge einen Firestore-Listener hinzu
+      const itemsRef = collection(db, "ItemsCollection");
+      console.log("from Local Itemscollection ");
+      const unsubscribe = onSnapshot(
+        query(itemsRef),
+        (snapshot) => {
+          const items = [];
+          snapshot.forEach((doc) => {
+            items.push(doc.data().name);
+          });
+
+          // Aktualisiere den Local Storage
+          localStorage.setItem("items", JSON.stringify(items));
+        },
+        (error) => {
+          console.error("Fehler beim Abhören der Items-Collection", error);
+        }
+      );
+
+      // Cleanup-Funktion, um den Listener zu entfernen
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, []);
+
   const fetchAllCategories = async (id) => {
     const categoryTypes = ["food", "drinks"];
 
@@ -26,6 +88,7 @@ const Local = (props) => {
       await fetchCategoriesFromFirestore(id, categoryType);
     }
   };
+
   const fetchCategoriesFromFirestore = async (id, categoryType) => {
     try {
       const categoriesQuery = await getDocs(
