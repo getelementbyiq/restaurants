@@ -51,7 +51,6 @@ const SideBar = (props) => {
           userData?.userType === "ownerUser" ? "#444444" : "none",
       }}
     >
-      User
       <Box
         sx={{ display: "flex", alignItems: "center" }}
         onClick={() => goTo("/")}
@@ -63,7 +62,7 @@ const SideBar = (props) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <rect width="40" height="40" rx="12" fill="#444444" />
+          <rect width="40" height="40" rx="12" />
           <path
             d="M13.641 23.4762L28 8M12 31.4127L28 13.9524M16.5128 33L21.0256 28.2381"
             stroke="white"

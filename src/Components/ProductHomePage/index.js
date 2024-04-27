@@ -119,11 +119,11 @@ const ProductHomePage = (product) => {
         borderRadius: "32px",
         boxShadow: !isHovered
           ? "0px 0px 25px 0px #000 inset"
-          : "0px 0px 150px 0px #000 inset",
+          : "0px 0px 200px 0px #000 inset",
         overflow: "hidden",
         position: "relative",
         cursor: "pointer",
-        height: "350px",
+        flexGrow: "1",
       }}
     >
       {/* {foodId === product.product.id && (
@@ -384,7 +384,10 @@ const ProductHomePage = (product) => {
                       sx={{
                         width: "24px",
                         height: "24px",
-                        outline: "2px solid #fff",
+                        transition: "150ms",
+                        "&&:hover": {
+                          outline: "2px solid #fff",
+                        },
                       }}
                     />
                   </a>
@@ -519,7 +522,10 @@ const ProductHomePage = (product) => {
               backdropFilter: "blur(3.5px)",
               borderRadius: "32px",
               // border: "1px solid red",
-              "&:hover": { background: "#000" },
+              "&:hover": {
+                background: "rgba(225, 225, 225, 0.3)",
+                color: "#fff",
+              },
             }}
           >
             <Typography

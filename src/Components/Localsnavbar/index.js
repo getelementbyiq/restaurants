@@ -36,6 +36,7 @@ const LocalsNavbar = (data) => {
         py: "8px",
         border: "1px silid red",
         gap: "8px",
+        justifyContent: "center",
       }}
     >
       <Box
@@ -50,7 +51,7 @@ const LocalsNavbar = (data) => {
           },
           background: navState === "home" ? "#444444" : "fff",
           cursor: "pointer",
-          color: navState === "home" ? "#fff" : "444444",
+          color: navState === "home" ? "#fff" : "#fff",
           transition: "150ms",
         }}
       >
@@ -69,7 +70,7 @@ const LocalsNavbar = (data) => {
           background: navState === "story" ? "#444444" : "fff",
           cursor: "pointer",
           transition: "150ms",
-          color: navState === "story" ? "#fff" : "444444",
+          color: navState === "story" ? "#fff" : "#fff",
         }}
       >
         <Typography>Our Story</Typography>
@@ -87,7 +88,7 @@ const LocalsNavbar = (data) => {
           background: navState === "team" ? "#444444" : "fff",
           cursor: "pointer",
           transition: "150ms",
-          color: navState === "team" ? "#fff" : "444444",
+          color: navState === "team" ? "#fff" : "#fff",
         }}
       >
         <Typography>Team</Typography>
@@ -105,7 +106,7 @@ const LocalsNavbar = (data) => {
           background: navState === "contact" ? "#444444" : "fff",
           cursor: "pointer",
           transition: "150ms",
-          color: navState === "contact" ? "#fff" : "444444",
+          color: navState === "contact" ? "#fff" : "#fff",
         }}
       >
         <Typography>Contact</Typography>
@@ -121,7 +122,7 @@ const LocalsNavbar = (data) => {
             color: "#fff",
           },
           background: navState === "career" ? "#444444" : "fff",
-          color: navState === "career" ? "#fff" : "444444",
+          color: navState === "career" ? "#fff" : "#fff",
           transition: "150ms",
           cursor: "pointer",
         }}

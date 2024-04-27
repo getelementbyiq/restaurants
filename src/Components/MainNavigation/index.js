@@ -37,7 +37,6 @@ const MainNavigation = (props) => {
         justifyContent: "space-between",
         position: "sticky",
         top: "0",
-        backgroundColor: "#fff",
         zIndex: "1000",
       }}
     >

@@ -36,7 +36,6 @@ const RightBar = (props) => {
       sx={{
         display: "flex",
         minWidth: "40px",
-        backgroundColor: "#fff",
         justifyContent: "center",
         flexDirection: "column",
         // border: "1px solid red",

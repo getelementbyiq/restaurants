@@ -74,3 +74,15 @@
   background-color: #888; /* Farbe des Scrollbalken-Thumb */
   border-radius: 5px; /* Abrundung des Scrollbalken-Thumb */
 }
+
+.css-yz9k0d-MuiInputBase-input {
+  color: white !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.scroll-by-amount {
+  scroll-margin-top: 5px; /* Definiert den Abstand von der aktuellen Position */
+}

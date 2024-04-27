@@ -87,11 +87,6 @@ const Main = (props) => {
   //   }
   // };
 
-  useEffect(() => {
-    if (userData) {
-    }
-  }, [userData]);
-
   return (
     <Box
       sx={{

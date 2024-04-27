@@ -9,9 +9,10 @@ const MainProductsInfin = (props) => {
     <Box
       sx={{
         display: "flex",
-        // border: "1px solid red",
+        border: "1px solid red",
         flexDirection: "column",
         gap: "16px",
+        position: "relative",
       }}
     >
       {/* <MainContentMessage /> */}

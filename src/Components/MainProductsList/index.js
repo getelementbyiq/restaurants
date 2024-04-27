@@ -24,8 +24,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setProductRef } from "../../Redux/slices/productRefSlice";
+import ProductSecondLayout from "../ProductsecondLayout";
+// import Masonry from "@mui/lab/Masonry";
+// or
+// import { Masonry } from "@mui/lab";
 
 const restaurantId = "d8TVB71rJl1AqGh3XcMO ";
+
+const size = ["small", "medium", "large"];
+let productIndex = 0;
 
 const MainProductsList = ({ updateProductRef }) => {
   const dispatch = useDispatch();
@@ -255,41 +262,45 @@ const MainProductsList = ({ updateProductRef }) => {
   console.log("restaurantData----", restaurantData);
 
   return (
-    <Grid
-      container
+    <Box
       sx={{
         display: "flex",
-        // border: "2px solid red",
-        borderRadius: "32px",
-        overflow: "hidden",
-        backgroundColor: "#FAFAFA",
-        px: "64px",
+        position: "relative",
       }}
     >
-      {restaurantData?.map((restaurant) =>
-        restaurant.menus.food.map((menu) =>
-          menu.products.map((product, index) => (
-            <Grid
-              item
-              xs={3}
-              md={3}
-              lg={3}
-              key={index} // moved key to the Grid component
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                flexGrow: "1",
-                // border: "1px solid blue",
-                px: "4px",
-                py: "4px",
-              }}
-            >
-              <ProductHomePage product={product} />
-            </Grid>
-          ))
-        )
-      )}
-    </Grid>
+      <Box
+        sx={{
+          display: "grid",
+          gap: "16px",
+          // border: "1px solid green",
+          width: "90vw",
+          // backgroundColor: "black",
+          position: "absolute",
+          left: "50%",
+          transform: "translateX(-50%)",
+          gridTemplateColumns: "repeat(auto-fill,260px)",
+          gridAutoRows: "10px",
+          justifyContent: "center",
+        }}
+      >
+        {restaurantData?.map((restaurant) =>
+          restaurant.menus.food.map((menu) =>
+            menu.products.map((product) => {
+              console.log("productsindexis", productIndex);
+              const currentSize = size[productIndex % size.length];
+              productIndex++;
+              return (
+                <ProductSecondLayout
+                  key={product.id}
+                  size={currentSize}
+                  product={product}
+                />
+              );
+            })
+          )
+        )}
+      </Box>
+    </Box>
   );
 };
 

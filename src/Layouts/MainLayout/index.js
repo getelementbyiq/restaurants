@@ -17,6 +17,7 @@ import MainQuestContent from "../../Components/MainQuestContent";
 import { Scrollbar } from "react-scrollbars-custom";
 import { selectProductRef } from "../../Redux/slices/productRefSlice";
 import SideBarLayout from "../../Components/Header/SideBarLayout";
+import AuthComponent from "../../Components/AuthComponent";
 
 const MainLayout = (props) => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const MainLayout = (props) => {
   const show = useSelector((state) => state.show);
   const localData = useSelector((state) => state.localData);
   const currentUserData = useSelector((state) => state.userById);
+  const restaurantData = useSelector((state) => state.oneRestaurantData);
   const userData = currentUserData?.user;
   const location = useLocation();
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -151,68 +153,65 @@ const MainLayout = (props) => {
         // justifyContent: "space-between",
         // gap: "16px",
         flexDirection: "column",
+        backgroundImage: `url(${restaurantData.restaurantData.background})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
-      <Scrollbar
-        onScroll={({ scrollTop }) => setScrollPosition(scrollTop)}
-        scrollTop={scrollPosition}
-        behavior="smooth"
-        style={{
-          width: "100%",
-          maxHeight: "100%",
+      <Box
+        sx={{
+          display: "flex",
+          // border: "1px solid red",
+          position: "relative",
+          transition: "150ms",
         }}
       >
+        {!location.pathname.includes(`/${localsId.locals}`) &&
+          !location.pathname.includes(`/${localsId.id}`) && (
+            <MainQuestContent />
+          )}
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "space-between",
+          gap: "16px",
+        }}
+      >
+        <SideBarLayout />
         <Box
           sx={{
             display: "flex",
+            flexDirection: "column",
             // border: "1px solid red",
-            position: "relative",
-            transition: "150ms",
+            flexGrow: 1,
+            gap: "8px",
           }}
         >
-          {!location.pathname.includes(`/${localsId.locals}`) &&
-            !location.pathname.includes(`/${localsId.id}`) && (
-              <MainQuestContent />
-            )}
-        </Box>
-        <Box
-          sx={{
-            width: "100%",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "16px",
-          }}
-        >
-          <SideBarLayout />
+          {location.pathname !== "/addlocation" && !isLocalIdPath && (
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box></Box>
+              <AuthComponent />
+            </Box>
+          )}
+
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
+              width: "100%",
               // border: "1px solid red",
-              flexGrow: 1,
-              gap: "8px",
+              height: "100%",
             }}
           >
-            {location.pathname !== "/addlocation" && !isLocalIdPath && (
-              <MainNavigation />
-            )}
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                // border: "1px solid red",
-                height: "100%",
-              }}
-            >
-              <Outlet />
-            </Box>
+            <Outlet />
           </Box>
-          <RightBar />
         </Box>
-      </Scrollbar>
+        <RightBar />
+      </Box>
 
       {/* <Footer /> */}
     </Box>

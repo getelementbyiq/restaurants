@@ -7,6 +7,8 @@ const ProtectedRoute = ({ children }) => {
   const currentUserData = useSelector((state) => state.userById);
   const userData = currentUserData.user;
 
+  console.log("user from protected", user);
+
   if (!user) {
     return <Navigate to="/" />;
   }

@@ -35,15 +35,18 @@ import Story from "./Pages/Locals/Story";
 import Team from "./Pages/Locals/Team";
 import Contact from "./Pages/Locals/Contact";
 import Jobs from "./Pages/Locals/Jobs";
+import LocalsFullView from "./Pages/LocalsFullViewPage";
+import SecondMainLayout from "./Layouts/SecondMainLayout";
+import PreferencesPages from "./Pages/Preferences";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<MainLayout />}>
-      <Route path="/" element={<HomePage />} />
+    <Route path="/" element={<SecondMainLayout />}>
+      <Route index element={<HomePage />} />
       <Route path="owners" element={<OwnerRegisterPage />} />
       <Route path="foodies" element={<UserRegisterPage />} />
       <Route path="foods" element={<FoodsPage />} />
-      <Route path="/:locals" element={<LocalsPage />} />
+      <Route path="/:locals" element={<LocalsFullView />} />
       <Route path="/:locals/:categoryType/:menu/:id" element={<HomePage />} />
       <Route path="/:locals/foods" element={<FoodPage />} />
       <Route path="/:locals/drinks" element={<FoodPage />} />
@@ -51,6 +54,14 @@ const Root = createBrowserRouter(
       <Route path="/:locals/daily" element={<FoodPage />} />
       <Route path="signin" element={<SignIn />} />
       <Route path="signup" element={<Signup />} />
+      <Route
+        path="preferences"
+        element={
+          <ProtectedRoute>
+            <PreferencesPages />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="items"
         element={
