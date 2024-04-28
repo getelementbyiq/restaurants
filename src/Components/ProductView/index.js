@@ -19,10 +19,10 @@ const ProductView = (product) => {
   const dispatch = useDispatch();
   const [isChecked, setIsChecked] = useState(false);
   const [isComment, setIsComment] = useState(false);
-  const [settingsOn, setSettingsOn] = useState(false);
+  // const [settingsOn, setSettingsOn] = useState(false);
   const handleCheck = () => {
     setIsChecked((open) => !open);
-    setSettingsOn((open) => !open);
+    // setSettingsOn((open) => !open);
   };
 
   const handleComment = () => {
