@@ -93,7 +93,7 @@ const ProductView = (product) => {
           // border: "1px solid red",
         }}
       >
-        {!isChecked && !isComment && (
+        {!isComment && (
           <Box
             sx={{
               display: "flex",
@@ -120,7 +120,7 @@ const ProductView = (product) => {
             </Typography>
           </Box>
         )}
-        {!isChecked && !isComment && (
+        {!isComment && (
           <Box
             sx={{
               display: "flex",
@@ -146,7 +146,7 @@ const ProductView = (product) => {
             </Typography>
           </Box>
         )}
-        {!isChecked && !isComment && (
+        {!isComment && (
           <Box
             sx={{
               display: "flex",
@@ -293,7 +293,7 @@ const ProductView = (product) => {
             )}
           </Box>
         )}
-        {!isChecked && !isComment && (
+        {!isComment && (
           <Box
             sx={{
               display: "flex",
