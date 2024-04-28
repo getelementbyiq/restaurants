@@ -103,7 +103,7 @@ const ProductView = (product) => {
               position: "relative",
               top: !isHovered ? "-36px" : "8px",
               visibility: isHovered ? "visible" : "hidden",
-              position: "relative",
+              // position: "relative",
               zIndex: "1",
               // border: "1px solid red",
             }}
