@@ -17,7 +17,7 @@ import { db } from "../../firebase";
 const ProductView = (product) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isChecked, setIsChecked] = useState(false);
+  // const [isChecked, setIsChecked] = useState(false);
   const [isComment, setIsComment] = useState(false);
   // const [settingsOn, setSettingsOn] = useState(false);
   // const handleCheck = () => {
