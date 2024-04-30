@@ -25,6 +25,9 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setProductRef } from "../../Redux/slices/productRefSlice";
 import ProductSecondLayout from "../ProductsecondLayout";
+import useMobileCheck from "../MobileCheck";
+import FullscreenProductView from "../../Pages/FullScreenProductMobile";
+import { setRestaurantDataFromMain } from "../../Redux/slices/restaurantDataFromMain";
 // import Masonry from "@mui/lab/Masonry";
 // or
 // import { Masonry } from "@mui/lab";
@@ -39,8 +42,13 @@ const MainProductsList = ({ updateProductRef }) => {
   const id = useParams();
   const [restaurantData, setRestaurantData] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
+  const isMobile = useMobileCheck();
 
   const productRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(setRestaurantDataFromMain(restaurantData));
+  }, [restaurantData, dispatch]);
 
   useEffect(() => {
     dispatch(setProductRef(productRef.current));
@@ -261,6 +269,12 @@ const MainProductsList = ({ updateProductRef }) => {
 
   console.log("restaurantData----", restaurantData);
 
+  const [selectedProductIndex, setSelectedProductIndex] = useState(null);
+
+  const handleProductClick = (index) => {
+    setSelectedProductIndex(index);
+  };
+
   return (
     <Box
       sx={{
@@ -273,19 +287,21 @@ const MainProductsList = ({ updateProductRef }) => {
           display: "grid",
           gap: "16px",
           // border: "1px solid green",
-          width: "90vw",
+          width: isMobile ? "100vw" : "90vw",
           // backgroundColor: "black",
           position: "absolute",
           left: "50%",
           transform: "translateX(-50%)",
-          gridTemplateColumns: "repeat(auto-fill,260px)",
+          gridTemplateColumns: isMobile
+            ? "repeat(auto-fill,45%)"
+            : "repeat(auto-fill,260px)",
           gridAutoRows: "10px",
           justifyContent: "center",
         }}
       >
         {restaurantData?.map((restaurant) =>
           restaurant.menus.food.map((menu) =>
-            menu.products.map((product) => {
+            menu.products.map((product, index) => {
               console.log("productsindexis", productIndex);
               const currentSize = size[productIndex % size.length];
               productIndex++;

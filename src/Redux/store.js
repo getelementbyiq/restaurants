@@ -27,6 +27,9 @@ import isClickedReducer from "./slices/isClicked";
 import productRefReducer from "./slices/productRefSlice";
 import localNavStateReducer from "./functions/slices/LocalNavState";
 import globalScrollStateReducer from "./slices/globalScrollState";
+import productFullViewReducer from "./slices/productFullView";
+import restaurantDataFromMainReducer from "./slices/restaurantDataFromMain";
+import swiperIndexReducer from "./slices/swiperIndex";
 
 const store = configureStore(
   {
@@ -60,6 +63,9 @@ const store = configureStore(
       productRef: productRefReducer,
       localNavState: localNavStateReducer,
       scrollState: globalScrollStateReducer,
+      productFullView: productFullViewReducer,
+      restaurantDataFromMain: restaurantDataFromMainReducer,
+      swiperIndex: swiperIndexReducer,
     },
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

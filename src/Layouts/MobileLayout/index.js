@@ -9,7 +9,7 @@ import GipoBanner from "../../Components/Banners/GipoBanner";
 import { UserAuth } from "../../Auth/Auth";
 import useMobileCheck from "../../Components/MobileCheck";
 
-const SecondMainLayout = (props) => {
+const MobileLayout = (props) => {
   const { user } = UserAuth();
   const id = useParams();
   const restaurantId = id.locals;
@@ -39,21 +39,11 @@ const SecondMainLayout = (props) => {
         height: "100vh",
       }}
     >
-      {location.pathname === "/" && <GipoBanner />}
-
-      {scrolled || location.pathname !== "/" ? <Secondheader /> : null}
-      {/* <Secondheader /> */}
-      <MainFilter />
-      <Box
-        sx={{ display: "flex", px: isMobile ? "0px" : "60px", flexGrow: "1" }}
-      >
-        {/* <TimeLine /> */}
-        <Outlet />
-      </Box>
+      <Outlet />
     </Box>
   );
 };
 
-SecondMainLayout.propTypes = {};
+MobileLayout.propTypes = {};
 
-export default SecondMainLayout;
+export default MobileLayout;

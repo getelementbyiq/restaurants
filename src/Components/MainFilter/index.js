@@ -11,6 +11,7 @@ const MainFilter = (props) => {
         gap: "16px",
         justifyContent: "center",
         my: "16px",
+        flexWrap: "wrap",
       }}
     >
       <Box

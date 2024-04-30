@@ -18,7 +18,7 @@ import { setRestaurantData } from "../../Redux/slices/onerestaurantData";
 import { Tooltip } from "react-tooltip";
 import useMobileCheck from "../MobileCheck";
 
-const ProductHomePage = (product) => {
+const ProductInSwiper = (product) => {
   const navigate = useNavigate();
   const id = useParams();
   console.log("food id", id);
@@ -63,7 +63,7 @@ const ProductHomePage = (product) => {
   //   new Blob([product.background])
   // )})`;
 
-  const [isHovered, setHovered] = useState(false);
+  // const [isHovered, setHovered] = useState(false);
 
   const onClickProduct = (product) => {
     if (id.id === product.product.id) {
@@ -102,11 +102,22 @@ const ProductHomePage = (product) => {
     navigate(`/${id}`);
   };
 
+  const [pressCount, setPressCount] = useState(0);
+  const handlePress = () => {
+    if (pressCount === 1) {
+      setPressCount(0);
+    } else if (pressCount > 1) {
+      setPressCount(0);
+    } else {
+      setPressCount(pressCount + 1);
+    }
+  };
+
   return (
     <Box
-      // onClick={() => onClickProduct(product)}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      // onClick={handlePress}
+      // onMouseEnter={() => setHovered(true)}
+      // onMouseLeave={() => setHovered(false)}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -119,10 +130,8 @@ const ProductHomePage = (product) => {
         backgroundPosition: "center",
 
         // py: !isComment ? "8px" : "0",
-        borderRadius: "32px",
-        boxShadow: !isHovered
-          ? "0px 0px 25px 0px #000 inset"
-          : "0px 0px 200px 0px #000 inset",
+        borderRadius: isMobile ? "0px" : "32px",
+        boxShadow: "0px 0px 400px 0px #000 inset",
         overflow: "hidden",
         position: "relative",
         cursor: "pointer",
@@ -157,95 +166,44 @@ const ProductHomePage = (product) => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "space-between",
               px: "16px",
               transition: "150ms",
               position: "relative",
-              top: !isHovered ? "-100px" : "8px",
-              visibility: isHovered ? "visible" : "hidden",
-              position: "relative",
+              top: "8px",
+              visibility: "visible",
               zIndex: "1",
-              flexDirection: "column",
-              textAlign: "end",
+              textAlign: "start",
               // border: "1px solid red",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexGrow: "1",
-                alignItems: "center",
-                gap: "8px",
-                px: "16px",
-                py: "4px",
-                justifyContent: "center",
-                position: "relative",
-                zIndex: "1500",
-                // border: "1px solid red",
-                "&&:hover": {
-                  borderRadius: "32px",
-                  background: "rgba(225,225,225,0.3)",
-                },
-              }}
-            >
-              {/* <Avatar
-                onClick={() => goTo(product.product.restaurantsId)}
-                src={restaurantData.restaurantData.logo}
-                sx={{
-                  width: "24px",
-                  height: "24px",
-                }}
-              />
+            <Box sx={{ maxWidth: "50%" }}>
               <Typography
                 sx={{
                   color: "#fff",
                   fontFamily: "Noto Sans",
                   fontWeight: "400",
-                  fontSize: "12px",
+                  fontSize: "32px",
                 }}
               >
-                {restaurantData.restaurantData.name}
-              </Typography> */}
+                {product.product.name}
+              </Typography>
             </Box>
-            <Typography
-              sx={{
-                color: "#fff",
-                fontFamily: "Noto Sans",
-                fontWeight: "400",
-                fontSize: "16px",
-              }}
-            >
-              {product.product.name}
-            </Typography>
+            <Box sx={{ maxWidth: "50%" }}>
+              <Typography
+                sx={{
+                  color: "#fff",
+                  fontFamily: "Noto Sans",
+                  fontWeight: "300",
+                  fontSize: "32px",
+                }}
+              >
+                {product.product.price}$
+              </Typography>
+            </Box>
           </Box>
         )}
-        {!isChecked && !isComment && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              px: "16px",
-              transition: "150ms",
-              position: "relative",
-              top: !isHovered ? "-36px" : "8px",
-              visibility: isHovered ? "visible" : "hidden",
-              position: "relative",
-              zIndex: "1",
-              // border: "1px solid red",
-            }}
-          >
-            <Typography
-              sx={{
-                color: "#fff",
-                fontFamily: "Noto Sans",
-                fontWeight: "300",
-                fontSize: "16px",
-              }}
-            >
-              {product.product.price}$
-            </Typography>
-          </Box>
-        )}
+
         {!isChecked && !isComment && (
           <Box
             sx={{
@@ -276,12 +234,12 @@ const ProductHomePage = (product) => {
                   alignItems: "flex-start",
                 }}
               >
-                {/* {isHovered && !isComment && (
+                {/* {!isComment && (
                   <Typography
                     sx={{
                       fontFamily: "Noto Sans",
                       color: "#fff",
-                      fontSize: "12px",
+                      fontSize: "28px",
                       fontWeight: "400",
                     }}
                   >
@@ -290,70 +248,89 @@ const ProductHomePage = (product) => {
                 )} */}
               </Box>
 
-              <Box sx={{ flexGrow: "1" }}></Box>
               <Box
                 sx={{
+                  flexGrow: "1",
                   display: "flex",
-                  mt: "8px",
-                  ml: "8px",
-                  gap: "4px",
-                  maxWidth: "100%",
-                  flexWrap: "wrap",
-                  mb: "16px",
-                  // border: "1px solid red",
-                  transition: "150ms",
-                  position: "relative",
-                  bottom: !isHovered ? "-30px" : "0",
-                  visibility: isHovered ? "visible" : "hidden",
-                  position: "relative",
-                  zIndex: "1",
-                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                {isHovered && !isComment && (
-                  <Typography
-                    sx={{
-                      fontFamily: "Noto Sans",
-                      color: "#fff",
-                      fontSize: "14px",
-                      fontWeight: "400",
-                    }}
-                  >
-                    {product.product.description}
-                  </Typography>
-                )}
-                {!isChecked && !isComment && product.product.items && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexGrow: "1",
-                      flexWrap: "wrap",
-                      gap: "4px",
-                    }}
-                  >
-                    {Object.values(product.product.items).map((item) => (
-                      <Box sx={{ display: "flex" }}>
-                        <Box
-                          sx={{
-                            background: "#fff",
-                            px: "4px",
-                            py: "2px",
-                            borderRadius: "32px",
-                          }}
-                        >
-                          <Typography
-                            sx={{ fontSize: "12px", fontFamily: "Noto Sans" }}
-                          >
-                            {item}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    ))}
-                  </Box>
+                {pressCount > 1 && (
+                  <Typography sx={{ fontSize: "60px" }}>LIKED</Typography>
                 )}
               </Box>
+              {pressCount === 1 && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    mt: "8px",
+                    ml: "8px",
+                    maxWidth: "100%",
+                    flexWrap: "wrap",
+                    mb: "32px",
+                    transition: "150ms",
+                    position: "relative",
+                    bottom: "0",
+                    visibility: "visible",
+                    zIndex: "1",
+                    flexDirection: "column",
+                    // border: "1px solid red",
+                    gap: "32px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      disply: "flex",
+                      justifyContent: "flex-start",
+                      // border: "1px solid white",
+                      textAlign: "start",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontFamily: "Noto Sans",
+                        color: "#fff",
+                        fontSize: "24px",
+                        fontWeight: "400",
+                      }}
+                    >
+                      {product.product.description}
+                    </Typography>
+                  </Box>
+                  {!isChecked && !isComment && product.product.items && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexGrow: "1",
+                        flexWrap: "wrap",
+                        gap: "4px",
+                      }}
+                    >
+                      {Object.values(product.product.items).map((item) => (
+                        <Box sx={{ display: "flex" }}>
+                          <Box
+                            sx={{
+                              background: "#fff",
+                              px: "16px",
+                              py: "4px",
+                              borderRadius: "32px",
+                            }}
+                          >
+                            <Typography
+                              sx={{ fontSize: "20px", fontFamily: "Noto Sans" }}
+                            >
+                              {item}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+                </Box>
+              )}
             </Box>
-            {!isComment && (
+            {pressCount === 0 && !isComment && (
               <Box
                 sx={{
                   display: "flex",
@@ -362,12 +339,16 @@ const ProductHomePage = (product) => {
                   alignItems: "flex-end",
                   transition: "150ms",
                   position: "relative",
-                  right: !isHovered ? "-30px" : "4px",
-                  visibility: isHovered ? "visible" : "hidden",
+                  right: "4px",
+                  visibility: "visible",
                   zIndex: "1",
-                  // border: "1px solid red",
+                  // border: "1px solid white",
+                  ml: "16px",
                 }}
               >
+                <IconButton onClick={() => setPressCount(0)}>
+                  <Typography sx={{ color: "#fff" }}>X</Typography>
+                </IconButton>
                 <Box
                   sx={{
                     // border: "1px solid red",
@@ -377,30 +358,14 @@ const ProductHomePage = (product) => {
                     gap: "8px",
                   }}
                 >
-                  <a
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content={restaurantData.restaurantData.name}
-                  >
-                    <Avatar
-                      onClick={() => goTo(product.product.restaurantsId)}
-                      src={restaurantData.restaurantData.logo}
-                      sx={{
-                        width: "24px",
-                        height: "24px",
-                        transition: "150ms",
-                        "&&:hover": {
-                          outline: "2px solid #fff",
-                        },
-                      }}
-                    />
-                  </a>
-                  <Tooltip
-                    id="my-tooltip"
-                    style={{
-                      // backgroundColor: "rgb(0, 255, 30)",
-                      color: "#fff",
-                      background: "rgba(0, 0, 0, 0.8)",
-                      backdropFilter: "blur(3.5px)",
+                  <Avatar
+                    onClick={() => goTo(product.product.restaurantsId)}
+                    src={restaurantData.restaurantData.logo}
+                    sx={{
+                      width: "32px",
+                      height: "32px",
+                      // border: "4px solid #fff",
+                      transition: "150ms",
                     }}
                   />
 
@@ -417,19 +382,51 @@ const ProductHomePage = (product) => {
                       onClick={handleComment}
                       sx={{
                         // border: "1px solid red",
-                        width: "24px",
-                        height: "24px",
+                        width: isMobile ? "44px" : "24px",
+                        height: isMobile ? "44px" : "24px",
                       }}
                     >
-                      <img
-                        src={Comment}
-                        alt=""
-                        style={{ width: "16px", height: "16px" }}
-                      />
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8.5 19H8C4 19 2 18 2 13V8C2 4 4 2 8 2H16C20 2 22 4 22 8V13C22 17 20 19 16 19H15.5C15.19 19 14.89 19.15 14.7 19.4L13.2 21.4C12.54 22.28 11.46 22.28 10.8 21.4L9.3 19.4C9.14 19.18 8.77 19 8.5 19Z"
+                          stroke="white"
+                          stroke-width="1.5"
+                          stroke-miterlimit="10"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M15.9965 11H16.0054"
+                          stroke="white"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M11.9955 11H12.0045"
+                          stroke="white"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M7.99451 11H8.00349"
+                          stroke="white"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
                     </IconButton>
                     <Typography
                       sx={{
-                        fontSize: "12px",
+                        fontSize: "18px",
                         color: "#fff",
                         display: "flex",
                         justifyContent: "center",
@@ -444,51 +441,31 @@ const ProductHomePage = (product) => {
                     sx={{
                       display: "flex",
                       justifyContent: "center",
-                      flexDirection: "column",
                       // border: "1px solid green",
+                      alignItems: "center",
                     }}
                   >
                     <IconButton
+                      onClick={handlePress}
                       sx={{
                         // border: "1px solid red",
-                        width: "24px",
-                        height: "24px",
-                        // border: "1px solid red",
+                        width: isMobile ? "44px" : "24px",
+                        height: isMobile ? "44px" : "24px",
+                        // border: "4px solid red",
                       }}
                     >
-                      <Box
+                      <Typography
                         sx={{
-                          // border: "1px solid red",
-                          display: "flex",
+                          fontSize: "32px",
+                          fontFamily: "Knewave, system-ui",
+                          fontWeight: "400",
+                          fontStyle: "normal",
+                          lineHeight: "90%",
+                          color: "#FF00D6",
                         }}
                       >
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M5 10C3.9 10 3 10.9 3 12C3 13.1 3.9 14 5 14C6.1 14 7 13.1 7 12C7 10.9 6.1 10 5 10Z"
-                            fill="white"
-                            stroke="white"
-                            stroke-width="1.5"
-                          />
-                          <path
-                            d="M19 10C17.9 10 17 10.9 17 12C17 13.1 17.9 14 19 14C20.1 14 21 13.1 21 12C21 10.9 20.1 10 19 10Z"
-                            fill="white"
-                            stroke="white"
-                            stroke-width="1.5"
-                          />
-                          <path
-                            d="M12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z"
-                            fill="white"
-                            stroke="white"
-                            stroke-width="1.5"
-                          />
-                        </svg>
-                      </Box>
+                        i
+                      </Typography>
                     </IconButton>
                   </Box>
                 </Box>
@@ -508,25 +485,26 @@ const ProductHomePage = (product) => {
             justifyContent: "center",
             transition: "150ms",
             position: "relative",
-            bottom: !isHovered ? "-50px" : "0",
-            visibility: isHovered ? "visible" : "hidden",
+            bottom: "0",
+            visibility: "visible",
             zIndex: "1",
-            mb: "8px",
+            mb: "80px",
             // border: "1px solid blue",
             px: "16px",
           }}
         >
           <Button
-            fullWidth
             sx={{
               // background: "#929292",
               color: "#fff",
-              background: "rgba(225, 225, 225, 0.1)",
+              background: "rgba(0, 0, 0, 0.3)",
               backdropFilter: "blur(3.5px)",
               borderRadius: "32px",
+              px: "26px",
+
               // border: "1px solid red",
               "&:hover": {
-                background: "rgba(225, 225, 225, 0.3)",
+                background: "rgba(0, 0, 0, 0.3)",
                 color: "#fff",
               },
             }}
@@ -534,7 +512,8 @@ const ProductHomePage = (product) => {
             <Typography
               sx={{
                 fontFamily: "Quicksand",
-                fontWeight: "400",
+                fontWeight: "800",
+                fontSize: "32px",
               }}
             >
               MENU
@@ -546,6 +525,6 @@ const ProductHomePage = (product) => {
   );
 };
 
-ProductHomePage.propTypes = {};
+ProductInSwiper.propTypes = {};
 
-export default ProductHomePage;
+export default ProductInSwiper;

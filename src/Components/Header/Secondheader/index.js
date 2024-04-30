@@ -14,12 +14,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import MainFilter from "../../MainFilter";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../../Auth/Auth";
+import useMobileCheck from "../../MobileCheck";
 
 const Secondheader = (props) => {
   const { user, logout } = UserAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [isFocused, setIsFocused] = useState(false);
+  const isMobile = useMobileCheck();
 
   console.log("location now", location);
 
@@ -55,7 +57,7 @@ const Secondheader = (props) => {
           px: "24px",
           justifyContent: "space-between",
 
-          backgroundColor: "#fff",
+          backgroundColor: isMobile ? "transparent" : "#fff",
           transition: "200ms",
           height: isFocused ? "120px" : "60px",
         }}

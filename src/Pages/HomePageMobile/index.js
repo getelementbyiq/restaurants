@@ -19,7 +19,7 @@ import FullscreenProductView from "../FullScreenProductMobile";
 import ProductSwiper from "../FullScreenProductMobile";
 import useMobileCheck from "../../Components/MobileCheck";
 
-const HomePage = (props) => {
+const HomePageMobile = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const currentUserData = useSelector((state) => state.userById.user);
@@ -41,7 +41,6 @@ const HomePage = (props) => {
         // flexDirection: "column",
         gap: "16px",
         // border: "1px solid green",
-        mt: "16px",
         flexDirection: "column",
         position: "relative",
       }}
@@ -49,62 +48,7 @@ const HomePage = (props) => {
       {/* <MainProducts /> */}
       {/* <MainPlattformMessage /> */}
       {/* <MainProductsInfin /> */}
-      <Box
-        sx={{
-          display: "flex",
-          // border: "1px solid red",
-          px: isMobile ? "0px" : "40px",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          mb: "8px",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            maxWidth: "40%",
-            flexDirection: "column",
-            gap: "16px",
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: "Noto Sans",
-              fontWeight: "600",
-              fontSize: "18px",
-            }}
-          >
-            Angesagttesten Produkte für jetzt
-          </Typography>
-          <Typography>realtime Angebote in Ihrer Umgebung</Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
 
-            maxWidth: "32%",
-            position: "relative",
-            zIndex: "2000",
-          }}
-        >
-          <Typography sx={{ cursor: "pointer" }}>
-            Sie besitzen ein oder gar mehrere Läden? für uns kein Problem{" "}
-            <span
-              style={{
-                fontFamily: "Knewave, system-ui",
-                fontSize: "16px",
-                fontWeight: "400",
-                fontStyle: "normal",
-                lineHeight: "90%",
-                color: "#FF00D6",
-                letterSpacing: "0.11em",
-              }}
-            >
-              kontaktieren Sie uns
-            </span>
-          </Typography>
-        </Box>
-      </Box>
       {restaurantData && <ProductSwiper />}
       <MainProductsList />
       {/* <AlertDialog product={product} /> */}
@@ -114,6 +58,6 @@ const HomePage = (props) => {
   );
 };
 
-HomePage.propTypes = {};
+HomePageMobile.propTypes = {};
 
-export default HomePage;
+export default HomePageMobile;

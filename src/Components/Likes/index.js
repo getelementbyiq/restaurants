@@ -8,9 +8,11 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { UserAuth } from "../../Auth/Auth";
+import useMobileCheck from "../MobileCheck";
 
 const LikeComponent = (product) => {
   const { id } = useParams();
+  const isMobile = useMobileCheck();
   const restaurantId = id;
   const categoryTypeData = useSelector((state) => state.categoryActive);
   const categoryType = categoryTypeData.categoryActive;
@@ -128,22 +130,37 @@ const LikeComponent = (product) => {
         onClick={handleLikes}
         sx={{
           // border: "1px solid red",
-          width: "24px",
-          height: "24px",
+          width: isMobile ? "44px" : "24px",
+          height: isMobile ? "44px" : "24px",
         }}
       >
-        <img
+        {/* <img
           src={isLiked ? Liked : Likes}
           alt=""
           style={{
             height: !isLiked ? "16px" : "16px",
             width: !isLiked ? "16px" : "16px",
           }}
-        />
+        /> */}
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.69C2 5.6 4.49 3.1 7.56 3.1C9.38 3.1 10.99 3.98 12 5.34C13.01 3.98 14.63 3.1 16.44 3.1C19.51 3.1 22 5.6 22 8.69C22 15.69 15.52 19.82 12.62 20.81Z"
+            stroke="white"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </IconButton>
       <Typography
         sx={{
-          fontSize: "12px",
+          fontSize: isMobile ? "18px" : "12px",
           color: !isLiked ? "#fff" : "#fff",
           display: "flex",
           position: "relative",

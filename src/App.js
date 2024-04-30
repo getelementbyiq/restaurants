@@ -38,11 +38,13 @@ import Jobs from "./Pages/Locals/Jobs";
 import LocalsFullView from "./Pages/LocalsFullViewPage";
 import SecondMainLayout from "./Layouts/SecondMainLayout";
 import PreferencesPages from "./Pages/Preferences";
+import MobileLayout from "./Layouts/MobileLayout";
+import HomePageMobile from "./Pages/HomePageMobile";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<SecondMainLayout />}>
-      <Route index element={<HomePage />} />
+    <Route baseName="/" path="/" element={<MobileLayout />}>
+      <Route index element={<HomePageMobile />} />
       <Route path="owners" element={<OwnerRegisterPage />} />
       <Route path="foodies" element={<UserRegisterPage />} />
       <Route path="foods" element={<FoodsPage />} />
