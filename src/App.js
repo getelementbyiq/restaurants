@@ -1,50 +1,50 @@
-import logo from "./logo.svg";
-import "./App.css";
+import logo from './logo.svg';
+import './App.css';
 import {
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
-} from "react-router-dom";
-import MainLayout from "./Layouts/MainLayout";
-import SignIn from "./Auth/SignIn";
-import Signup from "./Auth/SignUp";
-import { Provider } from "react-redux";
-import store from "./Redux/store";
-import Main from "./Pages/Main";
-import ProtectedRoute from "./Protection/ProtectedRoute/index";
-import CreateLocal from "./Pages/CreateLocal";
-import Local from "./Pages/Local";
-import Items from "./Pages/Items";
-import HomePage from "./Pages/HomePage";
-import OwnerRegisterPage from "./Pages/OwnerRegisterPage";
-import UserRegisterPage from "./Pages/UserRegisterPage";
-import IsOwner from "./Protection/IsOwner";
-import HomePageNewOwner from "./Pages/HomePageNewOwner";
-import Locals from "./Pages/Locals";
-import Menu from "./Pages/Menu";
-import LocalsLayout from "./Pages/LocalsLayout";
-import Notifications from "./Pages/Notifications";
-import Adresse from "./Pages/Adresse";
-import ItemsData from "./Components/ItemsData";
-import FoodsPage from "./Pages/FoodsPage";
-import FoodPage from "./Pages/FoodPage";
-import LocalsPage from "./Pages/LocalsPage";
-import Offers from "./Pages/Locals/Offers";
-import Story from "./Pages/Locals/Story";
-import Team from "./Pages/Locals/Team";
-import Contact from "./Pages/Locals/Contact";
-import Jobs from "./Pages/Locals/Jobs";
-import LocalsFullView from "./Pages/LocalsFullViewPage";
-import SecondMainLayout from "./Layouts/SecondMainLayout";
-import PreferencesPages from "./Pages/Preferences";
-import MobileLayout from "./Layouts/MobileLayout";
-import HomePageMobile from "./Pages/HomePageMobile";
+} from 'react-router-dom';
+import MainLayout from './Layouts/MainLayout';
+import SignIn from './Auth/SignIn';
+import Signup from './Auth/SignUp';
+import { Provider } from 'react-redux';
+import store from './Redux/store';
+import Main from './Pages/Main';
+import ProtectedRoute from './Protection/ProtectedRoute/index';
+import CreateLocal from './Pages/CreateLocal';
+import Local from './Pages/Local';
+import Items from './Pages/Items';
+import HomePage from './Pages/HomePage';
+import OwnerRegisterPage from './Pages/OwnerRegisterPage';
+import UserRegisterPage from './Pages/UserRegisterPage';
+import IsOwner from './Protection/IsOwner';
+import HomePageNewOwner from './Pages/HomePageNewOwner';
+import Locals from './Pages/Locals';
+import Menu from './Pages/Menu';
+import LocalsLayout from './Pages/LocalsLayout';
+import Notifications from './Pages/Notifications';
+import Adresse from './Pages/Adresse';
+import ItemsData from './Components/ItemsData';
+import FoodsPage from './Pages/FoodsPage';
+import FoodPage from './Pages/FoodPage';
+import LocalsPage from './Pages/LocalsPage';
+import Offers from './Pages/Locals/Offers';
+import Story from './Pages/Locals/Story';
+import Team from './Pages/Locals/Team';
+import Contact from './Pages/Locals/Contact';
+import Jobs from './Pages/Locals/Jobs';
+import LocalsFullView from './Pages/LocalsFullViewPage';
+import SecondMainLayout from './Layouts/SecondMainLayout';
+import PreferencesPages from './Pages/Preferences';
+import MobileLayout from './Layouts/MobileLayout';
+import HomePageMobile from './Pages/HomePageMobile';
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
-    <Route baseName="/" path="/" element={<MobileLayout />}>
-      <Route index element={<HomePageMobile />} />
+    <Route baseName="/" path="/" element={<SecondMainLayout />}>
+      <Route index element={<HomePage />} />
       <Route path="owners" element={<OwnerRegisterPage />} />
       <Route path="foodies" element={<UserRegisterPage />} />
       <Route path="foods" element={<FoodsPage />} />
@@ -94,8 +94,7 @@ const Root = createBrowserRouter(
           <ProtectedRoute>
             <LocalsLayout />
           </ProtectedRoute>
-        }
-      >
+        }>
         <Route
           path="/locals/:id/menu"
           element={
@@ -177,8 +176,8 @@ const Root = createBrowserRouter(
           </ProtectedRoute>
         }
       />
-    </Route>
-  )
+    </Route>,
+  ),
 );
 function App() {
   return (
