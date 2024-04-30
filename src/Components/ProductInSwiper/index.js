@@ -301,7 +301,7 @@ const ProductInSwiper = (product) => {
                         color: "#FF00D6",
                       }}
                     >
-                      Info
+                      Info Test
                     </Typography>
                     <IconButton
                       onClick={() => setPressCount(0)}
