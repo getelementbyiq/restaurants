@@ -265,7 +265,6 @@ const ProductInSwiper = (product) => {
                   sx={{
                     display: "flex",
                     mt: "8px",
-                    ml: "8px",
                     maxWidth: "100%",
                     flexWrap: "wrap",
                     mb: "32px",
@@ -275,10 +274,67 @@ const ProductInSwiper = (product) => {
                     visibility: "visible",
                     zIndex: "1",
                     flexDirection: "column",
-                    // border: "1px solid red",
                     gap: "32px",
+                    px: "20px",
+                    pb: "32px",
+                    mx: "8px",
+                    pt: "20px",
+                    borderRadius: "32px",
+                    background: "rgba(225, 225, 225, 0.3)",
+                    backdropFilter: "blur(5.5px)",
                   }}
                 >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      // border: "1px solid white",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: "32px",
+                        fontFamily: "Knewave, system-ui",
+                        fontWeight: "400",
+                        fontStyle: "normal",
+                        lineHeight: "90%",
+                        color: "#FF00D6",
+                      }}
+                    >
+                      Info
+                    </Typography>
+                    <IconButton
+                      onClick={() => setPressCount(0)}
+                      sx={{
+                        width: "44px",
+                        height: "44px",
+                        backgroundColor: "rgba(225, 225, 225, 0.3)",
+                      }}
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8.22656 15.7732L15.7732 8.22656"
+                          stroke="white"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M15.7732 15.7732L8.22656 8.22656"
+                          stroke="white"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </IconButton>
+                  </Box>
                   <Box
                     sx={{
                       disply: "flex",
@@ -346,9 +402,6 @@ const ProductInSwiper = (product) => {
                   ml: "16px",
                 }}
               >
-                <IconButton onClick={() => setPressCount(0)}>
-                  <Typography sx={{ color: "#fff" }}>X</Typography>
-                </IconButton>
                 <Box
                   sx={{
                     // border: "1px solid red",
