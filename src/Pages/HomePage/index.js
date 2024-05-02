@@ -105,7 +105,7 @@ const HomePage = (props) => {
           </Typography>
         </Box>
       </Box>
-      {/* {restaurantData && <ProductSwiper />} */}
+      {/* // {isMobile && restaurantData && <ProductSwiper />} */}
       <MainProductsList />
       {/* <AlertDialog product={product} /> */}
       {/* <MainContent /> */}
