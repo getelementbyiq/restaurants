@@ -1,14 +1,22 @@
 import {
   Box,
   Button,
+  FormControl,
   IconButton,
   Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  Slider,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setProductField } from "../../Redux/slices/createProductSlice";
+import {
+  setOfferTime,
+  setProductField,
+} from "../../Redux/slices/createProductSlice";
 import ItemsData from "../ItemsData";
 import {
   addDoc,
@@ -24,6 +32,10 @@ import Add from "../../assets/icons/add-black.svg";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useParams } from "react-router-dom";
 import { setFetchedProducts } from "../../Redux/slices/fetchProducts";
+
+function valuetext(value) {
+  return `${value}°C`;
+}
 
 const CreateProduct = (props) => {
   const dispatch = useDispatch();
@@ -254,6 +266,37 @@ const CreateProduct = (props) => {
   const firstThreeChars = fileName?.substring(0, 3); // Die ersten 3 Zeichen des Dateinamens
   const lastFourChars = fileName?.slice(-4);
 
+  const [from, setFrom] = React.useState("");
+  const [to, setTo] = React.useState("");
+
+  console.log("valueage", from);
+
+  const handleChangeFrom = (event) => {
+    setFrom(event.target.value);
+  };
+  const handleChangeTo = (event) => {
+    setTo(event.target.value);
+  };
+
+  useEffect(() => {
+    dispatch(setOfferTime({ timeType: "default", timeValue: [from, to] }));
+  }, [from, to, dispatch]);
+
+  const [nav, setNav] = useState(false);
+  const [prodTag, setProdTag] = useState("");
+  const nextBtn = () => {
+    setNav((open) => !open);
+  };
+
+  const chooseTag = (txt) => {
+    setProdTag(txt);
+  };
+
+  console.log("prodTag", prodTag);
+  useEffect(() => {
+    dispatch(setProductField({ field: "tag", value: prodTag }));
+  }, [prodTag, dispatch]);
+
   return (
     <Box
       sx={{
@@ -266,115 +309,292 @@ const CreateProduct = (props) => {
         background: "#FAFAFA",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          flexGrow: "1",
-          // border: "1px solid red",
-          gap: "8px",
-        }}
-      >
-        <TextField
-          name="name"
-          fullWidth
-          size="small"
-          placeholder={product.name ? `${product.name}` : "Name of product"}
-          sx={{ fontSize: "16px" }}
-          InputLabelProps={{
-            style: { color: "#444444" },
-          }}
-          InputProps={{
-            style: {
-              borderRadius: "32px",
-              background: "#fff",
-              fontSize: "16px",
-              background: "#fff",
-              // backdropFilter: "blur(7.5px)",
-              color: "#444444",
-            },
-          }}
-          onChange={(e) => handleFieldChange("name", e.target.value)}
-        />
-        <TextField
-          name="price"
-          fullWidth
-          size="small"
-          placeholder={product.price ? `${product.price}` : "Price"}
-          sx={{ fontSize: "16px" }}
-          InputLabelProps={{
-            style: { color: "#444444" },
-          }}
-          InputProps={{
-            style: {
-              borderRadius: "32px",
-              background: "#fff",
-              fontSize: "16px",
-              background: "#fff",
-              // backdropFilter: "blur(7.5px)",
-              color: "#444444",
-            },
-          }}
-          onChange={(e) => handleFieldChange("price", e.target.value)}
-        />
-        <TextField
-          name="description"
-          fullWidth
-          multiline
-          rows={4}
-          size="small"
-          placeholder={
-            product.description ? `${product.description}` : "Description"
-          }
-          sx={{ fontSize: "16px" }}
-          InputLabelProps={{
-            style: { color: "#444444" },
-          }}
-          InputProps={{
-            style: {
-              borderRadius: "16px",
-              background: "#fff",
-              fontSize: "16px",
-              background: "#fff",
-              // backdropFilter: "blur(7.5px)",
-              color: "#444444",
-            },
-          }}
-          onChange={(e) => handleFieldChange("description", e.target.value)}
-        />
-
+      {!nav && (
         <Box
           sx={{
             display: "flex",
-            width: "100%",
-            border: "1px solid rgba(0,0,0,0.2)",
-            height: "40px",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "40px",
+            flexDirection: "column",
+            flexGrow: "1",
+            // border: "1px solid red",
+            gap: "8px",
+            pt: "16px",
           }}
         >
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg, .gif"
-            onChange={handleFileSelect}
-            style={{ display: "none", cursor: "pointer" }}
-            id="productBackground"
+          <Box
+            sx={{
+              display: "flex",
+              gap: "8px",
+              // border: "1px solid red",
+              justifyContent: "center",
+              mb: "16px",
+              cursor: "pointer",
+            }}
+          >
+            <Box
+              onClick={() => chooseTag("food")}
+              sx={{
+                px: "16px",
+                py: "2px",
+                borderRadius: "32px",
+                backgroundColor: prodTag === "food" ? "#FFBAF4" : "#fff",
+              }}
+            >
+              <Typography sx={{ fontFamily: "Quicksand", fontSize: "12px" }}>
+                Food
+              </Typography>
+            </Box>
+            <Box
+              onClick={() => chooseTag("drink")}
+              sx={{
+                px: "16px",
+                py: "2px",
+                borderRadius: "32px",
+                backgroundColor: prodTag === "drink" ? "#FFBAF4" : "#fff",
+                cursor: "pointer",
+              }}
+            >
+              <Typography sx={{ fontFamily: "Quicksand", fontSize: "12px" }}>
+                Drink
+              </Typography>
+            </Box>
+            <Box
+              onClick={() => chooseTag("event")}
+              sx={{
+                px: "16px",
+                py: "2px",
+                borderRadius: "32px",
+                backgroundColor: prodTag === "event" ? "#FFBAF4" : "#fff",
+                cursor: "pointer",
+              }}
+            >
+              <Typography sx={{ fontFamily: "Quicksand", fontSize: "12px" }}>
+                Event
+              </Typography>
+            </Box>
+          </Box>
+          <TextField
+            name="name"
+            fullWidth
+            size="small"
+            placeholder={product.name ? `${product.name}` : "Name of product"}
+            sx={{ fontSize: "16px" }}
+            InputLabelProps={{
+              style: { color: "#444444" },
+            }}
+            InputProps={{
+              style: {
+                borderRadius: "32px",
+                background: "#fff",
+                fontSize: "16px",
+                background: "#fff",
+                // backdropFilter: "blur(7.5px)",
+                color: "#444444",
+              },
+            }}
+            onChange={(e) => handleFieldChange("name", e.target.value)}
           />
-          <label htmlFor="productBackground">
-            {selectedFile ? (
-              <p>
-                {firstThreeChars}...{lastFourChars}
-              </p>
-            ) : (
-              <p style={{ color: "rgba(0,0,0,0.3)" }}>Select your Background</p>
-            )}
-          </label>
-        </Box>
+          <TextField
+            name="price"
+            fullWidth
+            size="small"
+            placeholder={product.price ? `${product.price}` : "Price"}
+            sx={{ fontSize: "16px" }}
+            InputLabelProps={{
+              style: { color: "#444444" },
+            }}
+            InputProps={{
+              style: {
+                borderRadius: "32px",
+                background: "#fff",
+                fontSize: "16px",
+                background: "#fff",
+                // backdropFilter: "blur(7.5px)",
+                color: "#444444",
+              },
+            }}
+            onChange={(e) => handleFieldChange("price", e.target.value)}
+          />
+          <TextField
+            name="description"
+            fullWidth
+            multiline
+            rows={3}
+            size="small"
+            placeholder={
+              product.description ? `${product.description}` : "Description"
+            }
+            sx={{ fontSize: "16px" }}
+            InputLabelProps={{
+              style: { color: "#444444" },
+            }}
+            InputProps={{
+              style: {
+                borderRadius: "16px",
+                background: "#fff",
+                fontSize: "16px",
+                background: "#fff",
+                // backdropFilter: "blur(7.5px)",
+                color: "#444444",
+              },
+            }}
+            onChange={(e) => handleFieldChange("description", e.target.value)}
+          />
 
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Box sx={{ display: "flex" }}>
-            {/* <Input
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              border: "1px solid rgba(0,0,0,0.2)",
+              height: "40px",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "40px",
+            }}
+          >
+            <input
+              type="file"
+              accept=".png, .jpg, .jpeg, .gif"
+              onChange={handleFileSelect}
+              style={{ display: "none", cursor: "pointer" }}
+              id="productBackground"
+            />
+            <label htmlFor="productBackground">
+              {selectedFile ? (
+                <p>
+                  {firstThreeChars}...{lastFourChars}
+                </p>
+              ) : (
+                <p style={{ color: "rgba(0,0,0,0.3)" }}>
+                  Select your Background
+                </p>
+              )}
+            </label>
+          </Box>
+          <Box sx={{ display: "flex", flexGrow: "1" }}></Box>
+          <Button
+            onClick={nextBtn}
+            variant="contained"
+            fullWidth
+            type="submit"
+            sx={{
+              py: "16px",
+              borderRadius: "32px",
+              backgroundColor: "#F4F4F4",
+              color: "rgba(0,0,0,0.4)",
+              mb: "16px",
+              "&&:hover": {
+                backgroundColor: "#000",
+                color: "#EBFF00",
+              },
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "16px",
+                fontFamily: "Knewave, system-ui",
+                fontWeight: "400",
+                fontStyle: "normal",
+                lineHeight: "90%",
+              }}
+            >
+              Next
+            </Typography>
+          </Button>
+        </Box>
+      )}
+      {nav && (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flexGrow: "1",
+            // border: "1px solid blue",
+            gap: "8px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              gap: "8px",
+              my: "16px",
+            }}
+          >
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Von</InputLabel>
+              <Select
+                size="small"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={from}
+                label="Von"
+                onChange={handleChangeFrom}
+              >
+                <MenuItem value={"01:00"}>01:00</MenuItem>
+                <MenuItem value={"02:00"}>02:00</MenuItem>
+                <MenuItem value={"03:00"}>03:00</MenuItem>
+                <MenuItem value={"04:00"}>04:00</MenuItem>
+                <MenuItem value={"05:00"}>05:00</MenuItem>
+                <MenuItem value={"06:00"}>06:00</MenuItem>
+                <MenuItem value={"07:00"}>07:00</MenuItem>
+                <MenuItem value={"08:00"}>08:00</MenuItem>
+                <MenuItem value={"09:00"}>09:00</MenuItem>
+                <MenuItem value={"10:00"}>10:00</MenuItem>
+                <MenuItem value={"11:00"}>11:00</MenuItem>
+                <MenuItem value={"12:00"}>12:00</MenuItem>
+                <MenuItem value={"13:00"}>13:00</MenuItem>
+                <MenuItem value={"14:00"}>14:00</MenuItem>
+                <MenuItem value={"15:00"}>15:00</MenuItem>
+                <MenuItem value={"16:00"}>16:00</MenuItem>
+                <MenuItem value={"17:00"}>17:00</MenuItem>
+                <MenuItem value={"18:00"}>18:00</MenuItem>
+                <MenuItem value={"19:00"}>19:00</MenuItem>
+                <MenuItem value={"20:00"}>20:00</MenuItem>
+                <MenuItem value={"21:00"}>21:00</MenuItem>
+                <MenuItem value={"22:00"}>22:00</MenuItem>
+                <MenuItem value={"23:00"}>23:00</MenuItem>
+                <MenuItem value={"24:00"}>24:00</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Bis</InputLabel>
+              <Select
+                size="small"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={to}
+                label="Bis"
+                onChange={handleChangeTo}
+              >
+                <MenuItem value={"01:00"}>01:00</MenuItem>
+                <MenuItem value={"02:00"}>02:00</MenuItem>
+                <MenuItem value={"03:00"}>03:00</MenuItem>
+                <MenuItem value={"04:00"}>04:00</MenuItem>
+                <MenuItem value={"05:00"}>05:00</MenuItem>
+                <MenuItem value={"06:00"}>06:00</MenuItem>
+                <MenuItem value={"07:00"}>07:00</MenuItem>
+                <MenuItem value={"08:00"}>08:00</MenuItem>
+                <MenuItem value={"09:00"}>09:00</MenuItem>
+                <MenuItem value={"10:00"}>10:00</MenuItem>
+                <MenuItem value={"11:00"}>11:00</MenuItem>
+                <MenuItem value={"12:00"}>12:00</MenuItem>
+                <MenuItem value={"13:00"}>13:00</MenuItem>
+                <MenuItem value={"14:00"}>14:00</MenuItem>
+                <MenuItem value={"15:00"}>15:00</MenuItem>
+                <MenuItem value={"16:00"}>16:00</MenuItem>
+                <MenuItem value={"17:00"}>17:00</MenuItem>
+                <MenuItem value={"18:00"}>18:00</MenuItem>
+                <MenuItem value={"19:00"}>19:00</MenuItem>
+                <MenuItem value={"20:00"}>20:00</MenuItem>
+                <MenuItem value={"21:00"}>21:00</MenuItem>
+                <MenuItem value={"22:00"}>22:00</MenuItem>
+                <MenuItem value={"23:00"}>23:00</MenuItem>
+                <MenuItem value={"24:00"}>24:00</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box sx={{ display: "flex" }}>
+              {/* <Input
               fullWidth
               sx={{ color: "#363636" }}
               placeholder="Items"
@@ -385,95 +605,127 @@ const CreateProduct = (props) => {
               }}
               list="itemSuggestions"
             /> */}
-            <TextField
-              name="Items"
-              fullWidth
-              inputRef={itemsInputRef}
-              size="small"
-              list="itemSuggestions"
-              placeholder={"Items"}
-              sx={{ fontSize: "16px" }}
-              InputLabelProps={{
-                style: { color: "#444444" },
-              }}
-              InputProps={{
-                style: {
-                  borderRadius: "32px",
-                  background: "#fff",
-                  fontSize: "16px",
-                  background: "#fff",
-                  // backdropFilter: "blur(7.5px)",
-                  color: "#444444",
-                },
-              }}
-              onChange={(e) => {
-                setItemsValue(e.target.value);
-                setSearchValue(e.target.value);
-              }}
-            />
+              <TextField
+                name="Items"
+                fullWidth
+                inputRef={itemsInputRef}
+                size="small"
+                list="itemSuggestions"
+                placeholder={"Items"}
+                sx={{ fontSize: "16px" }}
+                InputLabelProps={{
+                  style: { color: "#444444" },
+                }}
+                InputProps={{
+                  style: {
+                    borderRadius: "32px",
+                    background: "#fff",
+                    fontSize: "16px",
+                    // backdropFilter: "blur(7.5px)",
+                    color: "#444444",
+                  },
+                }}
+                onChange={(e) => {
+                  setItemsValue(e.target.value);
+                  setSearchValue(e.target.value);
+                }}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <IconButton onClick={handleAddItem}>
+                  <img
+                    src={Add}
+                    alt="Add"
+                    style={{
+                      transition: "150ms",
+                    }}
+                  />
+                </IconButton>
+              </Box>
+            </Box>
+
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                flexGrow: "1",
+                overflow: "hidden",
+                maxHeight: "45vh",
+                borderRadius: "16px",
+                // border: "1px solid red",
+                mt: "4px",
               }}
             >
-              <IconButton onClick={handleAddItem}>
-                <img
-                  src={Add}
-                  alt="Add"
-                  style={{
-                    transition: "150ms",
-                  }}
-                />
-              </IconButton>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  overflowY: "auto",
+                  maxWidth: "250px",
+                  // flexGrow: 1,
+                  gap: "4px",
+                  overflow: "auto",
+                }}
+              >
+                {searchResults &&
+                  searchResults.map((item, index) => (
+                    <Box sx={{ display: "block" }}>
+                      <Box
+                        sx={{
+                          px: "8px",
+                          py: "4px",
+                          borderRadius: "32px",
+                          background: "#363636",
+                          color: "#fff",
+                        }}
+                        key={index}
+                        onClick={() => handleItemsSelect(item)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {item}
+                      </Box>
+                    </Box>
+                  ))}
+              </Box>
             </Box>
           </Box>
-          <Box
+          <Box sx={{ display: "flex", flexGrow: "1" }}></Box>
+
+          <Button
+            onClick={nextBtn}
+            variant="contained"
+            fullWidth
+            type="submit"
             sx={{
-              display: "flex",
-              flexGrow: "1",
-              overflow: "hidden",
-              maxHeight: "120px",
-              borderRadius: "16px",
-              // border: "1px solid red",
-              mt: "4px",
+              py: "16px",
+              borderRadius: "32px",
+              backgroundColor: "#F4F4F4",
+              color: "rgba(0,0,0,0.4)",
+              mb: "16px",
+              "&&:hover": {
+                backgroundColor: "#000",
+                color: "#EBFF00",
+              },
             }}
           >
-            <Box
+            <Typography
               sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                overflowY: "auto",
-                maxWidth: "250px",
-                // flexGrow: 1,
-                gap: "4px",
-                overflow: "auto",
+                fontSize: "16px",
+                fontFamily: "Knewave, system-ui",
+                fontWeight: "400",
+                fontStyle: "normal",
+                lineHeight: "90%",
               }}
             >
-              {searchResults &&
-                searchResults.map((item, index) => (
-                  <Box sx={{ display: "block" }}>
-                    <Box
-                      sx={{
-                        px: "8px",
-                        py: "4px",
-                        borderRadius: "32px",
-                        background: "#363636",
-                        color: "#fff",
-                      }}
-                      key={index}
-                      onClick={() => handleItemsSelect(item)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {item}
-                    </Box>
-                  </Box>
-                ))}
-            </Box>
-          </Box>
+              Back
+            </Typography>
+          </Button>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 };

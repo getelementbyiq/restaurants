@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import Secondheader from "../../Components/Header/Secondheader";
 import TimeLine from "../../Components/TimeLine";
@@ -9,7 +9,7 @@ import GipoBanner from "../../Components/Banners/GipoBanner";
 import { UserAuth } from "../../Auth/Auth";
 import useMobileCheck from "../../Components/MobileCheck";
 
-const SecondMainLayout = (props) => {
+const MobileLayout = (props) => {
   const { user } = UserAuth();
   const id = useParams();
   const restaurantId = id.locals;
@@ -37,23 +37,50 @@ const SecondMainLayout = (props) => {
         display: "flex",
         flexDirection: "column",
         height: "100vh",
+        position: "relative",
       }}
     >
-      {location.pathname === "/" && <GipoBanner />}
-
-      {scrolled || location.pathname !== "/" ? <Secondheader /> : null}
-      {/* <Secondheader /> */}
-      <MainFilter />
+      <Outlet />
       <Box
-        sx={{ display: "flex", px: isMobile ? "0px" : "60px", flexGrow: "1" }}
+        sx={{
+          display: "flex",
+          height: "60px",
+          backgroundColor: "rgba(0,0,0,0.4)",
+          position: "absolute",
+          bottom: "0",
+          laft: "0",
+          zIndex: "3000",
+          width: "100vw",
+          backdropFilter: "blur(3.5px)",
+        }}
       >
-        {/* <TimeLine /> */}
-        <Outlet />
+        <Grid>
+          <Grid
+            item
+            sx={{ width: "25%", border: "1px solid red", height: "100%" }}
+          ></Grid>
+          <Grid
+            item
+            sx={{ width: "25%", border: "1px solid red", height: "100%" }}
+          ></Grid>
+          <Grid
+            item
+            sx={{ width: "25%", border: "1px solid red", height: "100%" }}
+          ></Grid>
+          <Grid
+            item
+            sx={{ width: "25%", border: "1px solid red", height: "100%" }}
+          ></Grid>
+          <Grid
+            item
+            sx={{ width: "25%", border: "1px solid red", height: "100%" }}
+          ></Grid>
+        </Grid>
       </Box>
     </Box>
   );
 };
 
-SecondMainLayout.propTypes = {};
+MobileLayout.propTypes = {};
 
-export default SecondMainLayout;
+export default MobileLayout;

@@ -8,13 +8,15 @@ import MainFilter from "../../Components/MainFilter";
 import GipoBanner from "../../Components/Banners/GipoBanner";
 import { UserAuth } from "../../Auth/Auth";
 import useMobileCheck from "../../Components/MobileCheck";
+import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain";
 
-const MobileLayout = (props) => {
+const SecondMainLayout = (props) => {
   const { user } = UserAuth();
   const id = useParams();
   const restaurantId = id.locals;
   const location = useLocation();
   const isMobile = useMobileCheck();
+  const [secondMain, setSecondMain] = useState(false);
 
   console.log("location", location);
   const [scrolled, setScrolled] = useState(false);
@@ -30,20 +32,31 @@ const MobileLayout = (props) => {
   window.addEventListener("scroll", handleScroll);
 
   console.log("user from mainlayout", user);
+  useEffect(() => {
+    location.pathname.includes("second") && setSecondMain((state) => !state);
+  }, [location]);
 
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        flexGrow: "1",
       }}
     >
-      <Outlet />
+      <Secondheader />
+      {location.pathname === "/" && <GipoBanner />}
+
+      <Box
+        sx={{ display: "flex", px: isMobile ? "0px" : "60px", flexGrow: "1" }}
+      >
+        {/* <TimeLine /> */}
+        <Outlet />
+      </Box>
     </Box>
   );
 };
 
-MobileLayout.propTypes = {};
+SecondMainLayout.propTypes = {};
 
-export default MobileLayout;
+export default SecondMainLayout;

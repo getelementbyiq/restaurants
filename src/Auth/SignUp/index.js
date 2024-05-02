@@ -173,14 +173,14 @@ const SignUp = () => {
               InputProps={{ style: { borderRadius: "8px" } }}
             />
           </Box> */}
-          {/* <Box>
+          <Box>
             <Typography>Are you Restaurant Owner?</Typography>
             <Checkbox
               checked={userType}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
             />
-          </Box> */}
+          </Box>
           <Box>
             <Button
               variant="contained"

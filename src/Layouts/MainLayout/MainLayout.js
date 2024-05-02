@@ -1,23 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Box, Collapse, IconButton, Toolbar, Typography } from "@mui/material";
-import Footer from "../../Components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import "./index.css";
-import SideBar from "../../Components/Header/SideBar";
-import MainNavigation from "../../Components/MainNavigation";
-import RightBar from "../../Components/Header/RightBar";
+
 import { UserAuth } from "../../Auth/Auth";
 import { getUserById } from "../../Redux/thunks/getUserById";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
 import { setFetchedRestaurants } from "../../Redux/slices/restaurantsSlice";
 import { setRestaurantField } from "../../Redux/slices/createLocalSlice";
-import MainQuestContent from "../../Components/MainQuestContent";
-import { Scrollbar } from "react-scrollbars-custom";
-import { selectProductRef } from "../../Redux/slices/productRefSlice";
-import SideBarLayout from "../../Components/Header/SideBarLayout";
-import AuthComponent from "../../Components/AuthComponent";
+
+import RestaurantHeaderFromOwner from "../../Pages/Locals/RestaurantHeaderFromOwner";
+import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain";
 
 const MainLayout = (props) => {
   const navigate = useNavigate();
@@ -122,27 +117,8 @@ const MainLayout = (props) => {
   const createRestaurantData = useSelector(
     (state) => state.createRestaurant.restaurantData
   );
-  const blob = new Blob([createRestaurantData.background]);
-  const backgroundURL = show ? URL.createObjectURL(blob) : "";
-  const isLocalIdPath = location.pathname.includes("/locals/");
-
-  const clickLocal = (id) => {
-    navigate(`locals/${id}`);
-  };
-
-  const [requestCount, setRequestCount] = useState(0);
-
-  const fetchData = async () => {
-    try {
-      // Inkrementiere den Zähler vor dem Senden der Anfrage
-      setRequestCount(requestCount + 1);
-      const response = await fetch("API_ENDPOINT");
-      const data = await response.json();
-      // Verarbeite die Daten...
-    } catch (error) {
-      // Fehlerbehandlung...
-    }
-  };
+  const restaurantOfUser = useSelector((state) => state.restaurants.data);
+  const toRenderRestaurant = restaurantOfUser[0];
 
   return (
     <Box
@@ -150,70 +126,28 @@ const MainLayout = (props) => {
         width: "100%",
         height: "100vh",
         display: "flex",
-        // justifyContent: "space-between",
-        // gap: "16px",
+        gap: "16px",
         flexDirection: "column",
-        backgroundImage: `url(${restaurantData.restaurantData.background})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        // justifyContent: "space-between",
+        // backgroundImage: `url(${restaurantData.restaurantData.background})`,
+        // backgroundRepeat: "no-repeat",
+        // backgroundSize: "cover",
+        // backgroundPosition: "center",
       }}
     >
+      <RestaurantHeaderFromOwner />
+      <RestaurantBannerMain BG={toRenderRestaurant?.background} />
       <Box
         sx={{
           display: "flex",
-          // border: "1px solid red",
-          position: "relative",
-          transition: "150ms",
+          flexDirection: "column",
+          border: "2px solid red",
+          flexGrow: 1,
+          gap: "8px",
         }}
       >
-        {!location.pathname.includes(`/${localsId.locals}`) &&
-          !location.pathname.includes(`/${localsId.id}`) && (
-            <MainQuestContent />
-          )}
+        <Outlet />
       </Box>
-      <Box
-        sx={{
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "space-between",
-          gap: "16px",
-        }}
-      >
-        <SideBarLayout />
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            // border: "1px solid red",
-            flexGrow: 1,
-            gap: "8px",
-          }}
-        >
-          {location.pathname !== "/addlocation" && !isLocalIdPath && (
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Box></Box>
-              <AuthComponent />
-            </Box>
-          )}
-
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              width: "100%",
-              // border: "1px solid red",
-              height: "100%",
-            }}
-          >
-            <Outlet />
-          </Box>
-        </Box>
-        <RightBar />
-      </Box>
-
-      {/* <Footer /> */}
     </Box>
   );
 };

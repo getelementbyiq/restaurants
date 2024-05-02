@@ -15,15 +15,24 @@ const imagesRef = ref(storage, "restaurants");
 
 const initialState = {
   productData: {
-    name: "",
-    price: "",
-    description: "",
-    comments: "",
-    likes: "",
+    name: null,
+    price: null,
+    description: null,
+    comments: null,
+    likes: null,
     background: null,
     createdAt,
     restaurantsId: null,
     items: {},
+    offerTime: {
+      default: null,
+      collected: null,
+    },
+    menus: {
+      default: null,
+      deals: null,
+    },
+    tag: null,
   },
 };
 
@@ -48,12 +57,25 @@ const createProductSlice = createSlice({
         delete state.productData.items[itemsName];
       }
     },
+    setOfferTime: (state, action) => {
+      const { timeType, timeValue } = action.payload;
+
+      // Überprüfen, ob der Zeittyp gültig ist und dann den Wert setzen
+      if (timeType === "default" || timeType === "collected") {
+        state.productData.offerTime[timeType] = timeValue;
+      }
+    },
 
     resetCreateProduct: (state) => initialState,
   },
 });
 
-export const { setProductField, setItem, deleteItem, resetCreateProduct } =
-  createProductSlice.actions;
+export const {
+  setProductField,
+  setItem,
+  deleteItem,
+  resetCreateProduct,
+  setOfferTime,
+} = createProductSlice.actions;
 
 export default createProductSlice.reducer;

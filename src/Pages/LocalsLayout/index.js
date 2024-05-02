@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { Avatar, Box, Typography } from "@mui/material";
 import LocalHeader from "../../Components/LocalHeader";
 import CreatePost from "../Locals/CreatePost";
+import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain";
+import RestaurantHeaderFromOwner from "../Locals/RestaurantHeaderFromOwner";
 
 const LocalsLayout = (props) => {
   const location = useLocation();
@@ -16,20 +18,30 @@ const LocalsLayout = (props) => {
       (restaurant) => restaurant.id === id
     );
   }
+
+  const BG = restaurantOfUser.map((restaurant) => restaurant.background);
   // console.log("id, location", id, location.pathname);
 
   return (
     <Box
       sx={{
         display: "flex",
-        // border: "1px solid red",
+        border: "1px solid blue",
         flexGrow: "1",
         gap: "16px",
         flexDirection: "column",
-        pt: "8px",
       }}
     >
-      {`/locals/${id}` === location.pathname && <CreatePost />}
+      {!location.pathname.includes("menu") ||
+        (!location.pathname.includes("products") && (
+          <RestaurantBannerMain BG={BG} />
+        ))}
+      {location.pathname.includes("menu") ||
+        (location.pathname.includes("products") && (
+          <RestaurantHeaderFromOwner />
+        ))}
+
+      {/* {`/locals/${id}` === location.pathname && <CreatePost />} */}
 
       <Outlet />
     </Box>

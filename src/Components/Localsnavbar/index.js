@@ -39,7 +39,7 @@ const LocalsNavbar = (data) => {
         justifyContent: "center",
       }}
     >
-      <Box
+      {/* <Box
         onClick={() => goTo("home")}
         sx={{
           px: "8px",
@@ -56,7 +56,7 @@ const LocalsNavbar = (data) => {
         }}
       >
         <Typography>{data.data.name}</Typography>
-      </Box>
+      </Box> */}
       <Box
         onClick={() => goTo("story")}
         sx={{

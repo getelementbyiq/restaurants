@@ -30,6 +30,7 @@ import globalScrollStateReducer from "./slices/globalScrollState";
 import productFullViewReducer from "./slices/productFullView";
 import restaurantDataFromMainReducer from "./slices/restaurantDataFromMain";
 import swiperIndexReducer from "./slices/swiperIndex";
+import fetchUserSlice from "./immigration/user/userSlice";
 
 const store = configureStore(
   {
@@ -66,6 +67,7 @@ const store = configureStore(
       productFullView: productFullViewReducer,
       restaurantDataFromMain: restaurantDataFromMainReducer,
       swiperIndex: swiperIndexReducer,
+      fetchUser: fetchUserSlice,
     },
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

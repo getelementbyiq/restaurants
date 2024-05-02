@@ -62,6 +62,9 @@ const ProductPreview = (props) => {
       background,
       createdAt,
       items,
+      offerTime,
+      menus,
+      tag,
     } = product;
 
     const backgroundRef = ref(imagesRef, `${name}_background.jpg`);
@@ -84,14 +87,7 @@ const ProductPreview = (props) => {
       //   });
       //   return; // Die Funktion hier beenden
       // }
-      const productCollectionRef = collection(
-        db,
-        "restaurants",
-        restaurantsId,
-        categoryType,
-        selectedCategoryId,
-        "products"
-      );
+      const productCollectionRef = collection(db, "products");
 
       await addDoc(productCollectionRef, {
         name,
@@ -103,6 +99,9 @@ const ProductPreview = (props) => {
         createdAt,
         restaurantsId,
         items,
+        offerTime,
+        menus,
+        tag,
         categoryType,
         selectedCategoryId,
         // Weitere Produktinformationen hier hinzufügen...
@@ -145,7 +144,7 @@ const ProductPreview = (props) => {
 
   const [isHovered, setHovered] = useState(false);
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
       <Snackbar
         open={openStatus.open}
         autoHideDuration={6000}
@@ -171,8 +170,8 @@ const ProductPreview = (props) => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover", // Du kannst die Hintergrundgröße anpassen
           backgroundPosition: "center",
-          width: "244px",
-          height: "384px",
+          // width: "244px",
+          // height: "384px",
           borderRadius: "32px",
           boxShadow: product.background
             ? "0px 0px 300px 0px #000 inset"

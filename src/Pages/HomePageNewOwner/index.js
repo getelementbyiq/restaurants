@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const HomePageNewOwner = (props) => {
-  return <div>HomePageNewOwner</div>;
+  return <div>Homepage test</div>;
 };
 
 HomePageNewOwner.propTypes = {};

@@ -19,10 +19,17 @@ import Add from "../../assets/icons/add.svg";
 import { setOpenSecond } from "../../Redux/functions/slices/OpenSecond";
 import { setIsCreated } from "../../Redux/functions/slices/RestaurantIsCreated";
 import { setHaveRestaurant } from "../../Redux/functions/slices/haveRestaurant";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { db } from "../../firebase";
 import { Close } from "@mui/icons-material";
+import { setRestaurantDataFromMain } from "../../Redux/slices/restaurantDataFromMain";
 
 const Art = (props) => {
   const dispatch = useDispatch();
@@ -143,7 +150,7 @@ const Art = (props) => {
       const backgroundUrl = await getDownloadURL(backgroundRef);
       const restaurantCollectionRef = collection(db, "restaurants");
 
-      await addDoc(restaurantCollectionRef, {
+      const restaurantDocRef = await addDoc(restaurantCollectionRef, {
         name,
         logo: logoUrl,
         background: backgroundUrl,
@@ -155,6 +162,13 @@ const Art = (props) => {
         followers,
         createdAt,
       });
+      // const uid = userId;
+      // const userOwnerRef = doc(collection(db, "usersOwner"), uid);
+      // await updateDoc(userOwnerRef, {
+      //   ownRestaurants: arrayUnion(restaurantDocRef.id),
+      // });
+
+      // restaurantDocRef && dispatch(setRestaurantDataFromMain(restaurantDocRef));
       dispatch(setIsCreated(!isCreated));
 
       dispatch(setHaveRestaurant());

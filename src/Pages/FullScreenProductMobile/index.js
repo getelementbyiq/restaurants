@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import "./styles.css";
-import { Pagination } from "swiper/modules";
+import { Pagination, Mousewheel } from "swiper/modules";
 import { Avatar, Box, Button, IconButton, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
@@ -60,10 +60,11 @@ const ProductSwiper = () => {
   return (
     <Swiper
       direction={"vertical"}
+      mousewheel={true}
       pagination={{
         clickable: true,
       }}
-      modules={[Pagination]}
+      modules={[Mousewheel, Pagination]}
       className="mySwiper"
       onSlideChange={handleSlideChange}
 

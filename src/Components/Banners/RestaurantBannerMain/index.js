@@ -10,7 +10,6 @@ import {
   InputLabel,
   Typography,
 } from "@mui/material";
-import BG from "../../../assets/img/Copy-of-Diet.png";
 // import BGHover from "../../../assets/img/Copy-of-Diet.png";
 import Secondheader from "../../Header/Secondheader";
 import { color } from "framer-motion";
@@ -25,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../../../Auth/Auth";
 import useDeviceType from "../../MediaQueries";
 import useMobileCheck from "../../MobileCheck";
+import CreatePost from "../../../Pages/Locals/CreatePost";
 
 const textArray = [
   "your taste",
@@ -33,7 +33,8 @@ const textArray = [
   "your lovely drinks",
 ];
 
-const GipoBanner = (props) => {
+const RestaurantBannerMain = (props) => {
+  const { BG } = props;
   const { user, logout } = UserAuth();
   const devicetype = useDeviceType();
   const isMobile = useMobileCheck();
@@ -80,9 +81,10 @@ const GipoBanner = (props) => {
         transition: isMobile
           ? "height 100ms ease, opacity 120ms ease"
           : "height 250ms ease, opacity 300ms ease",
+        alignItems: "center",
         justifyContent: "center",
-        // border: "1px solid blue",
-        flexGrow: "1",
+        border: "1px solid blue",
+        // flexGrow: "1",
       }}
     >
       <Box
@@ -106,7 +108,7 @@ const GipoBanner = (props) => {
             top: "0",
             left: "0",
             backgroundColor: "rgba(0,0,0,0.5)",
-            zIndex: "1600",
+            zIndex: "1200",
             clipPath: isMobile
               ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
               : "polygon(0 0, 100% 0, 100% 88%, 0 100%)",
@@ -120,16 +122,18 @@ const GipoBanner = (props) => {
             position: "relative",
             flexGrow: "1",
             objectFit: "cover",
+            transition: "150ms",
+
             clipPath: isMobile
               ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
               : "polygon(0 0, 100% 0, 100% 88%, 0 100%)",
             height: isMobile ? "100vh" : "85vh",
 
-            backgroundImage: `url(${BG})`,
+            backgroundImage: BG ? `url(${BG})` : null,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            // border: "1px solid green",
+            border: "1px solid green",
           }}
         >
           {/* <img src={BG} alt="" style={{ height: "100%", objectFit: "cover" }} /> */}
@@ -148,171 +152,6 @@ const GipoBanner = (props) => {
             // border: "1px solid blue",
           }}
         >
-          {/* {!isMobile && (
-            <Box
-              sx={{
-                display: "flex",
-                gap: "8px",
-                justifyContent: "space-between",
-                px: "24px",
-                pt: "8px",
-                border: "1px solid yellow",
-                alignItems: "center",
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center", gap: "24px" }}>
-                <Typography
-                  sx={{
-                    fontFamily: "Quicksand",
-                    color: "#fff",
-                  }}
-                >
-                  About us
-                </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: "Quicksand",
-                    color: "#fff",
-                  }}
-                >
-                  AGB
-                </Typography>
-              </Box>
-              <Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: "8px",
-                    alignItems: "center",
-                    // border: "1px solid red",
-                  }}
-                >
-                  {!user && (
-                    <Box sx={{ display: "flex", gap: "24px", px: "16px" }}>
-                      <Typography>Add Restaurant</Typography>
-
-                      <Typography>Investors</Typography>
-                    </Box>
-                  )}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                    }}
-                  >
-                    {!user ? (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                        }}
-                      >
-                        <Button
-                          onClick={() => goTo("signin")}
-                          sx={{
-                            px: "32px",
-                            py: "8px",
-                            borderRadius: "32px",
-                            backgroundColor: "rgba(225,225,225,0.3)",
-                            color: "#fff",
-                            cusor: "pointer",
-                            textTransform: "lowercase",
-                            "&&:hover": {
-                              backgroundColor: "#242424",
-                              color: "#FF00D6",
-                            },
-                          }}
-                        >
-                          <Typography>
-                            <span style={{ textTransform: "uppercase" }}>
-                              S
-                            </span>
-                            ign in
-                          </Typography>
-                        </Button>
-                        <Button
-                          onClick={() => goTo("signup")}
-                          sx={{
-                            px: "32px",
-                            py: "8px",
-                            borderRadius: "32px",
-                            backgroundColor: "#EBFF00",
-                            color: "#000",
-                            cusor: "pointer",
-                            textTransform: "lowercase",
-                            "&&:hover": {
-                              backgroundColor: "#242424",
-                              color: "#EBFF00",
-                            },
-                          }}
-                        >
-                          <Typography>
-                            <span style={{ textTransform: "uppercase" }}>
-                              S
-                            </span>
-                            ign up
-                          </Typography>
-                        </Button>
-                      </Box>
-                    ) : (
-                      <IconButton onClick={logout}>
-                        <Avatar />
-                      </IconButton>
-                    )}
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          )} */}
-
-          {isMobile && (
-            <Box
-              sx={{
-                display: "flex",
-                // border: "1px solid red",
-                // flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "16px",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "Quicksand",
-                  color: "#fff",
-                }}
-              >
-                About us
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "Quicksand",
-                  color: "#fff",
-                }}
-              >
-                AGB
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "Quicksand",
-                  color: "#fff",
-                }}
-              >
-                Investors
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "Quicksand",
-                  color: "#fff",
-                }}
-              >
-                Add Restaurant
-              </Typography>
-            </Box>
-          )}
-
           <Box
             sx={{
               display: "flex",
@@ -324,12 +163,10 @@ const GipoBanner = (props) => {
               pb: "60px",
               alignItems: "center",
               flexDirection: "column",
-              // border: "1px solid red",
+              border: "1px solid red",
             }}
           >
-            <Box
-            //  sx={{ border: "1px solid red" }}
-            >
+            <Box sx={{ border: "1px solid red" }}>
               <svg
                 width="302"
                 height="185"
@@ -417,6 +254,101 @@ const GipoBanner = (props) => {
                   Restaurants, Café's, Bar's
                 </Typography> */}
               </Box>
+              {/* {!isMobile && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "8px",
+                    border: "1px solid white",
+                    py: "4px",
+                    px: "16px",
+                    borderRadius: "32px",
+                    alignItems: "center",
+                    backgroundColor: "rgba(225,225,225,0.50)",
+                    backdropFilter: "blur(15px)",
+                    flexGrow: "1",
+                  }}
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewGrid="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.25 15C11.9779 15 15 11.9779 15 8.25C15 4.52208 11.9779 1.5 8.25 1.5C4.52208 1.5 1.5 4.52208 1.5 8.25C1.5 11.9779 4.52208 15 8.25 15Z"
+                      stroke="white"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M14.1974 15.5171C14.5949 16.7171 15.5024 16.8371 16.1999 15.7871C16.8374 14.8271 16.4174 14.0396 15.2624 14.0396C14.4074 14.0321 13.9274 14.6996 14.1974 15.5171Z"
+                      stroke="white"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+
+                  <InputBase
+                    fullWidth
+                    InputProps={{ InputLabel: { color: "white" } }}
+                    placeholder="Burger, Pasta, Pizza..."
+                    // onFocus={handleInputFocus}
+                    // onBlur={handleInputBlur}
+                  />
+                  <svg
+                    width="18"
+                    height="18"
+                    viewGrid="0 0 18 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16.5 4.875H12"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M4.5 4.875H1.5"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M7.5 7.5C8.94975 7.5 10.125 6.32475 10.125 4.875C10.125 3.42525 8.94975 2.25 7.5 2.25C6.05025 2.25 4.875 3.42525 4.875 4.875C4.875 6.32475 6.05025 7.5 7.5 7.5Z"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M16.5 13.125H13.5"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M6 13.125H1.5"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M10.5 15.75C11.9497 15.75 13.125 14.5747 13.125 13.125C13.125 11.6753 11.9497 10.5 10.5 10.5C9.05025 10.5 7.875 11.6753 7.875 13.125C7.875 14.5747 9.05025 15.75 10.5 15.75Z"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </Box>
+              )} */}
             </Box>
           </Box>
         </Box>
@@ -425,6 +357,6 @@ const GipoBanner = (props) => {
   );
 };
 
-GipoBanner.propTypes = {};
+RestaurantBannerMain.propTypes = {};
 
-export default GipoBanner;
+export default RestaurantBannerMain;

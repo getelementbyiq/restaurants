@@ -21,6 +21,7 @@ import { getUserById } from "../../Redux/thunks/getUserById";
 import Add from "../../assets/icons/add.svg";
 import MyLocals from "./MyLocals";
 import Creator from "./Creator";
+import RestautantDashNavHeader from "./RestautantDashNavHeader";
 
 const SideBarOwner = (props) => {
   const location = useLocation();
@@ -114,7 +115,7 @@ const SideBarOwner = (props) => {
         </Box>
         <Divider sx={{ backgroundColor: "#fff", my: "8px" }} />
 
-        <MyLocals />
+        <RestautantDashNavHeader />
         <Creator />
         <Box sx={{ flexGrow: "1" }}></Box>
 

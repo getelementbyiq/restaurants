@@ -6,7 +6,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import MainLayout from "./Layouts/MainLayout";
+import MainLayout from "./Layouts/MainLayout/MainLayout";
 import SignIn from "./Auth/SignIn";
 import Signup from "./Auth/SignUp";
 import { Provider } from "react-redux";
@@ -36,19 +36,23 @@ import Team from "./Pages/Locals/Team";
 import Contact from "./Pages/Locals/Contact";
 import Jobs from "./Pages/Locals/Jobs";
 import LocalsFullView from "./Pages/LocalsFullViewPage";
-import SecondMainLayout from "./Layouts/SecondMainLayout";
+import SecondMainLayout from "./Layouts/SecondMainLayout/SecondMainLayout";
 import PreferencesPages from "./Pages/Preferences";
-import MobileLayout from "./Layouts/MobileLayout";
+import MobileLayout from "./Layouts/MobileLayout/MobileLayout";
 import HomePageMobile from "./Pages/HomePageMobile";
+import LocalsFullViewSecond from "./Pages/LocalsFullViewPageSecond";
+import CreateProductsV2 from "./Pages/CreateProductsV2/CreateProductsV2";
+import LayoutDefinder from "./Layouts/LayoutDefinder/LayoutDefinder";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
-    <Route baseName="/" path="/" element={<MobileLayout />}>
-      <Route index element={<HomePageMobile />} />
+    <Route baseName="/" path="/" element={<LayoutDefinder />}>
+      <Route index element={<HomePageNewOwner />} />
       <Route path="owners" element={<OwnerRegisterPage />} />
       <Route path="foodies" element={<UserRegisterPage />} />
       <Route path="foods" element={<FoodsPage />} />
       <Route path="/:locals" element={<LocalsFullView />} />
+      <Route path="/second/:locals" element={<LocalsFullViewSecond />} />
       <Route path="/:locals/:categoryType/:menu/:id" element={<HomePage />} />
       <Route path="/:locals/foods" element={<FoodPage />} />
       <Route path="/:locals/drinks" element={<FoodPage />} />
@@ -81,10 +85,10 @@ const Root = createBrowserRouter(
         }
       />
       <Route
-        index
+        path="/locals"
         element={
           <ProtectedRoute>
-            <Locals />
+            <LocalsLayout />
           </ProtectedRoute>
         }
       />
@@ -96,6 +100,14 @@ const Root = createBrowserRouter(
           </ProtectedRoute>
         }
       >
+        <Route
+          path="/locals/:id/products"
+          element={
+            <ProtectedRoute>
+              <CreateProductsV2 />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/locals/:id/menu"
           element={
