@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   AppBar,
   Avatar,
@@ -10,21 +10,47 @@ import {
   IconButton,
   InputBase,
   Typography,
-} from "@mui/material";
-import { AnimatePresence, motion } from "framer-motion";
-import MainFilter from "../../MainFilter";
-import { useLocation, useNavigate } from "react-router-dom";
-import { UserAuth } from "../../../Auth/Auth";
-import useMobileCheck from "../../MobileCheck";
+} from '@mui/material';
+import { AnimatePresence, motion } from 'framer-motion';
+import MainFilter from '../../MainFilter';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { UserAuth } from '../../../Auth/Auth';
+import useMobileCheck from '../../MobileCheck';
+import { useDispatch, useSelector } from 'react-redux';
+import { filterBy } from '../../../app/features/ProductsSlice';
 
 const Secondheader = (props) => {
+  const dispatch = useDispatch();
+  const menus = useSelector((state) => {
+    // take menu only if it exist
+    const restaurantData = state.restaurantDataFromMain;
+    if (restaurantData && restaurantData.length > 0) {
+      return restaurantData[0].menus;
+    }
+    return [];
+  });
+
   const { user, logout } = UserAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [isFocused, setIsFocused] = useState(false);
   const isMobile = useMobileCheck();
+  const [searchByName, setSearchByName] = useState(null); // search food state
 
-  console.log("location now", location);
+  // searching handles
+  const handleSearchFood = (value) => {
+    setSearchByName(value);
+  };
+  const handleSearchSubmit = () => {
+    let dependencyObj = {
+      menus,
+      searchDependencies: {
+        searchByName,
+      },
+    };
+    console.warn(menus);
+    dispatch(filterBy(dependencyObj));
+  };
 
   const handleInputBlur = () => {
     setIsFocused(false);
@@ -40,6 +66,7 @@ const Secondheader = (props) => {
   return (
     <AppBar
       sx={{
+<<<<<<< HEAD
         display: "flex",
         flexDirection: "column",
         position: "fixed",
@@ -61,24 +88,46 @@ const Secondheader = (props) => {
           height: isFocused ? "120px" : "60px",
         }}
       >
+=======
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'fixed',
+        top: '0',
+        zIndex: '2600',
+        width: '100%',
+        justifyContent: 'center',
+      }}>
+      <Grid
+        container
+        sx={{
+          display: 'flex',
+          // border: "1px solid red",
+          py: '8px',
+          px: '24px',
+          justifyContent: 'space-between',
+
+          backgroundColor: isMobile ? 'transparent' : '#fff',
+          transition: '200ms',
+          height: isFocused ? '120px' : '60px',
+        }}>
+>>>>>>> 6577b4fbb248ddb8bbd44117958de0b4e3771c94
         <Grid
           item
           xs={4}
           md={4}
           lg={4}
           sx={{
-            display: "flex",
-            gap: "16px",
-            alignItems: "center",
+            display: 'flex',
+            gap: '16px',
+            alignItems: 'center',
             // border: "1px solid red",
-          }}
-        >
+          }}>
           <Box
-            onClick={() => goTo("/")}
+            onClick={() => goTo('/')}
             sx={{
-              cursor: "pointer",
-              "&&:hover": {
-                transform: "scale(1.02)",
+              cursor: 'pointer',
+              '&&:hover': {
+                transform: 'scale(1.02)',
               },
             }}
             // sx={{ border: "1px solid red" }}
@@ -88,8 +137,7 @@ const Secondheader = (props) => {
               height="45"
               viewBox="0 0 73 45"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M61.1939 22.1285C61.6118 21.8299 62.1293 21.7603 62.7463 21.9195C62.8657 21.9394 62.9852 21.9493 63.1046 21.9493C63.5424 21.0537 64.2988 20.586 65.3735 20.5462C65.6522 20.5263 66.0403 20.4765 66.5379 20.3969C67.0354 20.3173 67.6325 20.3372 68.3291 20.4566C69.0456 20.576 69.6726 20.785 70.21 21.0835C71.3843 21.7204 72.0908 22.636 72.3297 23.8302C72.8073 25.5816 72.7377 27.4923 72.1207 29.5623C71.4639 31.8511 70.3493 33.6822 68.777 35.0555C68.0604 35.6924 67.3041 36.0905 66.508 36.2497C65.7119 36.4288 64.9954 36.5283 64.3585 36.5483C63.7216 36.5682 63.1344 36.5682 62.597 36.5483C62.0796 36.5483 61.572 36.4985 61.0745 36.399C59.9997 36.18 59.114 35.6725 58.4174 34.8764C57.6014 33.9808 57.2531 32.5875 57.3725 30.6967C57.4521 29.0249 57.8701 27.3431 58.6264 25.6513C59.4026 23.9396 60.2584 22.7654 61.1939 22.1285ZM66.4483 28.1292C65.9507 28.2885 65.483 28.3581 65.0451 28.3382C64.8262 28.5572 64.6272 28.796 64.448 29.0547C64.2888 29.2936 64.0699 29.5225 63.7912 29.7414C63.5126 29.9404 63.3733 30.02 63.3733 29.9802C63.0349 30.4579 62.7563 30.9555 62.5373 31.473C62.3184 31.9705 62.3184 32.4781 62.5373 32.9956C63.3335 33.0752 63.9206 33.0553 64.2988 32.9358C64.6769 32.8164 65.0252 32.5875 65.3437 32.2492C65.682 31.9108 65.9408 31.5128 66.1199 31.055C66.4781 30.1992 66.5876 29.2239 66.4483 28.1292Z"
                 fill="white"
@@ -110,18 +158,16 @@ const Secondheader = (props) => {
           </Box>
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}>
             <svg
               width="18"
               height="18"
               viewBox="0 0 18 18"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M8.99997 10.0726C10.2923 10.0726 11.34 9.02492 11.34 7.73258C11.34 6.44023 10.2923 5.39258 8.99997 5.39258C7.70763 5.39258 6.65997 6.44023 6.65997 7.73258C6.65997 9.02492 7.70763 10.0726 8.99997 10.0726Z"
                 stroke="#fff"
@@ -143,15 +189,15 @@ const Secondheader = (props) => {
           md={4}
           lg={4}
           sx={{
-            display: "flex",
+            display: 'flex',
             // backgroundColor: "#333333",
-            flexDirection: "column",
+            flexDirection: 'column',
             // border: "1px solid red",
-            justifyContent: "center",
-          }}
-        >
+            justifyContent: 'center',
+          }}>
           <Box
             sx={{
+<<<<<<< HEAD
               display: "flex",
               gap: "8px",
               border: "1px solid white",
@@ -161,13 +207,23 @@ const Secondheader = (props) => {
               alignItems: "center",
             }}
           >
+=======
+              display: 'flex',
+              gap: '8px',
+              border: '1px solid black',
+              py: '4px',
+              px: '16px',
+              borderRadius: '32px',
+              alignItems: 'center',
+            }}>
+>>>>>>> 6577b4fbb248ddb8bbd44117958de0b4e3771c94
             <svg
               width="18"
               height="18"
               viewGrid="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-            >
+              onClick={() => handleSearchSubmit()}>
               <path
                 d="M8.25 15C11.9779 15 15 11.9779 15 8.25C15 4.52208 11.9779 1.5 8.25 1.5C4.52208 1.5 1.5 4.52208 1.5 8.25C1.5 11.9779 4.52208 15 8.25 15Z"
                 stroke="white"
@@ -182,9 +238,12 @@ const Secondheader = (props) => {
               />
             </svg>
 
+            {/* main search */}
             <InputBase
               fullWidth
               placeholder="Search for dish, drinks or cusine..."
+              onChange={(e) => handleSearchFood(e.target.value)}
+              value={searchByName}
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
             />
@@ -193,8 +252,7 @@ const Secondheader = (props) => {
               height="18"
               viewGrid="0 0 18 18"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M16.5 4.875H12"
                 stroke="white"
@@ -258,73 +316,64 @@ const Secondheader = (props) => {
           md={4}
           lg={4}
           sx={{
-            display: "flex",
-            gap: "16px",
-            alignItems: "center",
-            justifyContent: "flex-end",
+            display: 'flex',
+            gap: '16px',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
             // border: "1px solid red",
-          }}
-        >
+          }}>
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}>
             {!user ? (
               <Box
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                }}
-              >
-                {!location.pathname.includes("signin") && (
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}>
+                {!location.pathname.includes('signin') && (
                   <Button
-                    onClick={() => goTo("signin")}
+                    onClick={() => goTo('signin')}
                     sx={{
-                      px: "32px",
-                      py: "8px",
-                      borderRadius: "32px",
-                      backgroundColor: location.pathname.includes("signup")
-                        ? "#FF00D6"
-                        : "#fff",
-                      color: "#000",
-                      cusor: "pointer",
-                      textTransform: "lowercase",
-                      "&&:hover": {
-                        backgroundColor: "#000",
-                        color: "#FF00D6",
+                      px: '32px',
+                      py: '8px',
+                      borderRadius: '32px',
+                      backgroundColor: location.pathname.includes('signup') ? '#FF00D6' : '#fff',
+                      color: '#000',
+                      cusor: 'pointer',
+                      textTransform: 'lowercase',
+                      '&&:hover': {
+                        backgroundColor: '#000',
+                        color: '#FF00D6',
                       },
-                    }}
-                  >
+                    }}>
                     <Typography>
-                      <span style={{ textTransform: "uppercase" }}>S</span>ign
-                      in
+                      <span style={{ textTransform: 'uppercase' }}>S</span>ign in
                     </Typography>
                   </Button>
                 )}
-                {!location.pathname.includes("signup") && (
+                {!location.pathname.includes('signup') && (
                   <Button
-                    onClick={() => goTo("signup")}
+                    onClick={() => goTo('signup')}
                     sx={{
-                      px: "32px",
-                      py: "8px",
-                      borderRadius: "32px",
-                      backgroundColor: "#EBFF00",
-                      color: "#000",
-                      cusor: "pointer",
-                      textTransform: "lowercase",
-                      "&&:hover": {
-                        backgroundColor: "#000",
-                        color: "#EBFF00",
+                      px: '32px',
+                      py: '8px',
+                      borderRadius: '32px',
+                      backgroundColor: '#EBFF00',
+                      color: '#000',
+                      cusor: 'pointer',
+                      textTransform: 'lowercase',
+                      '&&:hover': {
+                        backgroundColor: '#000',
+                        color: '#EBFF00',
                       },
-                    }}
-                  >
+                    }}>
                     <Typography>
-                      <span style={{ textTransform: "uppercase" }}>S</span>ign
-                      up
+                      <span style={{ textTransform: 'uppercase' }}>S</span>ign up
                     </Typography>
                   </Button>
                 )}
@@ -339,11 +388,10 @@ const Secondheader = (props) => {
       </Grid>
       <Box
         sx={{
-          display: "flex",
-          flexGrow: "1",
-          justifyContent: "center",
-        }}
-      >
+          display: 'flex',
+          flexGrow: '1',
+          justifyContent: 'center',
+        }}>
         <AnimatePresence>
           {isFocused && (
             <motion.div
@@ -351,26 +399,23 @@ const Secondheader = (props) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              style={{ display: "flex", gap: "16px" }}
-            >
+              style={{ display: 'flex', gap: '16px' }}>
               <Box
                 sx={{
-                  display: "flex",
-                  gap: "8px",
-                  border: "1px solid black",
-                  py: "4px",
-                  px: "16px",
-                  borderRadius: "32px",
-                  alignItems: "center",
-                }}
-              >
+                  display: 'flex',
+                  gap: '8px',
+                  border: '1px solid black',
+                  py: '4px',
+                  px: '16px',
+                  borderRadius: '32px',
+                  alignItems: 'center',
+                }}>
                 <svg
                   width="18"
                   height="18"
                   viewGrid="0 0 20 20"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                  xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M8.25 15C11.9779 15 15 11.9779 15 8.25C15 4.52208 11.9779 1.5 8.25 1.5C4.52208 1.5 1.5 4.52208 1.5 8.25C1.5 11.9779 4.52208 15 8.25 15Z"
                     stroke="black"
@@ -394,22 +439,20 @@ const Secondheader = (props) => {
               </Box>
               <Box
                 sx={{
-                  display: "flex",
-                  gap: "8px",
-                  border: "1px solid black",
-                  py: "4px",
-                  px: "16px",
-                  borderRadius: "32px",
-                  alignItems: "center",
-                }}
-              >
+                  display: 'flex',
+                  gap: '8px',
+                  border: '1px solid black',
+                  py: '4px',
+                  px: '16px',
+                  borderRadius: '32px',
+                  alignItems: 'center',
+                }}>
                 <svg
                   width="18"
                   height="18"
                   viewGrid="0 0 20 20"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                  xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M8.25 15C11.9779 15 15 11.9779 15 8.25C15 4.52208 11.9779 1.5 8.25 1.5C4.52208 1.5 1.5 4.52208 1.5 8.25C1.5 11.9779 4.52208 15 8.25 15Z"
                     stroke="black"

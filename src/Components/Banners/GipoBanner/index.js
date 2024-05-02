@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Avatar,
   Box,
@@ -9,29 +9,24 @@ import {
   InputBase,
   InputLabel,
   Typography,
-} from "@mui/material";
-import BG from "../../../assets/img/Copy-of-Diet.png";
+} from '@mui/material';
+import BG from '../../../assets/img/Copy-of-Diet.png';
 // import BGHover from "../../../assets/img/Copy-of-Diet.png";
-import Secondheader from "../../Header/Secondheader";
-import { color } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
-import { resetScrolled } from "../../../Redux/slices/globalScrollState";
-import Typewriter from "../../Typewriter";
-import AnimatedText from "../../AnimatedText";
-import TypewriterPlaceholder from "../../PlaceholderTypewriter";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { useNavigate } from "react-router-dom";
-import { UserAuth } from "../../../Auth/Auth";
-import useDeviceType from "../../MediaQueries";
-import useMobileCheck from "../../MobileCheck";
+import Secondheader from '../../Header/Secondheader';
+import { color } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetScrolled } from '../../../Redux/slices/globalScrollState';
+import Typewriter from '../../Typewriter';
+import AnimatedText from '../../AnimatedText';
+import TypewriterPlaceholder from '../../PlaceholderTypewriter';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { useNavigate } from 'react-router-dom';
+import { UserAuth } from '../../../Auth/Auth';
+import useDeviceType from '../../MediaQueries';
+import useMobileCheck from '../../MobileCheck';
 
-const textArray = [
-  "your taste",
-  "the right place for you",
-  "your cuisine",
-  "your lovely drinks",
-];
+const textArray = ['your taste', 'the right place for you', 'your cuisine', 'your lovely drinks'];
 
 const GipoBanner = (props) => {
   const { user, logout } = UserAuth();
@@ -42,7 +37,7 @@ const GipoBanner = (props) => {
   const [scrolled, setScrolled] = useState(false);
   const scrollState = useSelector((state) => state.scrollState);
   const swiperIndex = useSelector((state) => state.swiperIndex);
-  console.log("scrollState", scrollState);
+  console.log('scrollState', scrollState);
   const handleScroll = () => {
     const offset = window.scrollY;
     if (offset > 10) {
@@ -52,8 +47,8 @@ const GipoBanner = (props) => {
     }
   };
 
-  window.addEventListener("scroll", handleScroll);
-  const [placeholderText, setPlaceholderText] = useState("");
+  window.addEventListener('scroll', handleScroll);
+  const [placeholderText, setPlaceholderText] = useState('');
   const handleTypewriterOutput = (output) => {
     setPlaceholderText(output);
   };
@@ -68,16 +63,17 @@ const GipoBanner = (props) => {
       setScrolled(false);
     }
 
-    console.log("swiperIndexfrom", swiperIndex);
+    console.log('swiperIndexfrom', swiperIndex);
   }, [swiperIndex]);
 
   return (
     <Grid
       sx={{
-        display: "flex",
-        height: scrolled ? "30vh" : isMobile ? "100vh" : "85vh",
+        display: 'flex',
+        height: scrolled ? '30vh' : isMobile ? '100vh' : '85vh',
         opacity: scrolled ? 0 : 1,
         transition: isMobile
+<<<<<<< HEAD
           ? "height 100ms ease, opacity 120ms ease"
           : "height 250ms ease, opacity 300ms ease",
         justifyContent: "center",
@@ -85,110 +81,126 @@ const GipoBanner = (props) => {
         flexGrow: "1",
       }}
     >
+=======
+          ? 'height 100ms ease, opacity 120ms ease'
+          : 'height 250ms ease, opacity 300ms ease',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '1px solid blue',
+        flexGrow: '1',
+      }}>
+>>>>>>> 6577b4fbb248ddb8bbd44117958de0b4e3771c94
       <Box
         sx={{
-          display: "flex",
-          overflow: "hidden",
-          position: "relative",
-          flexGrow: "1",
-          objectFit: "cover",
+          display: 'flex',
+          overflow: 'hidden',
+          position: 'relative',
+          flexGrow: '1',
+          objectFit: 'cover',
           // backgroundImage: `url(${blobUrl})`,
           // backgroundRepeat: "no-repeat",
           // backgroundSize: "cover",
           // backgroundPosition: "center",
-        }}
-      >
+        }}>
         <Box
           sx={{
-            display: "flex",
-            width: "100%",
-            position: "absolute",
-            top: "0",
-            left: "0",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            zIndex: "1600",
+            display: 'flex',
+            width: '100%',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            zIndex: '1600',
             clipPath: isMobile
-              ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
-              : "polygon(0 0, 100% 0, 100% 88%, 0 100%)",
-            height: isMobile ? "100vh" : "85vh",
-          }}
-        ></Box>
+              ? 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'
+              : 'polygon(0 0, 100% 0, 100% 88%, 0 100%)',
+            height: isMobile ? '100vh' : '85vh',
+          }}></Box>
         <Box
           sx={{
-            display: "flex",
-            overflow: "hidden",
-            position: "relative",
-            flexGrow: "1",
-            objectFit: "cover",
+            display: 'flex',
+            overflow: 'hidden',
+            position: 'relative',
+            flexGrow: '1',
+            objectFit: 'cover',
             clipPath: isMobile
-              ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
-              : "polygon(0 0, 100% 0, 100% 88%, 0 100%)",
-            height: isMobile ? "100vh" : "85vh",
+              ? 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'
+              : 'polygon(0 0, 100% 0, 100% 88%, 0 100%)',
+            height: isMobile ? '100vh' : '85vh',
 
             backgroundImage: `url(${BG})`,
+<<<<<<< HEAD
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
             // border: "1px solid green",
           }}
         >
+=======
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            border: '1px solid green',
+          }}>
+>>>>>>> 6577b4fbb248ddb8bbd44117958de0b4e3771c94
           {/* <img src={BG} alt="" style={{ height: "100%", objectFit: "cover" }} /> */}
         </Box>
         <Box
           sx={{
-            display: "flex",
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            top: "0",
-            left: "0",
-            zIndex: "3500",
-            color: "#fff",
-            flexDirection: "column",
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            zIndex: '3500',
+            color: '#fff',
+            flexDirection: 'column',
             // border: "1px solid blue",
+<<<<<<< HEAD
           }}
         >
           {/* {!isMobile && (
+=======
+          }}>
+          {!isMobile && (
+>>>>>>> 6577b4fbb248ddb8bbd44117958de0b4e3771c94
             <Box
               sx={{
-                display: "flex",
-                gap: "8px",
-                justifyContent: "space-between",
-                px: "24px",
-                pt: "8px",
-                border: "1px solid yellow",
-                alignItems: "center",
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                display: 'flex',
+                gap: '8px',
+                justifyContent: 'space-between',
+                px: '24px',
+                pt: '8px',
+                border: '1px solid yellow',
+                alignItems: 'center',
+              }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
                 <Typography
                   sx={{
-                    fontFamily: "Quicksand",
-                    color: "#fff",
-                  }}
-                >
+                    fontFamily: 'Quicksand',
+                    color: '#fff',
+                  }}>
                   About us
                 </Typography>
                 <Typography
                   sx={{
-                    fontFamily: "Quicksand",
-                    color: "#fff",
-                  }}
-                >
+                    fontFamily: 'Quicksand',
+                    color: '#fff',
+                  }}>
                   AGB
                 </Typography>
               </Box>
               <Box>
                 <Box
                   sx={{
-                    display: "flex",
-                    gap: "8px",
-                    alignItems: "center",
+                    display: 'flex',
+                    gap: '8px',
+                    alignItems: 'center',
                     // border: "1px solid red",
-                  }}
-                >
+                  }}>
                   {!user && (
-                    <Box sx={{ display: "flex", gap: "24px", px: "16px" }}>
+                    <Box sx={{ display: 'flex', gap: '24px', px: '16px' }}>
                       <Typography>Add Restaurant</Typography>
 
                       <Typography>Investors</Typography>
@@ -196,62 +208,54 @@ const GipoBanner = (props) => {
                   )}
                   <Box
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                    }}
-                  >
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                    }}>
                     {!user ? (
                       <Box
                         sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                        }}
-                      >
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                        }}>
                         <Button
-                          onClick={() => goTo("signin")}
+                          onClick={() => goTo('signin')}
                           sx={{
-                            px: "32px",
-                            py: "8px",
-                            borderRadius: "32px",
-                            backgroundColor: "rgba(225,225,225,0.3)",
-                            color: "#fff",
-                            cusor: "pointer",
-                            textTransform: "lowercase",
-                            "&&:hover": {
-                              backgroundColor: "#242424",
-                              color: "#FF00D6",
+                            px: '32px',
+                            py: '8px',
+                            borderRadius: '32px',
+                            backgroundColor: 'rgba(225,225,225,0.3)',
+                            color: '#fff',
+                            cusor: 'pointer',
+                            textTransform: 'lowercase',
+                            '&&:hover': {
+                              backgroundColor: '#242424',
+                              color: '#FF00D6',
                             },
-                          }}
-                        >
+                          }}>
                           <Typography>
-                            <span style={{ textTransform: "uppercase" }}>
-                              S
-                            </span>
+                            <span style={{ textTransform: 'uppercase' }}>S</span>
                             ign in
                           </Typography>
                         </Button>
                         <Button
-                          onClick={() => goTo("signup")}
+                          onClick={() => goTo('signup')}
                           sx={{
-                            px: "32px",
-                            py: "8px",
-                            borderRadius: "32px",
-                            backgroundColor: "#EBFF00",
-                            color: "#000",
-                            cusor: "pointer",
-                            textTransform: "lowercase",
-                            "&&:hover": {
-                              backgroundColor: "#242424",
-                              color: "#EBFF00",
+                            px: '32px',
+                            py: '8px',
+                            borderRadius: '32px',
+                            backgroundColor: '#EBFF00',
+                            color: '#000',
+                            cusor: 'pointer',
+                            textTransform: 'lowercase',
+                            '&&:hover': {
+                              backgroundColor: '#242424',
+                              color: '#EBFF00',
                             },
-                          }}
-                        >
+                          }}>
                           <Typography>
-                            <span style={{ textTransform: "uppercase" }}>
-                              S
-                            </span>
+                            <span style={{ textTransform: 'uppercase' }}>S</span>
                             ign up
                           </Typography>
                         </Button>
@@ -270,44 +274,44 @@ const GipoBanner = (props) => {
           {isMobile && (
             <Box
               sx={{
+<<<<<<< HEAD
                 display: "flex",
                 // border: "1px solid red",
+=======
+                display: 'flex',
+                border: '1px solid red',
+>>>>>>> 6577b4fbb248ddb8bbd44117958de0b4e3771c94
                 // flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "16px",
-              }}
-            >
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '16px',
+              }}>
               <Typography
                 sx={{
-                  fontFamily: "Quicksand",
-                  color: "#fff",
-                }}
-              >
+                  fontFamily: 'Quicksand',
+                  color: '#fff',
+                }}>
                 About us
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "Quicksand",
-                  color: "#fff",
-                }}
-              >
+                  fontFamily: 'Quicksand',
+                  color: '#fff',
+                }}>
                 AGB
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "Quicksand",
-                  color: "#fff",
-                }}
-              >
+                  fontFamily: 'Quicksand',
+                  color: '#fff',
+                }}>
                 Investors
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "Quicksand",
-                  color: "#fff",
-                }}
-              >
+                  fontFamily: 'Quicksand',
+                  color: '#fff',
+                }}>
                 Add Restaurant
               </Typography>
             </Box>
@@ -315,6 +319,7 @@ const GipoBanner = (props) => {
 
           <Box
             sx={{
+<<<<<<< HEAD
               display: "flex",
               gap: "8px",
               flexGrow: "1",
@@ -327,6 +332,19 @@ const GipoBanner = (props) => {
               // border: "1px solid red",
             }}
           >
+=======
+              display: 'flex',
+              gap: '8px',
+              flexGrow: '1',
+              justifyContent: isMobile ? 'center' : 'flex-end',
+              px: '24px',
+              pt: '8px',
+              pb: '60px',
+              alignItems: 'center',
+              flexDirection: 'column',
+              border: '1px solid red',
+            }}>
+>>>>>>> 6577b4fbb248ddb8bbd44117958de0b4e3771c94
             <Box
             //  sx={{ border: "1px solid red" }}
             >
@@ -335,8 +353,7 @@ const GipoBanner = (props) => {
                 height="185"
                 viewBox="0 0 302 185"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M253.952 90.0805C255.706 88.8276 257.877 88.5352 260.467 89.2035C260.968 89.287 261.469 89.3288 261.971 89.3288C263.808 85.5698 266.982 83.6068 271.493 83.4398C272.663 83.3562 274.292 83.1474 276.38 82.8133C278.468 82.4791 280.974 82.5627 283.898 83.0639C286.905 83.5651 289.536 84.4421 291.791 85.6951C296.72 88.3681 299.685 92.2106 300.688 97.2225C302.692 104.573 302.4 112.592 299.811 121.28C297.054 130.886 292.376 138.571 285.777 144.335C282.77 147.008 279.596 148.678 276.255 149.346C272.913 150.098 269.906 150.516 267.233 150.599C264.56 150.683 262.096 150.683 259.841 150.599C257.669 150.599 255.539 150.391 253.45 149.973C248.94 149.054 245.222 146.924 242.299 143.583C238.874 139.824 237.412 133.977 237.913 126.041C238.247 119.024 240.002 111.966 243.176 104.866C246.434 97.682 250.026 92.7536 253.952 90.0805ZM276.004 115.265C273.916 115.934 271.953 116.226 270.115 116.143C269.196 117.061 268.361 118.064 267.609 119.15C266.941 120.152 266.022 121.113 264.852 122.032C263.683 122.867 263.098 123.201 263.098 123.034C261.678 125.039 260.509 127.127 259.59 129.299C258.671 131.387 258.671 133.517 259.59 135.689C262.931 136.023 265.395 135.94 266.982 135.438C268.57 134.937 270.031 133.977 271.368 132.557C272.788 131.137 273.874 129.466 274.626 127.545C276.129 123.953 276.589 119.86 276.004 115.265Z"
                   fill="white"
@@ -357,37 +374,34 @@ const GipoBanner = (props) => {
             </Box>
             <Box
               sx={{
-                display: "flex",
-                width: "40%",
-                flexDirection: "column",
-                transform: "rotate(-2.86deg) translateY(-20px)",
+                display: 'flex',
+                width: '40%',
+                flexDirection: 'column',
+                transform: 'rotate(-2.86deg) translateY(-20px)',
                 // border: "1px solid red",
-                gap: "16px",
-              }}
-            >
+                gap: '16px',
+              }}>
               <Box
                 sx={{
-                  display: "flex",
-                  color: "#fff",
+                  display: 'flex',
+                  color: '#fff',
                   //   border: "1px solid red",
-                  gap: "16px",
-                  py: "24px",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
+                  gap: '16px',
+                  py: '24px',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}>
                 <Typography
                   className="bounce-text"
                   bounce-text
                   sx={{
-                    fontSize: "50px",
-                    fontFamily: "Knewave, system-ui",
-                    fontWeight: "400",
-                    fontStyle: "normal",
-                    lineHeight: "90%",
-                    color: "#FF00D6",
-                  }}
-                >
+                    fontSize: '50px',
+                    fontFamily: 'Knewave, system-ui',
+                    fontWeight: '400',
+                    fontStyle: 'normal',
+                    lineHeight: '90%',
+                    color: '#FF00D6',
+                  }}>
                   Geschmack
                 </Typography>
                 {/* <Typography
@@ -417,6 +431,102 @@ const GipoBanner = (props) => {
                   Restaurants, Café's, Bar's
                 </Typography> */}
               </Box>
+<<<<<<< HEAD
+=======
+              {!isMobile && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: '8px',
+                    border: '1px solid white',
+                    py: '4px',
+                    px: '16px',
+                    borderRadius: '32px',
+                    alignItems: 'center',
+                    backgroundColor: 'rgba(225,225,225,0.50)',
+                    backdropFilter: 'blur(15px)',
+                    flexGrow: '1',
+                  }}>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewGrid="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M8.25 15C11.9779 15 15 11.9779 15 8.25C15 4.52208 11.9779 1.5 8.25 1.5C4.52208 1.5 1.5 4.52208 1.5 8.25C1.5 11.9779 4.52208 15 8.25 15Z"
+                      stroke="white"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M14.1974 15.5171C14.5949 16.7171 15.5024 16.8371 16.1999 15.7871C16.8374 14.8271 16.4174 14.0396 15.2624 14.0396C14.4074 14.0321 13.9274 14.6996 14.1974 15.5171Z"
+                      stroke="white"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+
+                  <InputBase
+                    fullWidth
+                    InputProps={{ InputLabel: { color: 'white' } }}
+                    placeholder="Burger, Pasta, Pizza..."
+                    onChange={() => setScrolled(true)}
+                    // onFocus={handleInputFocus}
+                    // onBlur={handleInputBlur}
+                  />
+                  <svg
+                    width="18"
+                    height="18"
+                    viewGrid="0 0 18 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M16.5 4.875H12"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M4.5 4.875H1.5"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M7.5 7.5C8.94975 7.5 10.125 6.32475 10.125 4.875C10.125 3.42525 8.94975 2.25 7.5 2.25C6.05025 2.25 4.875 3.42525 4.875 4.875C4.875 6.32475 6.05025 7.5 7.5 7.5Z"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M16.5 13.125H13.5"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M6 13.125H1.5"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M10.5 15.75C11.9497 15.75 13.125 14.5747 13.125 13.125C13.125 11.6753 11.9497 10.5 10.5 10.5C9.05025 10.5 7.875 11.6753 7.875 13.125C7.875 14.5747 9.05025 15.75 10.5 15.75Z"
+                      stroke="white"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </Box>
+              )}
+>>>>>>> 6577b4fbb248ddb8bbd44117958de0b4e3771c94
             </Box>
           </Box>
         </Box>
