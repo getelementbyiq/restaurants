@@ -46,11 +46,11 @@ import LayoutDefinder from "./Layouts/LayoutDefinder/LayoutDefinder";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
-    <Route baseName="/" path="/" element={<LayoutDefinder />}>
+    <Route path="/" element={<LayoutDefinder />}>
       <Route index element={<HomePageNewOwner />} />
-      <Route path="owners" element={<OwnerRegisterPage />} />
+      {/* <Route path="owners" element={<OwnerRegisterPage />} />
       <Route path="foodies" element={<UserRegisterPage />} />
-      <Route path="foods" element={<FoodsPage />} />
+      <Route path="foods" element={<FoodsPage />} /> */}
       <Route path="/:locals" element={<LocalsFullView />} />
       <Route path="/second/:locals" element={<LocalsFullViewSecond />} />
       <Route path="/:locals/:categoryType/:menu/:id" element={<HomePage />} />
@@ -92,87 +92,79 @@ const Root = createBrowserRouter(
           </ProtectedRoute>
         }
       />
+
       <Route
-        path="/locals/:id"
+        path="/locals/products"
         element={
           <ProtectedRoute>
-            <LocalsLayout />
+            <CreateProductsV2 />
           </ProtectedRoute>
         }
-      >
-        <Route
-          path="/locals/:id/products"
-          element={
-            <ProtectedRoute>
-              <CreateProductsV2 />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/locals/:id/menu"
-          element={
-            <ProtectedRoute>
-              <Menu />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/locals/:id/offers"
-          element={
-            <ProtectedRoute>
-              <Offers />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/locals/:id/story"
-          element={
-            <ProtectedRoute>
-              <Story />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/locals/:id/team"
-          element={
-            <ProtectedRoute>
-              <Team />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/locals/:id/contact"
-          element={
-            <ProtectedRoute>
-              <Contact />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/locals/:id/jobs"
-          element={
-            <ProtectedRoute>
-              <Jobs />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/locals/:id/notifications"
-          element={
-            <ProtectedRoute>
-              <Notifications />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/locals/:id/adresse"
-          element={
-            <ProtectedRoute>
-              <Adresse />
-            </ProtectedRoute>
-          }
-        />
-      </Route>
+      />
+      <Route
+        path="/locals/:id/menu"
+        element={
+          <ProtectedRoute>
+            <Menu />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/locals/:id/offers"
+        element={
+          <ProtectedRoute>
+            <Offers />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/locals/:id/story"
+        element={
+          <ProtectedRoute>
+            <Story />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/locals/:id/team"
+        element={
+          <ProtectedRoute>
+            <Team />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/locals/:id/contact"
+        element={
+          <ProtectedRoute>
+            <Contact />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/locals/:id/jobs"
+        element={
+          <ProtectedRoute>
+            <Jobs />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/locals/:id/notifications"
+        element={
+          <ProtectedRoute>
+            <Notifications />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/locals/:id/adresse"
+        element={
+          <ProtectedRoute>
+            <Adresse />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="createLocal"
         element={

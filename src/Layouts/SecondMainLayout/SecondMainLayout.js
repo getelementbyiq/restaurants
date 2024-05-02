@@ -8,7 +8,7 @@ import MainFilter from "../../Components/MainFilter";
 import GipoBanner from "../../Components/Banners/GipoBanner";
 import { UserAuth } from "../../Auth/Auth";
 import useMobileCheck from "../../Components/MobileCheck";
-import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain";
+import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain/RestaurantBannerMain";
 
 const SecondMainLayout = (props) => {
   const { user } = UserAuth();

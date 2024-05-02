@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Avatar, Box, Typography } from "@mui/material";
 import LocalHeader from "../../Components/LocalHeader";
 import CreatePost from "../Locals/CreatePost";
-import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain";
+import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain/RestaurantBannerMain";
 import RestaurantHeaderFromOwner from "../Locals/RestaurantHeaderFromOwner";
 
 const LocalsLayout = (props) => {

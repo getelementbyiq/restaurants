@@ -20,7 +20,7 @@ import AnimatedText from "../../AnimatedText";
 import TypewriterPlaceholder from "../../PlaceholderTypewriter";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../../Auth/Auth";
 import useDeviceType from "../../MediaQueries";
 import useMobileCheck from "../../MobileCheck";
@@ -39,6 +39,7 @@ const RestaurantBannerMain = (props) => {
   const devicetype = useDeviceType();
   const isMobile = useMobileCheck();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const [scrolled, setScrolled] = useState(false);
   const scrollState = useSelector((state) => state.scrollState);

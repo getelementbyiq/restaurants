@@ -12,7 +12,8 @@ import { setFetchedRestaurants } from "../../Redux/slices/restaurantsSlice";
 import { setRestaurantField } from "../../Redux/slices/createLocalSlice";
 
 import RestaurantHeaderFromOwner from "../../Pages/Locals/RestaurantHeaderFromOwner";
-import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain";
+import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain/RestaurantBannerMain";
+import BannerDefinder from "../../Components/Banners/BannerDefinder/BannerDefinder";
 
 const MainLayout = (props) => {
   const navigate = useNavigate();
@@ -136,7 +137,7 @@ const MainLayout = (props) => {
       }}
     >
       <RestaurantHeaderFromOwner />
-      <RestaurantBannerMain BG={toRenderRestaurant?.background} />
+      <BannerDefinder BG={toRenderRestaurant?.background} />
       <Box
         sx={{
           display: "flex",
