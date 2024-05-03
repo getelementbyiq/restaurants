@@ -63,11 +63,6 @@ const ProductsImageTemplate = ({ product }) => {
         >
           {product?.name}
         </Typography>
-        <Typography
-          sx={{ fontFamily: "Quicksand", fontSize: "16px", color: "#fff" }}
-        >
-          {product?.price}
-        </Typography>
       </Box>
     </Box>
   );

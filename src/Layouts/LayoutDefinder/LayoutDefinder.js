@@ -6,6 +6,7 @@ import { fetchUserData } from "../../Redux/immigration/user/userSlice";
 import { Box, CircularProgress } from "@mui/material";
 import MainLayout from "../MainLayout/MainLayout";
 import SecondMainLayout from "../SecondMainLayout/SecondMainLayout";
+import { fetchProductsDataWithoutUser } from "../../Redux/immigration/products/productsFetchSlice";
 
 const LayoutDefinder = (props) => {
   const dispatch = useDispatch();
@@ -13,9 +14,13 @@ const LayoutDefinder = (props) => {
   const uID = user?.uid;
   const userData = useSelector((state) => state.fetchUser.userData);
   const userDataState = useSelector((state) => state.fetchUser.loading);
+  const products = useSelector(
+    (state) => state.productsFetchSlice.productsDataWithoutUser
+  );
 
   useEffect(() => {
     dispatch(fetchUserData(uID));
+    dispatch(fetchProductsDataWithoutUser());
   }, [dispatch, user]);
 
   console.log("user From Auth", uID);
@@ -23,6 +28,7 @@ const LayoutDefinder = (props) => {
   console.log("user From Layoutdefinder", user);
   console.log("user From firebase", userData);
   console.log("user From firebase status", userDataState);
+  console.log("products From firebase products", products);
 
   if (userDataState === "loading") {
     <Box>
