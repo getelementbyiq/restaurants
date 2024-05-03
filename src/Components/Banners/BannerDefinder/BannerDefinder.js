@@ -10,7 +10,7 @@ const BannerDefinder = (BG) => {
   return (
     <Box>
       {pathname === "/" && <RestaurantBannerMain />}
-      {pathname === "/locals/products" && <RestaurantProductsBanner BG={BG} />}
+      {pathname === "/products" && <RestaurantProductsBanner BG={BG} />}
     </Box>
   );
 };

@@ -7,12 +7,11 @@ import ProductPreview from "../../Components/ProductPreview/index";
 import MenuDashboard from "../../Components/MenuDashboard";
 
 const CreateProductsV2 = (props) => {
-  const [activestate, setActiveState] = useState("Info");
-  const open = (txt) => {
-    setActiveState(txt);
-  };
   return (
-    <Grid container sx={{ display: "flex", flexGrow: "1", px: "40px" }}>
+    <Grid
+      container
+      sx={{ display: "flex", flexGrow: "1", px: "40px", minHeight: "500px" }}
+    >
       <Grid
         item
         xs={6}

@@ -21,7 +21,8 @@ import { resetCreateProduct } from "../../Redux/slices/createProductSlice";
 const ProductPreview = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const restaurantsId = id;
+  // const restaurantsId = id;
+  const restaurantsId = useSelector((state) => state?.restaurants?.data[0]?.id);
   const product = useSelector((state) => state.createProduct.productData);
   const itemsData = useSelector((state) => state.createItemsList);
   //   const localData = useSelector((state) => state.localData);

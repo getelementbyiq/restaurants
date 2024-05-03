@@ -13,10 +13,11 @@ import {
 } from "@mui/material";
 import { Style } from "@mui/icons-material";
 import { UserAuth } from "../../Auth/Auth";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const RestaurantHeaderFromOwner = (props) => {
+  const navigate = useNavigate();
   const restaurantOfUser = useSelector((state) => state.restaurants.data);
   const { id } = useParams();
   const [isTab, setIsTab] = useState("main");
@@ -34,6 +35,10 @@ const RestaurantHeaderFromOwner = (props) => {
   const toRenderRestaurant = restaurantOfUser[0];
 
   console.log("toRenderRestaurant", toRenderRestaurant);
+
+  const goTo = (txt) => {
+    navigate(`${txt}`);
+  };
   return (
     <AppBar
       sx={{
@@ -159,13 +164,48 @@ const RestaurantHeaderFromOwner = (props) => {
             alignItems: "center",
           }}
         >
-          <Typography sx={{ fontFamily: "Quicksand" }}>Products</Typography>
-          <Typography sx={{ fontFamily: "Quicksand" }}>Menu</Typography>
-          <Typography sx={{ fontFamily: "Quicksand" }}>Deals</Typography>
-          <Typography sx={{ fontFamily: "Quicksand" }}>Team</Typography>
-          <Typography sx={{ fontFamily: "Quicksand" }}>Constact</Typography>
-          <Typography sx={{ fontFamily: "Quicksand" }}>Jobs</Typography>
-          <Typography sx={{ fontFamily: "Quicksand" }}>AGB</Typography>
+          <Typography
+            onClick={() => goTo("products")}
+            sx={{ fontFamily: "Quicksand" }}
+          >
+            Products
+          </Typography>
+          <Typography
+            onClick={() => goTo("menu")}
+            sx={{ fontFamily: "Quicksand" }}
+          >
+            Menu
+          </Typography>
+          <Typography
+            onClick={() => goTo("/offers")}
+            sx={{ fontFamily: "Quicksand" }}
+          >
+            Deals
+          </Typography>
+          <Typography
+            onClick={() => goTo("team")}
+            sx={{ fontFamily: "Quicksand" }}
+          >
+            Team
+          </Typography>
+          <Typography
+            onClick={() => goTo("contact")}
+            sx={{ fontFamily: "Quicksand" }}
+          >
+            Constact
+          </Typography>
+          <Typography
+            onClick={() => goTo("jobs")}
+            sx={{ fontFamily: "Quicksand" }}
+          >
+            Jobs
+          </Typography>
+          <Typography
+            onClick={() => goTo("/rool")}
+            sx={{ fontFamily: "Quicksand" }}
+          >
+            AGB
+          </Typography>
         </Grid>
         <Grid
           Item

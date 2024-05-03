@@ -127,7 +127,6 @@ const MainLayout = (props) => {
         width: "100%",
         height: "100vh",
         display: "flex",
-        gap: "16px",
         flexDirection: "column",
         // justifyContent: "space-between",
         // backgroundImage: `url(${restaurantData.restaurantData.background})`,
@@ -142,9 +141,9 @@ const MainLayout = (props) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          border: "2px solid red",
           flexGrow: 1,
           gap: "8px",
+          pt: "70px",
         }}
       >
         <Outlet />

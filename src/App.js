@@ -41,8 +41,8 @@ import PreferencesPages from "./Pages/Preferences";
 import MobileLayout from "./Layouts/MobileLayout/MobileLayout";
 import HomePageMobile from "./Pages/HomePageMobile";
 import LocalsFullViewSecond from "./Pages/LocalsFullViewPageSecond";
-import CreateProductsV2 from "./Pages/CreateProductsV2/CreateProductsV2";
 import LayoutDefinder from "./Layouts/LayoutDefinder/LayoutDefinder";
+import ProductsPage from "./Pages/ProductsPage/ProductsPage";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
@@ -85,7 +85,7 @@ const Root = createBrowserRouter(
         }
       />
       <Route
-        path="/locals"
+        path="/mylocal"
         element={
           <ProtectedRoute>
             <LocalsLayout />
@@ -94,15 +94,15 @@ const Root = createBrowserRouter(
       />
 
       <Route
-        path="/locals/products"
+        path="/products"
         element={
           <ProtectedRoute>
-            <CreateProductsV2 />
+            <ProductsPage />
           </ProtectedRoute>
         }
       />
       <Route
-        path="/locals/:id/menu"
+        path="/menu"
         element={
           <ProtectedRoute>
             <Menu />
@@ -110,7 +110,7 @@ const Root = createBrowserRouter(
         }
       />
       <Route
-        path="/locals/:id/offers"
+        path="/offers"
         element={
           <ProtectedRoute>
             <Offers />
@@ -118,7 +118,7 @@ const Root = createBrowserRouter(
         }
       />
       <Route
-        path="/locals/:id/story"
+        path="/story"
         element={
           <ProtectedRoute>
             <Story />
@@ -126,7 +126,7 @@ const Root = createBrowserRouter(
         }
       />
       <Route
-        path="/locals/:id/team"
+        path="/team"
         element={
           <ProtectedRoute>
             <Team />
@@ -134,7 +134,7 @@ const Root = createBrowserRouter(
         }
       />
       <Route
-        path="/locals/:id/contact"
+        path="/contact"
         element={
           <ProtectedRoute>
             <Contact />
@@ -142,7 +142,7 @@ const Root = createBrowserRouter(
         }
       />
       <Route
-        path="/locals/:id/jobs"
+        path="/jobs"
         element={
           <ProtectedRoute>
             <Jobs />
@@ -150,7 +150,7 @@ const Root = createBrowserRouter(
         }
       />
       <Route
-        path="/locals/:id/notifications"
+        path="/notifications"
         element={
           <ProtectedRoute>
             <Notifications />
@@ -158,7 +158,7 @@ const Root = createBrowserRouter(
         }
       />
       <Route
-        path="/locals/:id/adresse"
+        path="/adresse"
         element={
           <ProtectedRoute>
             <Adresse />

@@ -32,6 +32,7 @@ import restaurantDataFromMainReducer from "./slices/restaurantDataFromMain";
 import swiperIndexReducer from "./slices/swiperIndex";
 import fetchUserSlice from "./immigration/user/userSlice";
 import productSlice from "../app/features/ProductsSlice";
+import productsFetchSlice from "./immigration/products/productsFetchSlice";
 
 const store = configureStore(
   {
@@ -70,6 +71,7 @@ const store = configureStore(
       swiperIndex: swiperIndexReducer,
       fetchUser: fetchUserSlice,
       products: productSlice,
+      productsFetchSlice: productsFetchSlice,
     },
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
