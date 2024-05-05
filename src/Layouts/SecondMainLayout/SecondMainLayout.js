@@ -9,6 +9,7 @@ import GipoBanner from "../../Components/Banners/GipoBanner";
 import { UserAuth } from "../../Auth/Auth";
 import useMobileCheck from "../../Components/MobileCheck";
 import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain/RestaurantBannerMain";
+import Clock from "../../Components/Clock/Clock";
 
 const SecondMainLayout = (props) => {
   const { user } = UserAuth();

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { UserAuth } from "../../Auth/Auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,21 +7,56 @@ import { Box, CircularProgress } from "@mui/material";
 import MainLayout from "../MainLayout/MainLayout";
 import SecondMainLayout from "../SecondMainLayout/SecondMainLayout";
 import { fetchProductsDataWithoutUser } from "../../Redux/immigration/products/productsFetchSlice";
+import { fetchProductsAsync } from "../../Redux/immigration/products/productsForMain";
+import Clock from "../../Components/Clock/Clock";
 
 const LayoutDefinder = (props) => {
   const dispatch = useDispatch();
   const { user } = UserAuth();
-  const uID = user?.uid;
+  const uID = user?.uid ? user?.uid : null;
   const userData = useSelector((state) => state.fetchUser.userData);
   const userDataState = useSelector((state) => state.fetchUser.loading);
   const products = useSelector(
     (state) => state.productsFetchSlice.productsDataWithoutUser
   );
+  const [startAfterDocument, setStartAfterDocument] = useState(null);
+
+  // const startAfterDocument = useSelector(
+  //   (state) => state.productsForMain.lastDocument
+  // );
+
+  const [timeIsRedy, setTimeIsReady] = useState(false);
+
+  const currentTime = Clock();
+  useEffect(() => {
+    if (currentTime) {
+      setTimeIsReady(true);
+    }
+  }, [currentTime]);
 
   useEffect(() => {
+    currentTime && console.log("currentTime", currentTime);
+  }, [currentTime]);
+  useEffect(() => {
     dispatch(fetchUserData(uID));
-    dispatch(fetchProductsDataWithoutUser());
+    // dispatch(fetchProductsDataWithoutUser());
   }, [dispatch, user]);
+
+  useEffect(() => {
+    currentTime &&
+      dispatch(fetchProductsAsync(currentTime, startAfterDocument));
+  }, [dispatch, startAfterDocument, timeIsRedy]); // Der Effekt wird beim Laden der Komponente und immer dann ausgeführt, wenn startAfterDocument aktualisiert wird
+
+  useEffect(() => {
+    products && handleLoadMore();
+  }, [products]);
+
+  const handleLoadMore = () => {
+    if (products.length > 0) {
+      const lastDocument = products[products.length - 1];
+      setStartAfterDocument(lastDocument);
+    }
+  };
 
   console.log("user From Auth", uID);
 

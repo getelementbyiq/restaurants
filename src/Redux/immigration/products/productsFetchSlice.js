@@ -22,7 +22,6 @@ export const fetchProductsDataWithoutUser = createAsyncThunk(
     }
   }
 );
-
 export const fetchProductsData = createAsyncThunk(
   "fetchProducts/fetchProductsData",
   async (userId, { dispatch }) => {
@@ -36,7 +35,8 @@ export const fetchProductsData = createAsyncThunk(
       const productsData = [];
 
       querySnapshot.forEach((doc) => {
-        productsData.push(doc.data());
+        // Füge die Produkt-Daten zusammen mit der Produkt-ID zum Array hinzu
+        productsData.push({ id: doc.id, ...doc.data() });
       });
       return productsData;
     } catch (error) {

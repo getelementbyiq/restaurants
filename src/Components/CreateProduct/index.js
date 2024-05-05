@@ -14,7 +14,9 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setOfferTime,
+  setEventsDate,
+  setOfferEnd,
+  setOfferStart,
   setProductField,
 } from "../../Redux/slices/createProductSlice";
 import ItemsData from "../ItemsData";
@@ -32,6 +34,13 @@ import Add from "../../assets/icons/add-black.svg";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useParams } from "react-router-dom";
 import { setFetchedProducts } from "../../Redux/slices/fetchProducts";
+import { timeToNumericFormat } from "../AAATimeToNum/TimeToNum";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 function valuetext(value) {
   return `${value}°C`;
@@ -67,6 +76,12 @@ const CreateProduct = (props) => {
   const selectedCategoryId = useSelector((state) => state.selectedCategory);
   const { id } = useParams();
   const restaurantId = id;
+
+  const [selectedDate, setSelectedDate] = React.useState(dayjs());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   console.error("categoryType", categoryType);
   console.error("selectedCategoryId", selectedCategoryId);
@@ -279,11 +294,13 @@ const CreateProduct = (props) => {
   };
 
   useEffect(() => {
-    dispatch(setOfferTime({ timeType: "default", timeValue: [from, to] }));
-  }, [from, to, dispatch]);
+    dispatch(setOfferStart(timeToNumericFormat(from)));
+    dispatch(setOfferEnd(timeToNumericFormat(to)));
+    dispatch(setEventsDate(selectedDate.toDate()));
+  }, [from, to, dispatch, selectedDate]);
 
   const [nav, setNav] = useState(false);
-  const [prodTag, setProdTag] = useState("");
+  const [prodTag, setProdTag] = useState("food");
   const nextBtn = () => {
     setNav((open) => !open);
   };
@@ -512,6 +529,26 @@ const CreateProduct = (props) => {
             gap: "8px",
           }}
         >
+          {prodTag === "event" && (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer
+                components={[
+                  "DatePicker",
+                  "MobileDatePicker",
+                  "DesktopDatePicker",
+                  "StaticDatePicker",
+                ]}
+              >
+                <DemoItem label="Desktop variant">
+                  <DesktopDatePicker
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                  />
+                </DemoItem>
+                {/* Hier können weitere DemoItems für andere DatePicker-Typen hinzugefügt werden */}
+              </DemoContainer>
+            </LocalizationProvider>
+          )}
           <Box
             sx={{
               display: "flex",

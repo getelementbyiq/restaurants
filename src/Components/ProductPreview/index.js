@@ -63,9 +63,12 @@ const ProductPreview = (props) => {
       background,
       createdAt,
       items,
-      offerTime,
+      offerStart,
+      offerEnd,
+      collectedOfferTime,
       menus,
       tag,
+      eventsDate,
     } = product;
 
     const backgroundRef = ref(imagesRef, `${name}_background.jpg`);
@@ -100,11 +103,14 @@ const ProductPreview = (props) => {
         createdAt,
         restaurantsId,
         items,
-        offerTime,
+        offerStart,
+        offerEnd,
+        collectedOfferTime,
         menus,
         tag,
         categoryType,
         selectedCategoryId,
+        eventsDate,
         // Weitere Produktinformationen hier hinzufügen...
       });
 

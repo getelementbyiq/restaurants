@@ -24,10 +24,10 @@ const initialState = {
     createdAt,
     restaurantsId: null,
     items: {},
-    offerTime: {
-      default: null,
-      collected: null,
-    },
+    offerStart: null,
+    offerEnd: null,
+    eventsDate: null,
+    collectedOfferTime: null,
     menus: {
       default: null,
       deals: null,
@@ -57,13 +57,24 @@ const createProductSlice = createSlice({
         delete state.productData.items[itemsName];
       }
     },
-    setOfferTime: (state, action) => {
-      const { timeType, timeValue } = action.payload;
-
+    setEventsDate: (state, action) => {
       // Überprüfen, ob der Zeittyp gültig ist und dann den Wert setzen
-      if (timeType === "default" || timeType === "collected") {
-        state.productData.offerTime[timeType] = timeValue;
-      }
+      state.productData.eventsDate = action.payload;
+    },
+    setOfferStart: (state, action) => {
+      // Überprüfen, ob der Zeittyp gültig ist und dann den Wert setzen
+      state.productData.offerStart = action.payload;
+    },
+    setOfferEnd: (state, action) => {
+      // Überprüfen, ob der Zeittyp gültig ist und dann den Wert setzen
+      state.productData.offerEnd = action.payload;
+    },
+    collectedOfferTime: (state, action) => {
+      // Überprüfen, ob der Zeittyp gültig ist und dann den Wert setzen
+      state.productData.offerStart = [
+        ...state.productData.offerStart,
+        action.payload,
+      ];
     },
 
     resetCreateProduct: (state) => initialState,
@@ -75,7 +86,10 @@ export const {
   setItem,
   deleteItem,
   resetCreateProduct,
-  setOfferTime,
+  setOfferStart,
+  setOfferEnd,
+  collectedOfferTime,
+  setEventsDate,
 } = createProductSlice.actions;
 
 export default createProductSlice.reducer;

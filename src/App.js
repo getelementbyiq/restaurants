@@ -43,6 +43,7 @@ import HomePageMobile from "./Pages/HomePageMobile";
 import LocalsFullViewSecond from "./Pages/LocalsFullViewPageSecond";
 import LayoutDefinder from "./Layouts/LayoutDefinder/LayoutDefinder";
 import ProductsPage from "./Pages/ProductsPage/ProductsPage";
+import { useState } from "react";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
@@ -103,6 +104,14 @@ const Root = createBrowserRouter(
       />
       <Route
         path="/menu"
+        element={
+          <ProtectedRoute>
+            <Menu />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="menu/:menuId"
         element={
           <ProtectedRoute>
             <Menu />
