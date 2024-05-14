@@ -8,7 +8,11 @@ import { useSelector } from "react-redux";
 import { db } from "../../firebase";
 
 const Menu = (props) => {
-  const restaurantId = useSelector((state) => state?.restaurants?.data[0]?.id);
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
+  );
+  const restaurantId = restaurantsData ? restaurantsData[0].id : [];
+
   useEffect(() => {
     const fetchMenus = async () => {
       try {
@@ -49,7 +53,7 @@ const Menu = (props) => {
       sx={{
         display: "flex",
         flexGrow: "1",
-        border: "1px solid red",
+        // border: "1px solid red",
         px: "40px",
       }}
     >
@@ -58,7 +62,7 @@ const Menu = (props) => {
         xs={3}
         md={3}
         sx={{
-          border: "1px solid blue",
+          // border: "1px solid blue",
           display: "flex",
           flexGrow: "1",
           justifyContent: "center",
@@ -72,7 +76,7 @@ const Menu = (props) => {
         xs={9}
         md={9}
         sx={{
-          border: "1px solid red",
+          // border: "1px solid red",
           display: "flex",
           flexGrow: "1",
           alignItems: "center",

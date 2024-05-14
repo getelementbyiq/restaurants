@@ -24,6 +24,7 @@ export default function ProductsGrid() {
         display: "flex",
         flexGrow: "1",
         flexDirection: "column",
+        border: "1px solid red",
       }}
     >
       {products?.map((product) => (

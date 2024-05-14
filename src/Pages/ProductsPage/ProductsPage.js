@@ -9,7 +9,7 @@ const ProductsPage = (props) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
       <ProductsPageNav />
-      <ProductsGrid />
+      {/* <ProductsGrid /> */}
       <CreateProductsV2 />
     </Box>
   );

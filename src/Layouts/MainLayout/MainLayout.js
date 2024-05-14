@@ -1,20 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Box, Collapse, IconButton, Toolbar, Typography } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import './index.css';
+import React, { useEffect, useRef, useState } from "react";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Box, Collapse, IconButton, Toolbar, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import "./index.css";
 
-import { UserAuth } from '../../Auth/Auth';
-import { getUserById } from '../../Redux/thunks/getUserById';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { db } from '../../firebase';
-import { setFetchedRestaurants } from '../../Redux/slices/restaurantsSlice';
-import { setRestaurantField } from '../../Redux/slices/createLocalSlice';
+import { UserAuth } from "../../Auth/Auth";
+import { getUserById } from "../../Redux/thunks/getUserById";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../firebase";
+import { setFetchedRestaurants } from "../../Redux/slices/restaurantsSlice";
+import { setRestaurantField } from "../../Redux/slices/createLocalSlice";
 
-import RestaurantHeaderFromOwner from '../../Pages/Locals/RestaurantHeaderFromOwner';
-import RestaurantBannerMain from '../../Components/Banners/RestaurantBannerMain/RestaurantBannerMain';
-import BannerDefinder from '../../Components/Banners/BannerDefinder/BannerDefinder';
-import { fetchProducts, filterBy } from '../../app/features/ProductsSlice';
+import RestaurantHeaderFromOwner from "../../Pages/Locals/RestaurantHeaderFromOwner";
+import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain/RestaurantBannerMain";
+import BannerDefinder from "../../Components/Banners/BannerDefinder/BannerDefinder";
+import { fetchProducts, filterBy } from "../../app/features/ProductsSlice";
+import { fetchRestaurantsData } from "../../Redux/immigration/restaurants/restaurantFetchSlice";
+import { fetchProductsData } from "../../Redux/immigration/products/productsFetchSlice";
 
 const MainLayout = (props) => {
   const dispatch = useDispatch();
@@ -31,128 +33,56 @@ const MainLayout = (props) => {
   const userData = currentUserData?.user;
   const location = useLocation();
   const [scrollPosition, setScrollPosition] = useState(0);
-  console.log('scrollPosition', scrollPosition);
+  console.log("scrollPosition", scrollPosition);
   const localsId = useParams();
-  console.log('localsID', localsId);
-
-  // useEffect(() => {
-  //   if (userId) {
-  //     dispatch(getUserById(userId));
-  //   }
-  // }, [dispatch, userId]);
-
-  // const fetchRestaurantsByUserId = (userId) => {
-  //   try {
-  //     // Referenz auf die Sammlung "restaurants" erstellen
-  //     const restaurantsRef = collection(db, "restaurants");
-
-  //     // Echtzeit-Listener für Änderungen an den Restaurants hinzufügen
-  //     const unsubscribe = onSnapshot(
-  //       query(restaurantsRef, where("userId", "==", userId)),
-  //       (snapshot) => {
-  //         const restaurants = [];
-  //         snapshot.forEach((doc) => {
-  //           restaurants.push(doc.data());
-  //         });
-  //         // Aktualisierte Restaurantdaten im Redux-Store speichern
-  //         dispatch(setFetchedRestaurants(restaurants));
-  //       }
-  //     );
-
-  //     // Unsubscribe-Funktion zurückgeben, um den Listener zu entfernen
-  //     return unsubscribe;
-  //   } catch (error) {
-  //     console.error("Fehler beim Abrufen der Restaurants:", error);
-  //     return null;
-  //   }
-  // };
-
-  // const handleScroll = ({ scrollTop, scrollHeight, clientHeight }) => {
-  //   // Prüfe, ob der Benutzer am unteren Ende der Seite ist und lade mehr Produkte
-  //   if (scrollTop + clientHeight === scrollHeight) {
-  //   }
-  //   // Verfolge die aktuelle Scrollposition
-  //   setScrollPosition(scrollTop);
-  // };
-
-  const fetchRestaurantsByUserId = (userId) => {
-    try {
-      // Referenz auf die Sammlung "restaurants" erstellen
-      const restaurantsRef = collection(db, 'restaurants');
-
-      // Echtzeit-Listener für Änderungen an den Restaurants hinzufügen
-      const unsubscribe = onSnapshot(
-        query(restaurantsRef, where('userId', '==', userId)),
-        (snapshot) => {
-          const restaurants = [];
-          snapshot.forEach((doc) => {
-            // Daten des Restaurants und ID abrufen
-            const restaurantData = doc.data();
-            const restaurantId = doc.id;
-            // Restaurantobjekt um die ID erweitern
-            const restaurantWithId = { id: restaurantId, ...restaurantData };
-            restaurants.push(restaurantWithId);
-          });
-          // Aktualisierte Restaurantdaten im Redux-Store speichern
-          dispatch(setFetchedRestaurants(restaurants));
-        },
-      );
-
-      // Unsubscribe-Funktion zurückgeben, um den Listener zu entfernen
-      return unsubscribe;
-    } catch (error) {
-      console.error('Fehler beim Abrufen der Restaurants:', error);
-      return null;
-    }
-  };
+  console.log("localsID", localsId);
+  const [restaurantId, setRestaurantId] = useState();
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
+  );
+  useEffect(() => {
+    restaurantsData && setRestaurantId(restaurantsData[0]?.id);
+  }, [restaurantsData]);
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getUserById(userId));
-      dispatch(
-        setRestaurantField({
-          field: 'userId',
-          value: userId,
-        }),
-      );
-      // fetchRestaurantsByUserId(userId);
-      // dispatch(fetchProducts(userId));
-      dispatch(fetchProducts());
-    }
-  }, [dispatch, userId]);
+    dispatch(fetchRestaurantsData(userId));
+  }, [userId, dispatch]);
 
-  const createRestaurantData = useSelector((state) => state.createRestaurant.restaurantData);
-  const restaurantOfUser = useSelector((state) => state.restaurants.data);
-  const toRenderRestaurant = restaurantOfUser[0];
+  useEffect(() => {
+    if (restaurantId !== null) {
+      dispatch(fetchProductsData(restaurantId));
+    }
+  }, [restaurantId, dispatch]);
 
   return (
     <Box
       sx={{
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
         // justifyContent: "space-between",
         // backgroundImage: `url(${restaurantData.restaurantData.background})`,
         // backgroundRepeat: "no-repeat",
         // backgroundSize: "cover",
         // backgroundPosition: "center",
-      }}>
+      }}
+    >
       <RestaurantHeaderFromOwner />
-      <BannerDefinder BG={toRenderRestaurant?.background} />
+      {/* <BannerDefinder BG={toRenderRestaurant?.background} /> */}
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
           flexGrow: 1,
-          gap: '8px',
-          pt: '70px',
-        }}>
+          gap: "8px",
+          pt: "70px",
+        }}
+      >
         <Outlet />
       </Box>
 
-      <div>
-        {/* TEST DELETE RENDER */}
+      {/* <div>
         {products.map((product) => {
           return (
             <div>
@@ -160,7 +90,7 @@ const MainLayout = (props) => {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </Box>
   );
 };

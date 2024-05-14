@@ -21,8 +21,12 @@ import { resetCreateProduct } from "../../Redux/slices/createProductSlice";
 const ProductPreview = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const [restaurantsId, setRestaurantsId] = useState();
   // const restaurantsId = id;
-  const restaurantsId = useSelector((state) => state?.restaurants?.data[0]?.id);
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
+  );
+
   const product = useSelector((state) => state.createProduct.productData);
   const itemsData = useSelector((state) => state.createItemsList);
   //   const localData = useSelector((state) => state.localData);
@@ -41,7 +45,10 @@ const ProductPreview = (props) => {
     (state) => state.fetchProducts.fetchProducts
   );
 
-  console.log("product from preview", product);
+  useEffect(() => {
+    restaurantsData && setRestaurantsId(restaurantsData[0]?.id);
+  }, [restaurantsData]);
+  console.log("product from preview", restaurantsId);
 
   const categoryTypeData = useSelector((state) => state.categoryActive);
 

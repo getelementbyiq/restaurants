@@ -30,8 +30,17 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { db } from "../../firebase";
 import { Close } from "@mui/icons-material";
 import { setRestaurantDataFromMain } from "../../Redux/slices/restaurantDataFromMain";
+import { UserAuth } from "../../Auth/Auth";
 
 const Art = (props) => {
+  const { user } = UserAuth();
+
+  const [userId, setUserId] = useState();
+
+  useEffect(() => {
+    user && setUserId(user.uid);
+  }, [user]);
+
   const dispatch = useDispatch();
   const createRestaurantData = useSelector(
     (state) => state.createRestaurant.restaurantData
@@ -106,16 +115,8 @@ const Art = (props) => {
     const storage = getStorage();
     const imagesRef = ref(storage, "restaurants");
 
-    const {
-      name,
-      street,
-      houseNumber,
-      city,
-      art,
-      userId,
-      followers,
-      createdAt,
-    } = createRestaurantData;
+    const { name, street, houseNumber, city, art, followers, createdAt } =
+      createRestaurantData;
     // Erstellen Sie Referenzen für Logo und Hintergrundbild
     const logoRef = ref(imagesRef, `${name}_logo.jpg`);
     const backgroundRef = ref(imagesRef, `${name}_background.jpg`);
