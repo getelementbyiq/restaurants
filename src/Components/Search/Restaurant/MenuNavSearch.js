@@ -14,6 +14,11 @@ const MenuNavSearch = (props) => {
     (state) => state.productsFetchSlice.searchResults
   );
 
+  const products = useSelector(
+    (state) => state.productsFetchSlice.productsOfMenu.data
+  );
+  console.log("products menunav", products);
+
   const handleProductClick = async (productId) => {
     try {
       // Referenz zum Menüdokument in der "menus" Collection
@@ -60,6 +65,12 @@ const MenuNavSearch = (props) => {
           <ProductsImageTemplate product={product} />
         </Box>
       ))}
+      {products &&
+        products.map((product, index) => (
+          <Box key={index}>
+            <ProductsImageTemplate product={product} />
+          </Box>
+        ))}
     </Box>
   );
 };

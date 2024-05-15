@@ -71,6 +71,7 @@ const Menu = (props) => {
           flexGrow: "1",
           justifyContent: "center",
           pb: "8px",
+          // backgroundColor: "red",
         }}
       >
         <CreateMenu />
@@ -80,12 +81,13 @@ const Menu = (props) => {
         xs={9}
         md={9}
         sx={{
-          // border: "1px solid red",
+          border: "1px solid black",
           display: "flex",
           flexGrow: "1",
           alignItems: "center",
           pb: "8px",
           flexDirection: "column",
+          // backgroundColor: "green",
         }}
       >
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center" }}>
@@ -100,3 +102,6 @@ const Menu = (props) => {
 Menu.propTypes = {};
 
 export default Menu;
+
+
+
