@@ -7,7 +7,8 @@ import {
   fetchProductsOfOneMenu,
   searchProducts,
 } from "../../../../Redux/immigration/products/productsFetchSlice";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { setMenuAddProduct } from "../../../../Redux/immigration/globalStates/globalStatesSlice";
 
 const MenuPageNav = (props) => {
   const { menuId } = useParams();
@@ -16,6 +17,7 @@ const MenuPageNav = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [menus, setMenus] = useState();
   const [menu, setMenu] = useState(null);
+  const location = useLocation()
 
   const handleSearch = (event) => {
     const term = event.target.value;
@@ -43,6 +45,24 @@ const MenuPageNav = (props) => {
     }
   }, [menuData, menuId, dispatch]);
   // console.log("menus from Navmenu", menuData);
+  const addProductsState = useSelector(
+    (state) => state.globalStates.menuAddProduct
+  );
+  const clickButton = () => {
+    //esli addProductState hranit ID von kategorie
+    //esli addProductState  ID von kategorie === menuId to sdelai Null
+    if (addProductsState === menuId) {
+      dispatch(setMenuAddProduct(null));
+    } else if(addProductsState ===null){
+      //no esli net to sdelai menuID
+      dispatch(setMenuAddProduct(menuId));
+//esli user clickts an anderen Menu
+    }else{
+      
+    }
+    //
+  };
+  console.log(" addProductsState", addProductsState);
 
   return (
     <Box
@@ -70,6 +90,18 @@ const MenuPageNav = (props) => {
         value={searchTerm}
         onChange={handleSearch}
       />
+      <button onClick={clickButton}>
+        {menuId === addProductsState ? (
+          <Typography>Add Product</Typography>
+        ) : (
+          <Typography>Zurück zum Dashboard</Typography>
+        )}
+      </button>
+      {menuId === addProductsState ? (
+        <Typography>Add Product</Typography>
+      ) : (
+        <Typography>Zurück zum Dashboard</Typography>
+      )}
     </Box>
   );
 };
