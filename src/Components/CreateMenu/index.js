@@ -8,7 +8,11 @@ import { db } from "../../firebase";
 const CreateMenu = () => {
   const { id } = useParams();
   const [textFieldValue, setTextFieldValue] = useState("");
-  const restaurantId = useSelector((state) => state?.restaurants?.data[0]?.id);
+  const restaurantOfUser = useSelector(
+    (state) => state.restaurants.userRestaurants
+  );
+
+  const restaurantId = restaurantOfUser[0]?.id;
   const [menus, setMenus] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();

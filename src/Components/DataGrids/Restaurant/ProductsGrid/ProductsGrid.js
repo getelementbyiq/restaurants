@@ -7,15 +7,19 @@ import ListProductTemplate from "../../../Templates/ListProductTemplate/ListProd
 
 export default function ProductsGrid() {
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state?.restaurants?.data[0]?.id);
+  const restaurantOfUser = useSelector(
+    (state) => state.restaurants.userRestaurants
+  );
+  // const restaurantsId = id;
+  const userId = restaurantOfUser[0]?.id;
   const products = useSelector(
     (state) => state.productsFetchSlice.productsData
   );
 
   console.log("products", products);
-  React.useEffect(() => {
-    dispatch(fetchProductsData(userId));
-  }, [userId, dispatch]);
+  // React.useEffect(() => {
+  //   dispatch(fetchProductsData(userId));
+  // }, [userId, dispatch]);
   return (
     <Box
       sx={{

@@ -21,8 +21,15 @@ import { resetCreateProduct } from "../../Redux/slices/createProductSlice";
 const ProductPreview = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const restaurantOfUser = useSelector(
+    (state) => state.restaurants.userRestaurants
+  );
   // const restaurantsId = id;
-  const restaurantsId = useSelector((state) => state?.restaurants?.data[0]?.id);
+  // const restaurantsId = restaurantOfUser?.map((restaurant) => restaurant.id);
+  const restaurantsId = restaurantOfUser[0]?.id;
+
+  console.log("restaurantId from preview", restaurantsId);
+
   const product = useSelector((state) => state.createProduct.productData);
   const itemsData = useSelector((state) => state.createItemsList);
   //   const localData = useSelector((state) => state.localData);
@@ -40,8 +47,6 @@ const ProductPreview = (props) => {
   const existingProducts = useSelector(
     (state) => state.fetchProducts.fetchProducts
   );
-
-  console.log("product from preview", product);
 
   const categoryTypeData = useSelector((state) => state.categoryActive);
 
@@ -66,7 +71,8 @@ const ProductPreview = (props) => {
       offerStart,
       offerEnd,
       collectedOfferTime,
-      menus,
+      menuDefault,
+      menuDeals,
       tag,
       eventsDate,
     } = product;
@@ -101,16 +107,18 @@ const ProductPreview = (props) => {
         likes,
         background: backgroundUrl,
         createdAt,
-        restaurantsId,
         items,
         offerStart,
         offerEnd,
         collectedOfferTime,
-        menus,
+        menuDefault,
+        menuDeals,
         tag,
         categoryType,
         selectedCategoryId,
         eventsDate,
+        restaurantsId,
+
         // Weitere Produktinformationen hier hinzufügen...
       });
 

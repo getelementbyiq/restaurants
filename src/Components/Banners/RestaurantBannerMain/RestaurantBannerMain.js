@@ -34,7 +34,8 @@ const textArray = [
 ];
 
 const RestaurantBannerMain = (props) => {
-  const { BG } = props;
+  // const { BG } = props;
+  // console.log("restaurantsBanner", BG);
   const { user, logout } = UserAuth();
   const devicetype = useDeviceType();
   const isMobile = useMobileCheck();
@@ -44,6 +45,9 @@ const RestaurantBannerMain = (props) => {
   const [scrolled, setScrolled] = useState(false);
   const scrollState = useSelector((state) => state.scrollState);
   const swiperIndex = useSelector((state) => state.swiperIndex);
+  const restaurantOfUser = useSelector(
+    (state) => state.restaurants.userRestaurants
+  );
   console.log("scrollState", scrollState);
   const handleScroll = () => {
     const offset = window.scrollY;
@@ -72,6 +76,14 @@ const RestaurantBannerMain = (props) => {
 
     console.log("swiperIndexfrom", swiperIndex);
   }, [swiperIndex]);
+
+  const [toRenderRestaurant, setToRenderRestaurant] = useState(null);
+
+  useEffect(() => {
+    if (restaurantOfUser) {
+      setToRenderRestaurant(restaurantOfUser[0]);
+    }
+  }, [restaurantOfUser]);
 
   return (
     <Grid
@@ -130,7 +142,9 @@ const RestaurantBannerMain = (props) => {
               : "polygon(0 0, 100% 0, 100% 88%, 0 100%)",
             height: isMobile ? "100vh" : "85vh",
 
-            backgroundImage: BG ? `url(${BG})` : null,
+            backgroundImage: toRenderRestaurant
+              ? `url(${toRenderRestaurant.background})`
+              : null,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",

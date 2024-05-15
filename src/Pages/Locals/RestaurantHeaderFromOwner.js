@@ -18,7 +18,9 @@ import { useSelector } from "react-redux";
 
 const RestaurantHeaderFromOwner = (props) => {
   const navigate = useNavigate();
-  const restaurantOfUser = useSelector((state) => state.restaurants.data);
+  const restaurantOfUser = useSelector(
+    (state) => state.restaurants.userRestaurants
+  );
   const { id } = useParams();
   const [isTab, setIsTab] = useState("main");
   const { logout } = UserAuth();

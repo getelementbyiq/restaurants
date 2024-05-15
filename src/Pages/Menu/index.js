@@ -8,7 +8,11 @@ import { useSelector } from "react-redux";
 import { db } from "../../firebase";
 
 const Menu = (props) => {
-  const restaurantId = useSelector((state) => state?.restaurants?.data[0]?.id);
+  const restaurantOfUser = useSelector(
+    (state) => state.restaurants.userRestaurants
+  );
+
+  const restaurantId = restaurantOfUser[0]?.id;
   useEffect(() => {
     const fetchMenus = async () => {
       try {

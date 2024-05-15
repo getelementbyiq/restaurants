@@ -20,7 +20,6 @@ import fetchProductsReducer from "./slices/fetchProducts";
 import settingsProductReducer from "./functions/slices/SettingsProduct";
 import isCommentReducer from "./functions/slices/IsComment";
 import userAllReducer from "./slices/userByIdSliceAll";
-import restaurantsReducer from "./slices/restaurantsSlice";
 import searchResultReducer from "./functions/slices/OpenThird";
 import oneRestaurantDataReducer from "./slices/onerestaurantData";
 import isClickedReducer from "./slices/isClicked";
@@ -34,6 +33,7 @@ import fetchUserSlice from "./immigration/user/userSlice";
 import productSlice from "../app/features/ProductsSlice";
 import productsFetchSlice from "./immigration/products/productsFetchSlice";
 import productsForMainSlice from "./immigration/products/productsForMain";
+import restaurantsSliceReducer from "./immigration/restaurants/fetchRestaurantSlice";
 
 const store = configureStore(
   {
@@ -60,7 +60,7 @@ const store = configureStore(
       isComment: isCommentReducer,
       userAll: userAllReducer,
       createRestaurantState: createRestaurantStateReducer,
-      restaurants: restaurantsReducer,
+      restaurants: restaurantsSliceReducer,
       searchResult: searchResultReducer,
       oneRestaurantData: oneRestaurantDataReducer,
       isClicked: isClickedReducer,

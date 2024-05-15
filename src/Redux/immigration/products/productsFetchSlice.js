@@ -24,11 +24,11 @@ export const fetchProductsDataWithoutUser = createAsyncThunk(
 );
 export const fetchProductsData = createAsyncThunk(
   "fetchProducts/fetchProductsData",
-  async (userId, { dispatch }) => {
+  async (restaurantsId, { dispatch }) => {
     try {
       const productsQuery = query(
         collection(db, "products"),
-        where("restaurantsId", "==", userId)
+        where("restaurantsId", "==", restaurantsId)
       );
 
       const querySnapshot = await getDocs(productsQuery);

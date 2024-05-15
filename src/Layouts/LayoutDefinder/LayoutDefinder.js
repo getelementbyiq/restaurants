@@ -9,6 +9,7 @@ import SecondMainLayout from "../SecondMainLayout/SecondMainLayout";
 import { fetchProductsDataWithoutUser } from "../../Redux/immigration/products/productsFetchSlice";
 import { fetchProductsAsync } from "../../Redux/immigration/products/productsForMain";
 import Clock from "../../Components/Clock/Clock";
+import { fetchUserRestaurants } from "../../Redux/immigration/restaurants/fetchRestaurantSlice";
 
 const LayoutDefinder = (props) => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const LayoutDefinder = (props) => {
   }, [currentTime]);
   useEffect(() => {
     dispatch(fetchUserData(uID));
+    dispatch(fetchUserRestaurants({ userId: uID }));
     // dispatch(fetchProductsDataWithoutUser());
   }, [dispatch, user]);
 

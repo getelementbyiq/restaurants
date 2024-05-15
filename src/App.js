@@ -52,7 +52,7 @@ const Root = createBrowserRouter(
       {/* <Route path="owners" element={<OwnerRegisterPage />} />
       <Route path="foodies" element={<UserRegisterPage />} />
       <Route path="foods" element={<FoodsPage />} /> */}
-      <Route path="/:locals" element={<LocalsFullView />} />
+      <Route path="/:locals" element={<HomePageNewOwner />} />
       <Route path="/second/:locals" element={<LocalsFullViewSecond />} />
       <Route path="/:locals/:categoryType/:menu/:id" element={<HomePage />} />
       <Route path="/:locals/foods" element={<FoodPage />} />
@@ -69,6 +69,14 @@ const Root = createBrowserRouter(
           </ProtectedRoute>
         }
       />
+      {/* <Route
+        path="/:"
+        element={
+          <ProtectedRoute>
+            <PreferencesPages />
+          </ProtectedRoute>
+        }
+      /> */}
       <Route
         path="items"
         element={

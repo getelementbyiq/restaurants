@@ -28,11 +28,13 @@ const initialState = {
     offerEnd: null,
     eventsDate: null,
     collectedOfferTime: null,
-    menus: {
-      default: null,
-      deals: null,
-    },
+    menuDefault: null,
+    menuDeals: [],
     tag: null,
+    // menus: {
+    //   default: null,
+    //   deals: null,
+    // },
   },
 };
 
