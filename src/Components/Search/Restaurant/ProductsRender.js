@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, IconButton } from "@mui/material";
 import ListProductTemplate from "../../Templates/ListProductTemplate/ListProductTemplate";
 import ProductsImageTemplate from "../../Templates/ProductsImageTemplate/ProductsImageTemplate";
 import { useParams } from "react-router-dom";
@@ -55,23 +55,75 @@ const ProductsRender = (props) => {
     }
   };
 
+  const [show, setShow] = useState(false);
+  const [linkId, setLinkId] = useState(null);
+  const clichOpen = (id) => {
+    if (show === false && linkId === null) {
+      setLinkId(id);
+      setShow(true);
+    } else if (show === true && linkId === menuId) {
+      setLinkId(null);
+      setShow(false);
+    } else if (show === true && id !== linkId) {
+      setShow(false);
+      setLinkId(null);
+    }
+  };
+
   return (
     <Grid
       container
       sx={{
         display: "flex",
         flexGrow: "1",
-        flexWrap: "wrap",
-        // border: "2px solid green",
-        px: "50px",
+        // flexWrap: "wrap",
+        border: "2px solid green",
+        // px: "5px",
+        position: "relative",
       }}
     >
+      <IconButton
+        onClick={() => clichOpen(menuId)}
+        sx={{
+          position: "absolute",
+          top: "-80px",
+          right: "0",
+          zIndex: "3000",
+          transition: "150ms",
+          backgroundColor: "#fff",
+          transform: show ? "rotate(45deg)" : "rotate(0deg)",
+        }}
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4.5 9H13.5"
+            stroke="#292D32"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M9 13.5V4.5"
+            stroke="#292D32"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </IconButton>
+
       <Box
         sx={{
           display: "grid",
           gap: "16px",
-          // border: "1px solid green",
-          width: isMobile ? "100vw" : "90vw",
+          // border: "2px solid red",
+          width: isMobile ? "100vw" : show ? "64%" : "100%",
           // backgroundColor: "black",
           // position: "absolute",
           // left: "50%",
@@ -105,14 +157,39 @@ const ProductsRender = (props) => {
             <ProductsImageTemplate product={product} />
           </Box>
         ))}{" "} */}
-      {searchValue?.map((product) => (
+      {show && (
         <Box
-          onClick={() => handleProductClick(product.id)}
-          sx={{ cursor: "pointer" }}
+          sx={{
+            width: "36%",
+            // border: "2px solid yellow",
+          }}
         >
-          <ProductsImageTemplate product={product} />
+          <Box
+            sx={{
+              display: "flex",
+              border: "2px solid yellow",
+              flexWrap: "wrap",
+              gap: "8px",
+              maxHeight: "100%",
+              overflow: "scrollY",
+              scrollbarWidth: "2px",
+              // alignItems: "flex-start",
+            }}
+          >
+            {searchValue?.map((product) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleProductClick(product.id)}
+              >
+                <ProductsImageTemplate product={product} />
+              </Box>
+            ))}
+          </Box>
         </Box>
-      ))}
+      )}
     </Grid>
   );
 };

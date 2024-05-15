@@ -17,7 +17,7 @@ const MenuPageNav = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [menus, setMenus] = useState();
   const [menu, setMenu] = useState(null);
-  const location = useLocation()
+  const location = useLocation();
 
   const handleSearch = (event) => {
     const term = event.target.value;
@@ -53,12 +53,11 @@ const MenuPageNav = (props) => {
     //esli addProductState  ID von kategorie === menuId to sdelai Null
     if (addProductsState === menuId) {
       dispatch(setMenuAddProduct(null));
-    } else if(addProductsState ===null){
+    } else if (addProductsState === null) {
       //no esli net to sdelai menuID
       dispatch(setMenuAddProduct(menuId));
-//esli user clickts an anderen Menu
-    }else{
-      
+      //esli user clickts an anderen Menu
+    } else {
     }
     //
   };
@@ -77,9 +76,9 @@ const MenuPageNav = (props) => {
       {menuId &&
         menu?.map((menu) => (
           <Box>
-            <Typography>Products {menu.productIds.length}</Typography>
-
             <Typography>{menu.name}</Typography>
+
+            <Typography> : {menu.productIds.length}</Typography>
           </Box>
         ))}
       <TextField
@@ -90,18 +89,6 @@ const MenuPageNav = (props) => {
         value={searchTerm}
         onChange={handleSearch}
       />
-      <button onClick={clickButton}>
-        {menuId === addProductsState ? (
-          <Typography>Add Product</Typography>
-        ) : (
-          <Typography>Zurück zum Dashboard</Typography>
-        )}
-      </button>
-      {menuId === addProductsState ? (
-        <Typography>Add Product</Typography>
-      ) : (
-        <Typography>Zurück zum Dashboard</Typography>
-      )}
     </Box>
   );
 };
