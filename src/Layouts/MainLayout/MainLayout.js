@@ -8,13 +8,15 @@ import { UserAuth } from "../../Auth/Auth";
 import { getUserById } from "../../Redux/thunks/getUserById";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
+import { setFetchedRestaurants } from "../../Redux/slices/restaurantsSlice";
 import { setRestaurantField } from "../../Redux/slices/createLocalSlice";
 
 import RestaurantHeaderFromOwner from "../../Pages/Locals/RestaurantHeaderFromOwner";
 import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain/RestaurantBannerMain";
 import BannerDefinder from "../../Components/Banners/BannerDefinder/BannerDefinder";
 import { fetchProducts, filterBy } from "../../app/features/ProductsSlice";
-import { fetchUserRestaurants } from "../../Redux/immigration/restaurants/fetchRestaurantSlice";
+import { fetchRestaurantsData } from "../../Redux/immigration/restaurants/restaurantFetchSlice";
+import { fetchProductsData } from "../../Redux/immigration/products/productsFetchSlice";
 
 const MainLayout = (props) => {
   const dispatch = useDispatch();
@@ -32,40 +34,23 @@ const MainLayout = (props) => {
   console.log("scrollPosition", scrollPosition);
   const localsId = useParams();
   console.log("localsID", localsId);
+  const [restaurantId, setRestaurantId] = useState();
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
+  );
+  useEffect(() => {
+    restaurantsData && setRestaurantId(restaurantsData[0]?.id);
+  }, [restaurantsData]);
 
   useEffect(() => {
-    dispatch(fetchUserRestaurants(userId));
-  }, [dispatch, user]);
+    dispatch(fetchRestaurantsData(userId));
+  }, [userId, dispatch]);
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getUserById(userId));
-      dispatch(
-        setRestaurantField({
-          field: "userId",
-          value: userId,
-        })
-      );
-      // fetchRestaurantsByUserId(userId);
-      // dispatch(fetchProducts(userId));
-      dispatch(fetchProducts());
+    if (restaurantId !== null) {
+      dispatch(fetchProductsData(restaurantId));
     }
-  }, [dispatch, userId]);
-
-  const [toRenderRestaurant, setToRenderRestaurant] = useState(null);
-
-  useEffect(() => {
-    if (restaurantOfUser) {
-      setToRenderRestaurant(restaurantOfUser[0]);
-    }
-  }, [restaurantOfUser]);
-
-  console.log("to render Restaurant", toRenderRestaurant?.background);
-  console.log("to render Restaurant", restaurantOfUser);
-
-  useEffect(() => {
-    toRenderRestaurant?.id && navigate(`/${toRenderRestaurant?.id}`);
-  }, [toRenderRestaurant]);
+  }, [restaurantId, dispatch]);
 
   return (
     <Box
@@ -82,7 +67,7 @@ const MainLayout = (props) => {
       }}
     >
       <RestaurantHeaderFromOwner />
-      <BannerDefinder BG={toRenderRestaurant?.background} />
+      {/* <BannerDefinder BG={toRenderRestaurant?.background} /> */}
       <Box
         sx={{
           display: "flex",
@@ -94,6 +79,16 @@ const MainLayout = (props) => {
       >
         <Outlet />
       </Box>
+
+      {/* <div>
+        {products.map((product) => {
+          return (
+            <div>
+              <p>{product.name}</p>
+            </div>
+          );
+        })}
+      </div> */}
     </Box>
   );
 };

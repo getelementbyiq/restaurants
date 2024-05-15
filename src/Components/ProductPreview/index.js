@@ -21,12 +21,17 @@ import { resetCreateProduct } from "../../Redux/slices/createProductSlice";
 const ProductPreview = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const [restaurantsId, setRestaurantsId] = useState();
   const restaurantOfUser = useSelector(
     (state) => state.restaurants.userRestaurants
   );
   // const restaurantsId = id;
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
+  );
+
   // const restaurantsId = restaurantOfUser?.map((restaurant) => restaurant.id);
-  const restaurantsId = restaurantOfUser[0]?.id;
+  // const restaurantsId = restaurantOfUser[0]?.id;
 
   console.log("restaurantId from preview", restaurantsId);
 
@@ -47,6 +52,11 @@ const ProductPreview = (props) => {
   const existingProducts = useSelector(
     (state) => state.fetchProducts.fetchProducts
   );
+
+  useEffect(() => {
+    restaurantsData && setRestaurantsId(restaurantsData[0]?.id);
+  }, [restaurantsData]);
+  console.log("product from preview", restaurantsId);
 
   const categoryTypeData = useSelector((state) => state.categoryActive);
 

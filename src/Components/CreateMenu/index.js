@@ -4,19 +4,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
+import { fetchMenusData } from "../../Redux/immigration/menusOfRestaurant/menusOfRestaurantSlice";
 
 const CreateMenu = () => {
-  const { id } = useParams();
   const [textFieldValue, setTextFieldValue] = useState("");
-  const restaurantOfUser = useSelector(
-    (state) => state.restaurants.userRestaurants
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
   );
-
-  const restaurantId = restaurantOfUser[0]?.id;
-  const [menus, setMenus] = useState([]);
+  const [menus, setMenus] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [restaurantId, setRestaurantId] = useState();
+
+  useEffect(() => {
+    restaurantsData && setRestaurantId(restaurantsData[0].id);
+  }, [restaurantsData]);
+
+  useEffect(() => {
+    dispatch(fetchMenusData(restaurantId));
+  }, [restaurantId, dispatch]);
+
+  const menusPrev = useSelector((state) => state.fetchMenus?.menusData);
+  useEffect(() => {
+    menusPrev && setMenus(menusPrev);
+  }, [menusPrev]);
 
   const handleAddCategory = async () => {
     if (!textFieldValue.trim()) return;
@@ -53,11 +66,6 @@ const CreateMenu = () => {
       console.error("Fehler beim Erstellen des Menüs: ", error);
     }
   };
-
-  useEffect(() => {
-    const storedMenus = JSON.parse(localStorage.getItem("menus")) || [];
-    setMenus(storedMenus);
-  }, []);
 
   const goTo = (menuId) => {
     navigate(`/menu/${menuId}`);
@@ -130,7 +138,7 @@ const CreateMenu = () => {
             py: "16px",
           }}
         >
-          {menus.map((menu) => (
+          {menus?.map((menu) => (
             <Typography key={menu.id} onClick={() => goTo(menu.id)}>
               {menu.name}
             </Typography>
