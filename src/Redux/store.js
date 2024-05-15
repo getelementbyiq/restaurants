@@ -35,7 +35,7 @@ import productsFetchSlice from "./immigration/products/productsFetchSlice";
 import productsForMainSlice from "./immigration/products/productsForMain";
 import fetchRestaurantSlice from "./immigration/restaurants/restaurantFetchSlice";
 import menusOfRestaurantSlice from "./immigration/menusOfRestaurant/menusOfRestaurantSlice";
-import restaurantsSliceReducer from "./immigration/restaurants/fetchRestaurantSlice";
+import globalStateSlice from "./immigration/globalStates/globalStatesSlice";
 
 const store = configureStore(
   {
@@ -78,6 +78,7 @@ const store = configureStore(
       productsForMain: productsForMainSlice,
       fetchRestaurants: fetchRestaurantSlice,
       fetchMenus: menusOfRestaurantSlice,
+      globalStates: globalStateSlice,
     },
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

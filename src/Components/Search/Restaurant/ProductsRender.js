@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import ListProductTemplate from "../../Templates/ListProductTemplate/ListProductTemplate";
 import ProductsImageTemplate from "../../Templates/ProductsImageTemplate/ProductsImageTemplate";
 import { useParams } from "react-router-dom";
@@ -16,6 +16,9 @@ const ProductsRender = (props) => {
   const isMobile = useMobileCheck();
   const searchValue = useSelector(
     (state) => state.productsFetchSlice.searchResults
+  );
+  const addProductsState = useSelector(
+    (state) => state.globalStates.menuAddProduct
   );
 
   const products = useSelector(
@@ -53,25 +56,16 @@ const ProductsRender = (props) => {
   };
 
   return (
-    <Box
+    <Grid
+      container
       sx={{
         display: "flex",
         flexGrow: "1",
         flexWrap: "wrap",
-        gap: "8px",
         // border: "2px solid green",
         px: "50px",
       }}
     >
-      {searchValue?.map((product) => (
-        <Box
-          onClick={() => handleProductClick(product.id)}
-          sx={{ cursor: "pointer" }}
-        >
-          <ProductsImageTemplate product={product} />
-        </Box>
-      ))}
-
       <Box
         sx={{
           display: "grid",
@@ -87,9 +81,11 @@ const ProductsRender = (props) => {
             : "repeat(auto-fill,220px)",
           gridAutoRows: "10px",
           // justifyContent: "center",
+          flexWrap: "wrap",
         }}
       >
-        {products &&
+        {!addProductsState &&
+          products &&
           products.map((product, index) => {
             const currentSize = size[productIndex % size.length];
             productIndex++;
@@ -102,7 +98,22 @@ const ProductsRender = (props) => {
             );
           })}
       </Box>
-    </Box>
+      {/* {addProductsState &&
+        products &&
+        products.map((product, index) => (
+          <Box key={index}>
+            <ProductsImageTemplate product={product} />
+          </Box>
+        ))}{" "} */}
+      {searchValue?.map((product) => (
+        <Box
+          onClick={() => handleProductClick(product.id)}
+          sx={{ cursor: "pointer" }}
+        >
+          <ProductsImageTemplate product={product} />
+        </Box>
+      ))}
+    </Grid>
   );
 };
 
