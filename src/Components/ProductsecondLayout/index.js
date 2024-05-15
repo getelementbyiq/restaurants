@@ -34,13 +34,13 @@ const ProductSecondLayout = ({ size, product }) => {
       display: "flex",
     },
     small: {
-      gridRowEnd: isMobile ? "span 12" : "span 14",
+      gridRowEnd: isMobile ? "span 12" : "span 12",
     },
     medium: {
       gridRowEnd: isMobile ? "span 8" : "span 12",
     },
     large: {
-      gridRowEnd: isMobile ? "span 10" : "span 16",
+      gridRowEnd: isMobile ? "span 10" : "span 12",
     },
   };
   return (
