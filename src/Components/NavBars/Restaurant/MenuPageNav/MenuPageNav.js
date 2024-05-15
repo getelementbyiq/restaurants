@@ -10,7 +10,6 @@ import {
 import { useParams } from "react-router-dom";
 
 const MenuPageNav = (props) => {
-  
   const { menuId } = useParams();
   const dispatch = useDispatch();
   const menuData = useSelector((state) => state.fetchMenus?.menusData);
@@ -50,20 +49,19 @@ const MenuPageNav = (props) => {
       sx={{
         display: "flex",
         py: "16px",
-        border: "1px solid red",
+        // border: "1px solid red",
         flexGrow: "1",
         justifyContent: "space-around",
       }}
     >
-      {" "}
-      {menuId && (
-        <>
-          <Typography>
-            Products {menu?.map((menu) => menu.productIds.length)}
-          </Typography>
-          <Typography>{menu?.map((menu) => menu.name)}</Typography>
-        </>
-      )}
+      {menuId &&
+        menu?.map((menu) => (
+          <Box>
+            <Typography>Products {menu.productIds.length}</Typography>
+
+            <Typography>{menu.name}</Typography>
+          </Box>
+        ))}
       <TextField
         size="small"
         sx={{ width: "300px" }}

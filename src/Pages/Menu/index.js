@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { Box, Grid } from "@mui/material";
 import CreateMenu from "../../Components/CreateMenu";
 import MenuPageNav from "../../Components/NavBars/Restaurant/MenuPageNav/MenuPageNav";
-import MenuNavSearch from "../../Components/Search/Restaurant/MenuNavSearch";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { db } from "../../firebase";
+import ProductsRender from "../../Components/Search/Restaurant/ProductsRender";
 
 const Menu = (props) => {
   const restaurantsData = useSelector(
@@ -81,19 +81,19 @@ const Menu = (props) => {
         xs={9}
         md={9}
         sx={{
-          border: "1px solid black",
+          // border: "1px solid black",
           display: "flex",
           flexGrow: "1",
-          alignItems: "center",
           pb: "8px",
           flexDirection: "column",
           // backgroundColor: "green",
+          gap: "16px",
         }}
       >
         <Box sx={{ display: "flex", width: "100%", justifyContent: "center" }}>
           <MenuPageNav />
         </Box>
-        <MenuNavSearch />
+        <ProductsRender />
       </Grid>
     </Grid>
   );
@@ -102,6 +102,3 @@ const Menu = (props) => {
 Menu.propTypes = {};
 
 export default Menu;
-
-
-

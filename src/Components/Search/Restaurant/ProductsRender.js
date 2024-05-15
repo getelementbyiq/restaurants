@@ -7,9 +7,13 @@ import ProductsImageTemplate from "../../Templates/ProductsImageTemplate/Product
 import { useParams } from "react-router-dom";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
-
-const MenuNavSearch = (props) => {
+import ProductSecondLayout from "../../ProductsecondLayout";
+import useMobileCheck from "../../MobileCheck";
+let productIndex = 0;
+const size = ["small", "medium", "large"];
+const ProductsRender = (props) => {
   const { menuId } = useParams();
+  const isMobile = useMobileCheck();
   const searchValue = useSelector(
     (state) => state.productsFetchSlice.searchResults
   );
@@ -55,6 +59,8 @@ const MenuNavSearch = (props) => {
         flexGrow: "1",
         flexWrap: "wrap",
         gap: "8px",
+        // border: "2px solid green",
+        px: "50px",
       }}
     >
       {searchValue?.map((product) => (
@@ -65,16 +71,41 @@ const MenuNavSearch = (props) => {
           <ProductsImageTemplate product={product} />
         </Box>
       ))}
-      {products &&
-        products.map((product, index) => (
-          <Box key={index}>
-            <ProductsImageTemplate product={product} />
-          </Box>
-        ))}
+
+      <Box
+        sx={{
+          display: "grid",
+          gap: "16px",
+          // border: "1px solid green",
+          width: isMobile ? "100vw" : "90vw",
+          // backgroundColor: "black",
+          // position: "absolute",
+          // left: "50%",
+          // transform: "translateX(-50%)",
+          gridTemplateColumns: isMobile
+            ? "repeat(auto-fill,45%)"
+            : "repeat(auto-fill,220px)",
+          gridAutoRows: "10px",
+          // justifyContent: "center",
+        }}
+      >
+        {products &&
+          products.map((product, index) => {
+            const currentSize = size[productIndex % size.length];
+            productIndex++;
+            return (
+              <ProductSecondLayout
+                key={product.id}
+                size={currentSize}
+                product={product}
+              />
+            );
+          })}
+      </Box>
     </Box>
   );
 };
 
-MenuNavSearch.propTypes = {};
+ProductsRender.propTypes = {};
 
-export default MenuNavSearch;
+export default ProductsRender;
