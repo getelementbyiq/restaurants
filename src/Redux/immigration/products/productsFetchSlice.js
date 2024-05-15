@@ -1,5 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../../firebase";
 
 export const fetchProductsDataWithoutUser = createAsyncThunk(
@@ -46,6 +53,62 @@ export const fetchProductsData = createAsyncThunk(
   }
 );
 
+export const fetchProductsOfOneMenu = createAsyncThunk(
+  "fetchProducts/fetchProductsOfOneMenu",
+  async (menu, { dispatch }) => {
+    try {
+      const productsData = [];
+      console.log("productId-menu", menu);
+      // Überprüfe, ob menu.productIds ein Array ist
+      if (Array.isArray(menu.productIds)) {
+        console.log("productId-ids", menu.productIds);
+        // Iteriere über jede Produkt-ID im Menü
+        for (const productId of menu.productIds) {
+          try {
+            console.log("productId-id", productId);
+            // Erstelle eine Referenz auf das Produkt-Dokument
+            const productDocRef = doc(db, "products", productId);
+            // Rufe das Produkt-Dokument ab
+            const productDocSnap = await getDoc(productDocRef);
+
+            // Überprüfe, ob das Produkt-Dokument existiert
+            if (productDocSnap.exists()) {
+              // Füge die Produkt-Daten zum Array hinzu
+              productsData.push({
+                id: productDocSnap.id,
+                ...productDocSnap.data(),
+              });
+            } else {
+              console.warn(
+                `Produkt mit der ID ${productId} wurde nicht gefunden.`
+              );
+            }
+          } catch (error) {
+            console.error(
+              `Fehler beim Abrufen des Produkts mit der ID ${productId}:`,
+              error
+            );
+          }
+        }
+      } else {
+        // Wandele den einzelnen String in ein Array um
+        const productIdArray = [menu.productIds];
+
+        // Iteriere über jede Produkt-ID im Array
+        for (const productId of productIdArray) {
+          // Die gleiche Logik wie oben ...
+        }
+      }
+
+      return productsData;
+    } catch (error) {
+      // Handle Fehler, z.B. Anzeigen einer Fehlermeldung
+      console.error("Fehler beim Abrufen der Produkte:", error);
+      throw error; // Wirf den Fehler erneut, damit Redux Toolkit ihn fangen kann
+    }
+  }
+);
+
 const fetchProductsSlice = createSlice({
   name: "productsFetchSlice",
   initialState: {
@@ -54,6 +117,11 @@ const fetchProductsSlice = createSlice({
     loading: "",
     error: null,
     searchResults: [],
+    productsOfMenu: {
+      data: null,
+      loading: "",
+      error: null,
+    },
   },
   reducers: {
     searchProducts: (state, action) => {
@@ -95,6 +163,19 @@ const fetchProductsSlice = createSlice({
       .addCase(fetchProductsDataWithoutUser.rejected, (state, action) => {
         state.loading = "rejected";
         state.error = action.payload;
+      })
+      .addCase(fetchProductsOfOneMenu.pending, (state) => {
+        state.productsOfMenu.loading = "loading";
+        state.productsOfMenu.error = null;
+      })
+      .addCase(fetchProductsOfOneMenu.fulfilled, (state, action) => {
+        state.productsOfMenu.loading = "fulfilled";
+        state.productsOfMenu.data = action.payload;
+        state.productsOfMenu.error = null;
+      })
+      .addCase(fetchProductsOfOneMenu.rejected, (state, action) => {
+        state.productsOfMenu.loading = "rejected";
+        state.productsOfMenu.error = action.payload;
       });
   },
 });

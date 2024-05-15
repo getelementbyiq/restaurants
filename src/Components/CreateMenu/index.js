@@ -125,7 +125,28 @@ const CreateMenu = () => {
             }}
           />
           <IconButton onClick={handleAddCategory}>
-            {/* Icon für das Hinzufügen eines Menüs */}
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 12H18"
+                stroke="#292D32"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 18V6"
+                stroke="#292D32"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </IconButton>
         </Box>
 
@@ -139,9 +160,26 @@ const CreateMenu = () => {
           }}
         >
           {menus?.map((menu) => (
-            <Typography key={menu.id} onClick={() => goTo(menu.id)}>
-              {menu.name}
-            </Typography>
+            <Box
+              key={menu.id}
+              onClick={() => goTo(menu.id)}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                px: "32px",
+                py: "8px",
+                borderRadius: "8px",
+                backgroundColor: location.pathname.includes(menu.id)
+                  ? "rgba(0,0,0,0.4)"
+                  : "rgba(0,0,0,0.1)",
+                "&&:hover": {
+                  backgroundColor: "rgba(0,0,0,0.2)",
+                },
+                cursor: "pointer",
+              }}
+            >
+              <Typography>{menu.name}</Typography>
+            </Box>
           ))}
         </Box>
       </Box>
