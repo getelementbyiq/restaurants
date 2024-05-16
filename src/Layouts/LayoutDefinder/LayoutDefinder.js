@@ -9,10 +9,12 @@ import SecondMainLayout from "../SecondMainLayout/SecondMainLayout";
 import { fetchProductsDataWithoutUser } from "../../Redux/immigration/products/productsFetchSlice";
 import { fetchProductsAsync } from "../../Redux/immigration/products/productsForMain";
 import Clock from "../../Components/Clock/Clock";
+import { useLocation } from "react-router-dom";
 
 const LayoutDefinder = (props) => {
   const dispatch = useDispatch();
   const { user } = UserAuth();
+  
   const uID = user?.uid ? user?.uid : null;
   const userData = useSelector((state) => state.fetchUser.userData);
   const userDataState = useSelector((state) => state.fetchUser.loading);

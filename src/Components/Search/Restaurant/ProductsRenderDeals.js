@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import ListProductTemplate from "../../Templates/ListProductTemplate/ListProductTemplate";
-import ProductsImageTemplate from "../../Templates/ProductsImageTemplate/ProductsImageTemplate";
 import { useParams } from "react-router-dom";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import ProductSecondLayout from "../../ProductsecondLayout";
 import useMobileCheck from "../../MobileCheck";
+import ProductsImageTemplateDeals from "../../Templates/ProductsImageTemplate/ProductsImageTemplateDeals";
 let productIndex = 0;
 const size = ["small", "medium", "large"];
-const ProductsRender = (props) => {
-  const { menuId} = useParams();
+const ProductRenderDelas = (props) => {
+  const { dealsId } = useParams();
   const isMobile = useMobileCheck();
   const searchValue = useSelector(
     (state) => state.productsFetchSlice.searchResults
@@ -25,7 +25,7 @@ const ProductsRender = (props) => {
   );
 
   const products = useSelector(
-    (state) => state.productsFetchSlice.productsOfMenu.data
+    (state) => state.productsFetchSlice.productsOfDeals.data
   );
   const searchTerm = useSelector(
     (state) => state.productsFetchSlice.searchValue
@@ -35,7 +35,7 @@ const ProductsRender = (props) => {
   const handleProductClick = async (productId) => {
     try {
       // Referenz zum Menüdokument in der "menus" Collection
-      const menuDocRef = doc(db, "menus", menuId);
+      const menuDocRef = doc(db, "deals", dealsId);
 
       // Aktualisiere das Menüdokument und füge die productId zur productIds-Liste hinzu
       await updateDoc(menuDocRef, {
@@ -45,14 +45,14 @@ const ProductsRender = (props) => {
 
       // Aktualisiere das Menüobjekt im Local Storage
       const menusFromLocalStorage =
-        JSON.parse(localStorage.getItem("menus")) || [];
+        JSON.parse(localStorage.getItem("deals")) || [];
       const updatedMenus = menusFromLocalStorage.map((menu) => {
-        if (menu.id === menuId) {
+        if (menu.id === dealsId) {
           return { ...menu, productIds: [...menu.productIds, productId] };
         }
         return menu;
       });
-      localStorage.setItem("menus", JSON.stringify(updatedMenus));
+      localStorage.setItem("deals", JSON.stringify(updatedMenus));
       console.log(
         "Menüobjekt im Local Storage wurde erfolgreich aktualisiert."
       );
@@ -61,15 +61,13 @@ const ProductsRender = (props) => {
     }
   };
 
-
-  
   const [show, setShow] = useState(false);
   const [linkId, setLinkId] = useState(null);
   const clichOpen = (id) => {
     if (show === false && linkId === null) {
       setLinkId(id);
       setShow(true);
-    } else if (show === true && linkId === menuId) {
+    } else if (show === true && linkId === dealsId) {
       setLinkId(null);
       setShow(false);
     } else if (show === true && id !== linkId) {
@@ -91,7 +89,7 @@ const ProductsRender = (props) => {
       }}
     >
       <IconButton
-        onClick={() => clichOpen(menuId)}
+        onClick={() => clichOpen(dealsId)}
         sx={{
           position: "absolute",
           top: "-80px",
@@ -195,7 +193,7 @@ const ProductsRender = (props) => {
                   }}
                   onClick={() => handleProductClick(product.id)}
                 >
-                  <ProductsImageTemplate product={product} />
+                  <ProductsImageTemplateDeals product={product} />
                 </Box>
               ))
             ) : (
@@ -207,7 +205,7 @@ const ProductsRender = (props) => {
                   }}
                   onClick={() => handleProductClick(product.id)}
                 >
-                  <ProductsImageTemplate product={product} />
+                  <ProductsImageTemplateDeals product={product} />
                 </Box>
               ))
             )}
@@ -218,6 +216,6 @@ const ProductsRender = (props) => {
   );
 };
 
-ProductsRender.propTypes = {};
+ProductRenderDelas.propTypes = {};
 
-export default ProductsRender;
+export default ProductRenderDelas;

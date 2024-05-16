@@ -127,6 +127,14 @@ const Root = createBrowserRouter(
         }
       />
       <Route
+        path="/offers/:dealsId"
+        element={
+          <ProtectedRoute>
+            <Offers />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/story"
         element={
           <ProtectedRoute>

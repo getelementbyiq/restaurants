@@ -12,17 +12,17 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../firebase";
 
-const ProductsImageTemplate = ({ product }) => {
-  const { menuId } = useParams();
+const ProductsImageTemplateDeals = ({ product }) => {
+  const { dealsId } = useParams();
   const [choosen, setChoosen] = useState(false);
   const products = useSelector(
-    (state) => state.productsFetchSlice.productsOfMenu.data
+    (state) => state.productsFetchSlice.productsOfDeals.data
   );
   useEffect(() => {
     setChoosen(
       products?.some((selectedProduct) => selectedProduct.id === product.id)
     );
-  }, [menuId, product.id, products]);
+  }, [dealsId, product.id, products]);
   console.log("products from List", product.id);
 
   const addOrDeleteProduct = (productId) => {
@@ -36,7 +36,7 @@ const ProductsImageTemplate = ({ product }) => {
   const removeFromMenu = async (productId) => {
     try {
       // Referenz zum Menüdokument in der "menus" Collection
-      const menuDocRef = doc(db, "menus", menuId);
+      const menuDocRef = doc(db, "deals", dealsId);
 
       // Abrufen des aktuellen Menüdokuments
       const menuDocSnapshot = await getDoc(menuDocRef);
@@ -66,7 +66,7 @@ const ProductsImageTemplate = ({ product }) => {
   const handleProductClick = async (productId) => {
     try {
       // Referenz zum Menüdokument in der "menus" Collection
-      const menuDocRef = doc(db, "menus", menuId);
+      const menuDocRef = doc(db, "deals", dealsId);
 
       // Aktualisiere das Menüdokument und füge die productId zur productIds-Liste hinzu
       await updateDoc(menuDocRef, {
@@ -78,7 +78,7 @@ const ProductsImageTemplate = ({ product }) => {
       const menusFromLocalStorage =
         JSON.parse(localStorage.getItem("menus")) || [];
       const updatedMenus = menusFromLocalStorage.map((menu) => {
-        if (menu.id === menuId) {
+        if (menu.id === dealsId) {
           return { ...menu, productIds: [...menu.productIds, productId] };
         }
         return menu;
@@ -199,6 +199,6 @@ const ProductsImageTemplate = ({ product }) => {
   );
 };
 
-ProductsImageTemplate.propTypes = {};
+ProductsImageTemplateDeals.propTypes = {};
 
-export default ProductsImageTemplate;
+export default ProductsImageTemplateDeals;

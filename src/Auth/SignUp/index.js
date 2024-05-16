@@ -86,7 +86,7 @@ const SignUp = () => {
 
       dispatch(setUser(user));
 
-      await navigate("/preferences");
+      await navigate("/addlocation");
     } catch (error) {
       setError(error.message);
       console.log(error.message);

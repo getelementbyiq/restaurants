@@ -108,6 +108,62 @@ export const fetchProductsOfOneMenu = createAsyncThunk(
     }
   }
 );
+
+export const fetchProductsOfOneDeal = createAsyncThunk(
+  "fetchProducts/fetchProductsOfOneDeal",
+  async (menu, { dispatch }) => {
+    try {
+      const productsData = [];
+      console.log("productId-menu", menu);
+      // Überprüfe, ob menu.productIds ein Array ist
+      if (Array.isArray(menu.productIds)) {
+        console.log("productId-ids", menu.productIds);
+        // Iteriere über jede Produkt-ID im Menü
+        for (const productId of menu.productIds) {
+          try {
+            console.log("productId-id", productId);
+            // Erstelle eine Referenz auf das Produkt-Dokument
+            const productDocRef = doc(db, "products", productId);
+            // Rufe das Produkt-Dokument ab
+            const productDocSnap = await getDoc(productDocRef);
+
+            // Überprüfe, ob das Produkt-Dokument existiert
+            if (productDocSnap.exists()) {
+              // Füge die Produkt-Daten zum Array hinzu
+              productsData.push({
+                id: productDocSnap.id,
+                ...productDocSnap.data(),
+              });
+            } else {
+              console.warn(
+                `Produkt mit der ID ${productId} wurde nicht gefunden.`
+              );
+            }
+          } catch (error) {
+            console.error(
+              `Fehler beim Abrufen des Produkts mit der ID ${productId}:`,
+              error
+            );
+          }
+        }
+      } else {
+        // Wandele den einzelnen String in ein Array um
+        const productIdArray = [menu.productIds];
+
+        // Iteriere über jede Produkt-ID im Array
+        for (const productId of productIdArray) {
+          // Die gleiche Logik wie oben ...
+        }
+      }
+
+      return productsData;
+    } catch (error) {
+      // Handle Fehler, z.B. Anzeigen einer Fehlermeldung
+      console.error("Fehler beim Abrufen der Produkte:", error);
+      throw error; // Wirf den Fehler erneut, damit Redux Toolkit ihn fangen kann
+    }
+  }
+);
 const fetchProductsSlice = createSlice({
   name: "productsFetchSlice",
   initialState: {
@@ -118,6 +174,11 @@ const fetchProductsSlice = createSlice({
     searchValue: "",
     searchResults: [],
     productsOfMenu: {
+      data: null,
+      loading: "",
+      error: null,
+    },
+    productsOfDeals: {
       data: null,
       loading: "",
       error: null,
@@ -187,6 +248,19 @@ const fetchProductsSlice = createSlice({
       .addCase(fetchProductsOfOneMenu.rejected, (state, action) => {
         state.productsOfMenu.loading = "rejected";
         state.productsOfMenu.error = action.payload;
+      })
+      .addCase(fetchProductsOfOneDeal.pending, (state) => {
+        state.productsOfDeals.loading = "loading";
+        state.productsOfDeals.error = null;
+      })
+      .addCase(fetchProductsOfOneDeal.fulfilled, (state, action) => {
+        state.productsOfDeals.loading = "fulfilled";
+        state.productsOfDeals.data = action.payload;
+        state.productsOfDeals.error = null;
+      })
+      .addCase(fetchProductsOfOneDeal.rejected, (state, action) => {
+        state.productsOfDeals.loading = "rejected";
+        state.productsOfDeals.error = action.payload;
       });
   },
 });
