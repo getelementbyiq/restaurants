@@ -10,10 +10,12 @@ import { fetchProductsDataWithoutUser } from "../../Redux/immigration/products/p
 import { fetchProductsAsync } from "../../Redux/immigration/products/productsForMain";
 import Clock from "../../Components/Clock/Clock";
 import { fetchUserRestaurants } from "../../Redux/immigration/restaurants/fetchRestaurantSlice";
+import { useLocation } from "react-router-dom";
 
 const LayoutDefinder = (props) => {
   const dispatch = useDispatch();
   const { user } = UserAuth();
+
   const uID = user?.uid ? user?.uid : null;
   const userData = useSelector((state) => state.fetchUser.userData);
   const userDataState = useSelector((state) => state.fetchUser.loading);

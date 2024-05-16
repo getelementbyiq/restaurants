@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Box, TextField, Typography } from "@mui/material";
 import {
+  fetchProductsOfOneDeal,
   fetchProductsOfOneMenu,
   resetSearchResults,
   searchProducts,
@@ -12,10 +13,10 @@ import {
 import { useLocation, useParams } from "react-router-dom";
 import { setMenuAddProduct } from "../../../../Redux/immigration/globalStates/globalStatesSlice";
 
-const MenuPageNav = (props) => {
-  const { menuId } = useParams();
+const DealsPageNav = (props) => {
+  const { dealsId } = useParams();
   const dispatch = useDispatch();
-  const menuData = useSelector((state) => state.fetchMenus?.menusData);
+  const dealsData = useSelector((state) => state.fetchDeals?.dealsData);
   const [searchTerm, setSearchTerm] = useState("");
   const [menus, setMenus] = useState();
   const [menu, setMenu] = useState(null);
@@ -32,37 +33,37 @@ const MenuPageNav = (props) => {
   }, [searchTerm, dispatch]);
 
   useEffect(() => {
-    menuData && setMenus(menuData);
-  }, [menuData]);
+    dealsData && setMenus(dealsData);
+  }, [dealsData]);
 
   useEffect(() => {
-    menuData && setMenu(menuData.filter((menu) => menu.id === menuId));
-  }, [menuData, menuId]);
+    dealsData && setMenu(dealsData.filter((menu) => menu.id === dealsId));
+  }, [dealsData, dealsId]);
 
   useEffect(() => {
-    if (menuData) {
-      // Filtere das Menü anhand der übergebenen menuId
-      const selectedMenu = menuData.find((menu) => menu.id === menuId);
+    if (dealsData) {
+      // Filtere das Menü anhand der übergebenen dealsId
+      const selectedMenu = dealsData.find((menu) => menu.id === dealsId);
       console.log("selectedMenu", selectedMenu);
       // Wenn ein Menü mit der entsprechenden ID gefunden wurde
       if (selectedMenu) {
         // Rufe die Produkte für das ausgewählte Menü ab
-        dispatch(fetchProductsOfOneMenu(selectedMenu));
+        dispatch(fetchProductsOfOneDeal(selectedMenu));
       }
     }
-  }, [menuData, menuId, dispatch]);
+  }, [dealsData, dealsId, dispatch]);
   // console.log("menus from Navmenu", menuData);
   const addProductsState = useSelector(
     (state) => state.globalStates.menuAddProduct
   );
   const clickButton = () => {
     //esli addProductState hranit ID von kategorie
-    //esli addProductState  ID von kategorie === menuId to sdelai Null
-    if (addProductsState === menuId) {
+    //esli addProductState  ID von kategorie === dealsId to sdelai Null
+    if (addProductsState === dealsId) {
       dispatch(setMenuAddProduct(null));
     } else if (addProductsState === null) {
-      //no esli net to sdelai menuID
-      dispatch(setMenuAddProduct(menuId));
+      //no esli net to sdelai dealsId
+      dispatch(setMenuAddProduct(dealsId));
       //esli user clickts an anderen Menu
     } else {
     }
@@ -80,7 +81,7 @@ const MenuPageNav = (props) => {
         justifyContent: "space-around",
       }}
     >
-      {menuId &&
+      {dealsId &&
         menu?.map((menu) => (
           <Box>
             <Typography>{menu.name}</Typography>
@@ -100,8 +101,8 @@ const MenuPageNav = (props) => {
   );
 };
 
-MenuPageNav.propTypes = {
+DealsPageNav.propTypes = {
   productsData: PropTypes.array.isRequired,
 };
 
-export default MenuPageNav;
+export default DealsPageNav;

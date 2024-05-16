@@ -4,10 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
-import { fetchMenusData } from "../../Redux/immigration/menusOfRestaurant/menusOfRestaurantSlice";
+import { fetchDealsData } from "../../Redux/immigration/menusOfRestaurant/dealsOfRestaurantSlice";
 
-const CreateMenu = () => {
+const CreateDeals = () => {
   const [textFieldValue, setTextFieldValue] = useState("");
+  const [dealsType, setDealsType] = useState(null);
+  const [discount, setDiscount] = useState(null);
+  const [offerStart, setOfferStart] = useState(null);
+  const [offerEnd, setOfferEnd] = useState(null);
+  const [offerDate, setOfferDate] = useState(null);
   const restaurantsData = useSelector(
     (state) => state.fetchRestaurants?.restaurantsData
   );
@@ -26,10 +31,10 @@ const CreateMenu = () => {
   }, [restaurantsData]);
 
   useEffect(() => {
-    dispatch(fetchMenusData(restaurantId));
+    dispatch(fetchDealsData(restaurantId));
   }, [restaurantId, dispatch]);
 
-  const menusPrev = useSelector((state) => state.fetchMenus?.menusData);
+  const menusPrev = useSelector((state) => state.fetchDeals?.dealsData);
   useEffect(() => {
     menusPrev && setMenus(menusPrev);
   }, [menusPrev]);
@@ -37,41 +42,26 @@ const CreateMenu = () => {
   const handleAddCategory = async () => {
     if (!textFieldValue.trim()) return;
     try {
-      const newMenuRef = await addDoc(collection(db, "menus"), {
+      const newMenuRef = await addDoc(collection(db, "deals"), {
         restaurantId,
         background: null,
         name: textFieldValue.trim(),
         views: null,
         likes: null,
         productIds: [],
+        dealsType,
+        discount,
+        offerStart,
+        offerEnd,
+        offerDate,
       });
-      console.log("Neues Menü wurde erstellt mit ID: ", newMenuRef.id);
-
-      const menuObject = {
-        id: newMenuRef.id,
-        restaurantId,
-        background: null,
-        name: textFieldValue.trim(),
-        views: null,
-        likes: null,
-        productIds: [],
-      };
-      // Zugriff auf den Local Storage
-      const menusFromLocalStorage =
-        JSON.parse(localStorage.getItem("menus")) || [];
-      // Hinzufügen des neuen Menüs zu den vorhandenen Menüs
-      menusFromLocalStorage.push(menuObject);
-      // Zurückspeichern der aktualisierten Menüs im Local Storage
-      localStorage.setItem("menus", JSON.stringify(menusFromLocalStorage));
-      // Hier kannst du bei Bedarf den Redux-Store aktualisieren oder andere Aktionen ausführen
-      setTextFieldValue(""); // Leere das Eingabefeld nach dem Hinzufügen
     } catch (error) {
       console.error("Fehler beim Erstellen des Menüs: ", error);
     }
   };
 
-  const goTo = (menuId) => {
-    navigate(`/menu/${menuId}`);
+  const goTo = (dealsId) => {
+    navigate(`/offers/${dealsId}`);
   };
 
   return (
@@ -110,7 +100,7 @@ const CreateMenu = () => {
         >
           <Input
             fullWidth
-            placeholder="Category name"
+            placeholder="Name of Deal"
             value={textFieldValue}
             onChange={(e) => setTextFieldValue(e.target.value)}
             sx={{
@@ -131,28 +121,28 @@ const CreateMenu = () => {
             }}
           />
           <IconButton onClick={handleAddCategory}>
-          <svg
-          width="30"
-          height="30"
-          viewBox="0 0 18 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M4.5 9H13.5"
-            stroke="#292D32"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M9 13.5V4.5"
-            stroke="#292D32"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+            <svg
+              width="30"
+              height="30"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.5 9H13.5"
+                stroke="#292D32"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9 13.5V4.5"
+                stroke="#292D32"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </IconButton>
         </Box>
 
@@ -193,4 +183,4 @@ const CreateMenu = () => {
   );
 };
 
-export default CreateMenu;
+export default CreateDeals;

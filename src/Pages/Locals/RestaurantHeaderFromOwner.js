@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   AppBar,
@@ -13,30 +13,33 @@ import {
 } from "@mui/material";
 import { Style } from "@mui/icons-material";
 import { UserAuth } from "../../Auth/Auth";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const RestaurantHeaderFromOwner = (props) => {
+  const location = useLocation();
+  const page = location.pathname;
+
   const navigate = useNavigate();
-  const restaurantOfUser = useSelector(
-    (state) => state.restaurants.userRestaurants
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
   );
+  const [toRenderRestaurant, setToRenderRestaurant] = useState();
+  const restaurantOfUser = useSelector((state) => state.restaurants.data);
+
   const { id } = useParams();
   const [isTab, setIsTab] = useState("main");
   const { logout } = UserAuth();
   const [isCreate, setIsCreate] = useState(false);
 
-  const openTab = (txt) => {
-    setIsTab(txt);
-  };
+  useEffect(() => {
+    restaurantsData &&
+      restaurantsData.map((restaurant) => setToRenderRestaurant(restaurant));
+  }, [restaurantsData]);
 
-  const onChangeInput = () => {
-    setIsCreate((is) => !is);
-  };
   console.log("isCreate", isCreate);
-  const toRenderRestaurant = restaurantOfUser[0];
 
-  console.log("toRenderRestaurant", toRenderRestaurant);
+  console.log("toRenderRestaurant", restaurantOfUser);
 
   const goTo = (txt) => {
     navigate(`${txt}`);
@@ -81,6 +84,7 @@ const RestaurantHeaderFromOwner = (props) => {
             }}
           >
             <Avatar
+              onClick={() => goTo("/")}
               src={toRenderRestaurant?.logo}
               sx={{
                 width: "32px",
@@ -161,53 +165,124 @@ const RestaurantHeaderFromOwner = (props) => {
           lg={4}
           sx={{
             display: "flex",
-            gap: "24px",
             justifyContent: "center",
             alignItems: "center",
+            gap: "4px",
           }}
         >
-          <Typography
+          <Box
             onClick={() => goTo("products")}
-            sx={{ fontFamily: "Quicksand" }}
+            sx={{
+              display: "flex",
+              borderRadius: "32px",
+              px: "12px",
+              py: "4px",
+              backgroundColor:
+                page === "/products" ? "rgba(0,0,0,0.4)" : "none",
+              "&&:hover": {
+                backgroundColor: "rgba(225,225,225,0.3)",
+              },
+              cursor: "pointer",
+            }}
           >
-            Products
-          </Typography>
-          <Typography
+            <Typography sx={{ fontFamily: "Quicksand" }}>Products</Typography>
+          </Box>
+          <Box
             onClick={() => goTo("menu")}
-            sx={{ fontFamily: "Quicksand" }}
+            sx={{
+              display: "flex",
+              borderRadius: "32px",
+              px: "12px",
+              py: "4px",
+              backgroundColor: page === "/menu" ? "rgba(0,0,0,0.4)" : "none",
+              "&&:hover": {
+                backgroundColor: "rgba(225,225,225,0.3)",
+              },
+              cursor: "pointer",
+            }}
           >
-            Menu
-          </Typography>
-          <Typography
+            <Typography sx={{ fontFamily: "Quicksand" }}>Menu</Typography>
+          </Box>
+          <Box
             onClick={() => goTo("/offers")}
-            sx={{ fontFamily: "Quicksand" }}
+            sx={{
+              display: "flex",
+              borderRadius: "32px",
+              px: "12px",
+              py: "4px",
+              backgroundColor: page === "/offers" ? "rgba(0,0,0,0.4)" : "none",
+              "&&:hover": {
+                backgroundColor: "rgba(225,225,225,0.3)",
+              },
+              cursor: "pointer",
+            }}
           >
-            Deals
-          </Typography>
-          <Typography
+            <Typography sx={{ fontFamily: "Quicksand" }}>Deals</Typography>
+          </Box>
+          <Box
             onClick={() => goTo("team")}
-            sx={{ fontFamily: "Quicksand" }}
+            sx={{
+              display: "flex",
+              borderRadius: "32px",
+              px: "12px",
+              py: "4px",
+              backgroundColor: page === "/team" ? "rgba(0,0,0,0.4)" : "none",
+              "&&:hover": {
+                backgroundColor: "rgba(225,225,225,0.3)",
+              },
+              cursor: "pointer",
+            }}
           >
-            Team
-          </Typography>
-          <Typography
+            <Typography sx={{ fontFamily: "Quicksand" }}>Team</Typography>
+          </Box>
+          <Box
             onClick={() => goTo("contact")}
-            sx={{ fontFamily: "Quicksand" }}
+            sx={{
+              display: "flex",
+              borderRadius: "32px",
+              px: "12px",
+              py: "4px",
+              backgroundColor: page === "/contact" ? "rgba(0,0,0,0.4)" : "none",
+              "&&:hover": {
+                backgroundColor: "rgba(225,225,225,0.3)",
+              },
+              cursor: "pointer",
+            }}
           >
-            Constact
-          </Typography>
-          <Typography
+            <Typography sx={{ fontFamily: "Quicksand" }}>Constact</Typography>
+          </Box>
+          <Box
             onClick={() => goTo("jobs")}
-            sx={{ fontFamily: "Quicksand" }}
+            sx={{
+              display: "flex",
+              borderRadius: "32px",
+              px: "12px",
+              py: "4px",
+              backgroundColor: page === "/jobs" ? "rgba(0,0,0,0.4)" : "none",
+              "&&:hover": {
+                backgroundColor: "rgba(225,225,225,0.3)",
+              },
+              cursor: "pointer",
+            }}
           >
-            Jobs
-          </Typography>
-          <Typography
+            <Typography sx={{ fontFamily: "Quicksand" }}>Jobs</Typography>
+          </Box>
+          <Box
             onClick={() => goTo("/rool")}
-            sx={{ fontFamily: "Quicksand" }}
+            sx={{
+              display: "flex",
+              borderRadius: "32px",
+              px: "12px",
+              py: "4px",
+              backgroundColor: page === "/rool" ? "rgba(0,0,0,0.4)" : "none",
+              "&&:hover": {
+                backgroundColor: "rgba(225,225,225,0.3)",
+              },
+              cursor: "pointer",
+            }}
           >
-            AGB
-          </Typography>
+            <Typography sx={{ fontFamily: "Quicksand" }}>AGB</Typography>
+          </Box>
         </Grid>
         <Grid
           Item
