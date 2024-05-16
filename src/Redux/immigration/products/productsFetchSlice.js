@@ -108,7 +108,6 @@ export const fetchProductsOfOneMenu = createAsyncThunk(
     }
   }
 );
-
 const fetchProductsSlice = createSlice({
   name: "productsFetchSlice",
   initialState: {
@@ -116,6 +115,7 @@ const fetchProductsSlice = createSlice({
     productsDataWithoutUser: null,
     loading: "",
     error: null,
+    searchValue: "",
     searchResults: [],
     productsOfMenu: {
       data: null,
@@ -125,15 +125,26 @@ const fetchProductsSlice = createSlice({
   },
   reducers: {
     searchProducts: (state, action) => {
-      const { searchTerm } = action.payload;
-      const results = state.productsData.filter((product) =>
+      const searchTerm = state.searchValue;
+      let results;
+
+      // Andernfalls filtern Sie die Produkte nach dem Suchbegriff
+      results = state.productsData.filter((product) =>
         Object.values(product).some(
           (value) =>
             typeof value === "string" &&
             value.toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
+
+      // Aktualisieren Sie die Suchergebnisse im Redux-Zustand
       state.searchResults = results;
+    },
+    resetSearchResults: (state, action) => {
+      state.searchResults = [];
+    },
+    setsearchValue: (state, action) => {
+      state.searchValue = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -180,6 +191,7 @@ const fetchProductsSlice = createSlice({
   },
 });
 
-export const { searchProducts } = fetchProductsSlice.actions;
+export const { searchProducts, setsearchValue, resetSearchResults } =
+  fetchProductsSlice.actions;
 
 export default fetchProductsSlice.reducer;

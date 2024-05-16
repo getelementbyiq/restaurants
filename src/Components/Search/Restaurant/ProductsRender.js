@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { Box, Grid, IconButton } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import ListProductTemplate from "../../Templates/ListProductTemplate/ListProductTemplate";
 import ProductsImageTemplate from "../../Templates/ProductsImageTemplate/ProductsImageTemplate";
 import { useParams } from "react-router-dom";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import ProductSecondLayout from "../../ProductsecondLayout";
 import useMobileCheck from "../../MobileCheck";
@@ -17,12 +17,18 @@ const ProductsRender = (props) => {
   const searchValue = useSelector(
     (state) => state.productsFetchSlice.searchResults
   );
+  const allProductData = useSelector(
+    (state) => state.productsFetchSlice.productsData
+  );
   const addProductsState = useSelector(
     (state) => state.globalStates.menuAddProduct
   );
 
   const products = useSelector(
     (state) => state.productsFetchSlice.productsOfMenu.data
+  );
+  const searchTerm = useSelector(
+    (state) => state.productsFetchSlice.searchValue
   );
   console.log("products menunav", products);
 
@@ -55,6 +61,8 @@ const ProductsRender = (props) => {
     }
   };
 
+
+  
   const [show, setShow] = useState(false);
   const [linkId, setLinkId] = useState(null);
   const clichOpen = (id) => {
@@ -77,7 +85,7 @@ const ProductsRender = (props) => {
         display: "flex",
         flexGrow: "1",
         // flexWrap: "wrap",
-        border: "2px solid green",
+        // border: "2px solid green",
         // px: "5px",
         position: "relative",
       }}
@@ -95,8 +103,8 @@ const ProductsRender = (props) => {
         }}
       >
         <svg
-          width="18"
-          height="18"
+          width="30"
+          height="30"
           viewBox="0 0 18 18"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +175,7 @@ const ProductsRender = (props) => {
           <Box
             sx={{
               display: "flex",
-              border: "2px solid yellow",
+              // border: "2px solid yellow",
               flexWrap: "wrap",
               gap: "8px",
               maxHeight: "100%",
@@ -176,17 +184,33 @@ const ProductsRender = (props) => {
               // alignItems: "flex-start",
             }}
           >
-            {searchValue?.map((product) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleProductClick(product.id)}
-              >
-                <ProductsImageTemplate product={product} />
-              </Box>
-            ))}
+            {searchTerm && searchValue.length === 0 ? (
+              <Typography>Es wurde für {searchTerm} nichts gefunden</Typography>
+            ) : searchValue.length === 0 ? (
+              allProductData?.map((product) => (
+                <Box
+                  sx={{
+                    display: "flex",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleProductClick(product.id)}
+                >
+                  <ProductsImageTemplate product={product} />
+                </Box>
+              ))
+            ) : (
+              searchValue?.map((product) => (
+                <Box
+                  sx={{
+                    display: "flex",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleProductClick(product.id)}
+                >
+                  <ProductsImageTemplate product={product} />
+                </Box>
+              ))
+            )}
           </Box>
         </Box>
       )}

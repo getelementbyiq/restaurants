@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, TextField, Typography } from "@mui/material";
 import {
   fetchProductsOfOneMenu,
+  resetSearchResults,
   searchProducts,
+  setsearchValue,
 } from "../../../../Redux/immigration/products/productsFetchSlice";
 import { useLocation, useParams } from "react-router-dom";
 import { setMenuAddProduct } from "../../../../Redux/immigration/globalStates/globalStatesSlice";
@@ -23,7 +25,12 @@ const MenuPageNav = (props) => {
     const term = event.target.value;
     setSearchTerm(term);
     dispatch(searchProducts({ searchTerm: term }));
+    dispatch(setsearchValue(term));
   };
+  useEffect(() => {
+    !searchTerm && dispatch(resetSearchResults());
+  }, [searchTerm, dispatch]);
+
   useEffect(() => {
     menuData && setMenus(menuData);
   }, [menuData]);

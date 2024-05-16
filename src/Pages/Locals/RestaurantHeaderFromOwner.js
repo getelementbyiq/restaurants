@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   AppBar,
@@ -18,23 +18,25 @@ import { useSelector } from "react-redux";
 
 const RestaurantHeaderFromOwner = (props) => {
   const navigate = useNavigate();
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
+  );
+  const [toRenderRestaurant, setToRenderRestaurant] = useState();
   const restaurantOfUser = useSelector((state) => state.restaurants.data);
+
   const { id } = useParams();
   const [isTab, setIsTab] = useState("main");
   const { logout } = UserAuth();
   const [isCreate, setIsCreate] = useState(false);
 
-  const openTab = (txt) => {
-    setIsTab(txt);
-  };
+  useEffect(() => {
+    restaurantsData &&
+      restaurantsData.map((restaurant) => setToRenderRestaurant(restaurant));
+  }, [restaurantsData]);
 
-  const onChangeInput = () => {
-    setIsCreate((is) => !is);
-  };
   console.log("isCreate", isCreate);
-  const toRenderRestaurant = restaurantOfUser[0];
 
-  console.log("toRenderRestaurant", toRenderRestaurant);
+  console.log("toRenderRestaurant", restaurantOfUser);
 
   const goTo = (txt) => {
     navigate(`${txt}`);
@@ -79,6 +81,7 @@ const RestaurantHeaderFromOwner = (props) => {
             }}
           >
             <Avatar
+              onClick={() => goTo("/")}
               src={toRenderRestaurant?.logo}
               sx={{
                 width: "32px",

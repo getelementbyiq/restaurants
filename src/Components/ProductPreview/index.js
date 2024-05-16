@@ -46,7 +46,8 @@ const ProductPreview = (props) => {
   );
 
   useEffect(() => {
-    restaurantsData && setRestaurantsId(restaurantsData[0]?.id);
+    restaurantsData &&
+      restaurantsData.map((restaurant) => setRestaurantsId(restaurant.id));
   }, [restaurantsData]);
   console.log("product from preview", restaurantsId);
 

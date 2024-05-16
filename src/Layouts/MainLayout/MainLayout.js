@@ -21,17 +21,12 @@ import { fetchProductsData } from "../../Redux/immigration/products/productsFetc
 const MainLayout = (props) => {
   const dispatch = useDispatch();
   // products to render
-  const products = useSelector((state) => state.products.filteredProducts);
-  const show = useSelector((state) => state.show);
-  const localData = useSelector((state) => state.localData);
-  const currentUserData = useSelector((state) => state.userById);
-  const restaurantData = useSelector((state) => state.oneRestaurantData);
+  const [currentRestaurant, setCurrentRestaurant] = useState();
 
   const navigate = useNavigate();
   const { user } = UserAuth();
   const userId = user?.uid;
-  const userData = currentUserData?.user;
-  const location = useLocation();
+
   const [scrollPosition, setScrollPosition] = useState(0);
   console.log("scrollPosition", scrollPosition);
   const localsId = useParams();
@@ -48,11 +43,18 @@ const MainLayout = (props) => {
     dispatch(fetchRestaurantsData(userId));
   }, [userId, dispatch]);
 
+  console.log("localsID", restaurantId);
+
   useEffect(() => {
     if (restaurantId !== null) {
       dispatch(fetchProductsData(restaurantId));
     }
   }, [restaurantId, dispatch]);
+
+  useEffect(() => {
+    restaurantsData &&
+      restaurantsData.map((restaurant) => setCurrentRestaurant(restaurant));
+  }, [restaurantsData]);
 
   return (
     <Box
@@ -61,15 +63,15 @@ const MainLayout = (props) => {
         height: "100vh",
         display: "flex",
         flexDirection: "column",
-        // justifyContent: "space-between",
-        // backgroundImage: `url(${restaurantData.restaurantData.background})`,
+        justifyContent: "space-between",
+        // backgroundImage: `url(${currentRestaurant.background})`,
         // backgroundRepeat: "no-repeat",
         // backgroundSize: "cover",
         // backgroundPosition: "center",
       }}
     >
       <RestaurantHeaderFromOwner />
-      {/* <BannerDefinder BG={toRenderRestaurant?.background} /> */}
+      <BannerDefinder BG={currentRestaurant?.background} />
       <Box
         sx={{
           display: "flex",

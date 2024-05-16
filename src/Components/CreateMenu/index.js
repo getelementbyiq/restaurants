@@ -11,6 +11,9 @@ const CreateMenu = () => {
   const restaurantsData = useSelector(
     (state) => state.fetchRestaurants?.restaurantsData
   );
+  const allProductData = useSelector(
+    (state) => state.productsFetchSlice.productsData
+  );
   const [menus, setMenus] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,6 +83,7 @@ const CreateMenu = () => {
         flexDirection: "column",
         gap: "8px",
         flexGrow: "1",
+        // border: "2px solid green",
       }}
     >
       <Box
@@ -91,6 +95,7 @@ const CreateMenu = () => {
           px: "8px",
           flexDirection: "column",
           flexGrow: "1",
+          // border: "2px solid red",
         }}
       >
         <Box
@@ -100,6 +105,7 @@ const CreateMenu = () => {
             mt: "8px",
             display: "flex",
             gap: "4px",
+            // border: "2px solid yellow",
           }}
         >
           <Input
@@ -125,28 +131,28 @@ const CreateMenu = () => {
             }}
           />
           <IconButton onClick={handleAddCategory}>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 12H18"
-                stroke="#292D32"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12 18V6"
-                stroke="#292D32"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+          <svg
+          width="30"
+          height="30"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4.5 9H13.5"
+            stroke="#292D32"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M9 13.5V4.5"
+            stroke="#292D32"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
           </IconButton>
         </Box>
 
