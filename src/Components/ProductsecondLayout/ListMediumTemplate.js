@@ -9,7 +9,8 @@ import {
 } from "../../Redux/slices/productFullView";
 import ProductsMediumTemplate from "../ProductHomePage/ProductsMediumTemplate";
 
-const ProductSecondLayout = ({ size, product }) => {
+const ListMediumTemplate = ({ size, product }) => {
+  const show = useSelector((state) => state.globalStates.menuAddProduct);
   const [clicked, setClicked] = useState(false);
   const isMobile = useMobileCheck();
   const dispatch = useDispatch();
@@ -34,13 +35,13 @@ const ProductSecondLayout = ({ size, product }) => {
       display: "flex",
     },
     small: {
-      gridRowEnd: isMobile ? "span 12" : "span 12",
+      gridRowEnd: isMobile ? "span 12" : "span 8",
     },
     medium: {
-      gridRowEnd: isMobile ? "span 8" : "span 12",
+      gridRowEnd: isMobile ? "span 8" : "span 8",
     },
     large: {
-      gridRowEnd: isMobile ? "span 10" : "span 12",
+      gridRowEnd: isMobile ? "span 10" : "span 8",
     },
   };
   return (
@@ -69,6 +70,6 @@ const ProductSecondLayout = ({ size, product }) => {
 //   );
 // };
 
-ProductSecondLayout.propTypes = {};
+ListMediumTemplate.propTypes = {};
 
-export default ProductSecondLayout;
+export default ListMediumTemplate;

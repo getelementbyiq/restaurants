@@ -19,6 +19,9 @@ const LayoutDefinder = (props) => {
   const uID = user?.uid ? user?.uid : null;
   const userData = useSelector((state) => state.fetchUser.userData);
   const userDataState = useSelector((state) => state.fetchUser.loading);
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
+  );
   const products = useSelector(
     (state) => state.productsFetchSlice.productsDataWithoutUser
   );

@@ -4,6 +4,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   query,
   where,
 } from "firebase/firestore";
@@ -164,6 +165,7 @@ export const fetchProductsOfOneDeal = createAsyncThunk(
     }
   }
 );
+
 const fetchProductsSlice = createSlice({
   name: "productsFetchSlice",
   initialState: {
@@ -206,6 +208,9 @@ const fetchProductsSlice = createSlice({
     },
     setsearchValue: (state, action) => {
       state.searchValue = action.payload;
+    },
+    updateProduct(state, action) {
+      state.productsOfDeals.data = action.payload;
     },
   },
   extraReducers: (builder) => {

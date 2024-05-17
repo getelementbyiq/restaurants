@@ -39,7 +39,8 @@ const MainLayout = (props) => {
     (state) => state.fetchRestaurants?.restaurantsData
   );
   useEffect(() => {
-    restaurantsData && setRestaurantId(restaurantsData[0]?.id);
+    restaurantsData &&
+      restaurantsData.map((restaurant) => setRestaurantId(restaurant.id));
   }, [restaurantsData]);
 
   useEffect(() => {

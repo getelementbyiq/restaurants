@@ -37,6 +37,7 @@ import fetchRestaurantSlice from "./immigration/restaurants/restaurantFetchSlice
 import menusOfRestaurantSlice from "./immigration/menusOfRestaurant/menusOfRestaurantSlice";
 import globalStateSlice from "./immigration/globalStates/globalStatesSlice";
 import dealsOfRestaurantSlice from "./immigration/menusOfRestaurant/dealsOfRestaurantSlice";
+import restaurantFetchSlice from "./immigration/restaurants/restaurantFetchSlice";
 
 const store = configureStore(
   {
@@ -63,7 +64,7 @@ const store = configureStore(
       isComment: isCommentReducer,
       userAll: userAllReducer,
       createRestaurantState: createRestaurantStateReducer,
-      restaurants: restaurantsSliceReducer,
+      restaurants: restaurantFetchSlice,
       searchResult: searchResultReducer,
       oneRestaurantData: oneRestaurantDataReducer,
       isClicked: isClickedReducer,

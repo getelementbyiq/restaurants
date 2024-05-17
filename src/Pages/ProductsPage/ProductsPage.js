@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Box } from "@mui/material";
 import CreateProductsV2 from "../CreateProductsV2/CreateProductsV2";
@@ -9,14 +9,18 @@ import { fetchProductsData } from "../../Redux/immigration/products/productsFetc
 
 const ProductsPage = (props) => {
   const dispatch = useDispatch();
-  const restaurantOfUser = useSelector(
-    (state) => state.restaurants.userRestaurants
+  const [restaurantId, setRestaurantId] = useState();
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
   );
-
-  const restaurantsId = restaurantOfUser[0]?.id;
   useEffect(() => {
-    dispatch(fetchProductsData(restaurantsId));
-  }, [restaurantsId, dispatch]);
+    restaurantsData &&
+      restaurantsData?.map((restaurant) => setRestaurantId(restaurant.id));
+  }, [restaurantsData]);
+
+  useEffect(() => {
+    dispatch(fetchProductsData(restaurantId));
+  }, [restaurantId, dispatch]);
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
       <ProductsPageNav />

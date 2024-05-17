@@ -86,6 +86,7 @@ const ProductRenderDelas = (props) => {
         // border: "2px solid green",
         // px: "5px",
         position: "relative",
+        // overflow: "hidden",
       }}
     >
       <IconButton
@@ -167,7 +168,8 @@ const ProductRenderDelas = (props) => {
         <Box
           sx={{
             width: "36%",
-            // border: "2px solid yellow",
+            border: "2px solid yellow",
+            position: "relative",
           }}
         >
           <Box

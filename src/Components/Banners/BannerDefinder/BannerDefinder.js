@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
 import RestaurantBannerMain from "../RestaurantBannerMain/RestaurantBannerMain";
@@ -7,16 +7,21 @@ import RestaurantProductsBanner from "../RestaurantProductsBanner/RestaurantProd
 import { useSelector } from "react-redux";
 
 const BannerDefinder = (BG) => {
-  const restaurantOfUser = useSelector(
-    (state) => state.restaurants.userRestaurants
+  const [restaurantId, setRestaurantId] = useState();
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
   );
+  useEffect(() => {
+    restaurantsData &&
+      restaurantsData?.map((restaurant) => setRestaurantId(restaurant.id));
+  }, [restaurantsData]);
+
   // const restaurantsId = id;
   // const restaurantsId = restaurantOfUser?.map((restaurant) => restaurant.id);
-  const restaurantsId = restaurantOfUser[0]?.id;
   const { pathname } = useLocation();
   return (
     <Box>
-      {pathname === `/${restaurantsId}` && <RestaurantBannerMain />}
+      {pathname === `/${restaurantId}` && <RestaurantBannerMain />}
       {pathname === "/products" && <RestaurantProductsBanner BG={BG} />}
     </Box>
   );
