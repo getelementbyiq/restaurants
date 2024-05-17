@@ -36,13 +36,13 @@ const MenuPageNav = (props) => {
   }, [menuData]);
 
   useEffect(() => {
-    menuData && setMenu(menuData.filter((menu) => menu.id === menuId));
+    menuData && setMenu(menuData?.filter((menu) => menu.id === menuId));
   }, [menuData, menuId]);
 
   useEffect(() => {
     if (menuData) {
       // Filtere das Menü anhand der übergebenen menuId
-      const selectedMenu = menuData.find((menu) => menu.id === menuId);
+      const selectedMenu = menuData?.find((menu) => menu.id === menuId);
       console.log("selectedMenu", selectedMenu);
       // Wenn ein Menü mit der entsprechenden ID gefunden wurde
       if (selectedMenu) {
