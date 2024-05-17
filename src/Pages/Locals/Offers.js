@@ -9,6 +9,7 @@ import OnePlusOneDeal from "../../Components/Deals/OnePlusOneDeal";
 import ProductRenderInDeals from "../../Components/Search/Restaurant/ProductRenderInDeals";
 import ProductAddRight from "../../Components/Search/Restaurant/ProductAddRightBar";
 import DealsDefinder from "../../Components/Deals/DealsDefinder";
+import DealsBannerDefinder from "../../Components/Deals/DealsBannerDefinder";
 
 const Offers = (props) => {
   return (
@@ -78,7 +79,7 @@ const Offers = (props) => {
               // border: "1px solid red",
             }}
           >
-            {/* <DealsDefinder /> */}
+            <DealsBannerDefinder />
             <ProductRenderInDeals />
           </Box>
           <ProductAddRight />

@@ -47,7 +47,7 @@ const DealsPageNav = (props) => {
       // Filtere das Menü anhand der übergebenen dealsId
       const selectedMenu = dealsData.find((menu) => menu.id === dealsId);
       console.log("selectedMenu", selectedMenu);
-      console.log("selectedMenu", selectedMenu.productIds);
+      console.log("selectedMenu", selectedMenu?.productIds);
       // Wenn ein Menü mit der entsprechenden ID gefunden wurde
       if (selectedMenu) {
         // Rufe die Produkte für das ausgewählte Menü ab
@@ -79,6 +79,7 @@ const DealsPageNav = (props) => {
         position: "relative",
         overflow: "hidden",
         height: "48px",
+        px: "40px",
       }}
     >
       <DealsDefinder />

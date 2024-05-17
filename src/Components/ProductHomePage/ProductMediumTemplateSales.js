@@ -17,21 +17,14 @@ import { reseIsClicked, setIsClicked } from "../../Redux/slices/isClicked";
 import { setRestaurantData } from "../../Redux/slices/onerestaurantData";
 import { Tooltip } from "react-tooltip";
 import useMobileCheck from "../MobileCheck";
-import Clock from "../Clock/Clock";
-import { timeToNumericFormat } from "../AAATimeToNum/TimeToNum";
 
-const ProductsMediumTemplate = (product) => {
+const ProductMediumTemplateSales = (product) => {
+  const { dealId } = useParams();
   const navigate = useNavigate();
-  const { dealsId } = useParams();
-  const currentTime = Clock();
-  const currentTimeRightFormat = timeToNumericFormat(currentTime);
+  const id = useParams();
+  console.log("food id", id);
 
-  console.log("currentTimeRightFormat", currentTimeRightFormat);
-
-  const [saleDealValue, setSaleDealValue] = useState();
-
-  const value = useSelector((state) => state.globalStates.saleDealValue);
-  console.log("saleDealValue", saleDealValue);
+  const foodId = id.id;
 
   const dispatch = useDispatch();
   const [isChecked, setIsChecked] = useState(false);
@@ -39,31 +32,20 @@ const ProductsMediumTemplate = (product) => {
   const [settingsOn, setSettingsOn] = useState(false);
   const isMobile = useMobileCheck();
 
-  const restaurantData = useSelector((state) => state.oneRestaurantData);
   const deal = useSelector((state) =>
-    state.fetchDeals.dealsData.find((deal) => deal.id === dealsId)
+    state.fetchDeals.dealsData.find((deal) => deal.id === dealId)
   );
-  const dealsState = useSelector((state) => state.globalStates.dealsState);
 
-  useEffect(() => {
-    if (value) {
-      setSaleDealValue(value);
-    } else if (deal) {
-      setSaleDealValue(deal.discount);
-    }
-  }, [value, deal]);
+  console.log("unser deal", deal);
+
+  const restaurantData = useSelector((state) => state.oneRestaurantData);
   const handleCheck = () => {
     setIsChecked((open) => !open);
     setSettingsOn((open) => !open);
   };
 
-  console.log("unser deal", deal);
-
   const handleComment = () => {
     setIsComment((open) => !open);
-  };
-  const stringPriceToNumber = (stringPrice) => {
-    return parseFloat(stringPrice.replace(",", "."));
   };
   // const productId = product?.product.id;
   console.log("product", product);
@@ -89,6 +71,16 @@ const ProductsMediumTemplate = (product) => {
   // )})`;
 
   const [isHovered, setHovered] = useState(true);
+
+  const onClickProduct = (product) => {
+    if (id.id === product.product.id) {
+      navigate("/");
+    } else {
+      navigate(
+        `/${product.product.restaurantsId}/${product.product.categoryType}/${product.product.selectedCategoryId}/${product.product.id}`
+      );
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -125,6 +117,7 @@ const ProductsMediumTemplate = (product) => {
       sx={{
         display: "flex",
         flexDirection: "column",
+        border: "1px solid red",
         // flexGrow: 1,
         backgroundImage: `url(${product.product.background})`,
 
@@ -186,16 +179,15 @@ const ProductsMediumTemplate = (product) => {
           <Box
             sx={{
               display: "flex",
+              justifyContent: "flex-end",
               px: "16px",
               transition: "150ms",
               position: "relative",
               top: !isHovered ? "-36px" : "8px",
               visibility: isHovered ? "visible" : "hidden",
+              position: "relative",
               zIndex: "1",
               // border: "1px solid red",
-              flexDirection: "column",
-              gap: "4px",
-              alignItems: "flex-end",
             }}
           >
             <Typography
@@ -208,43 +200,6 @@ const ProductsMediumTemplate = (product) => {
             >
               {product.product.price}$
             </Typography>
-            {saleDealValue &&
-              deal.dealsType === "sale" &&
-              dealsState === "sale" && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    px: "16px",
-                    py: "4px",
-                    borderRadius: "32px",
-                    backgroundColor:
-                      currentTimeRightFormat < deal.offerStart
-                        ? "grey"
-                        : currentTimeRightFormat > deal.offerEnd
-                        ? "grey"
-                        : "green",
-                  }}
-                >
-                  {/* esli currentTime menwe chen from to grey, i esli current time bolwe to, to gray     
-                           offerStart < CurrentTime < offerEnd === green
-                  */}
-                  <Typography
-                    sx={{
-                      color: "#fff",
-                      fontFamily: "Noto Sans",
-                      fontWeight: "300",
-                      fontSize: "16px",
-                    }}
-                  >
-                    {stringPriceToNumber(product.product.price) -
-                      (saleDealValue *
-                        stringPriceToNumber(product.product.price)) /
-                        100}
-                    $
-                  </Typography>
-                </Box>
-              )}
           </Box>
         )}
         {!isChecked && !isComment && (
@@ -361,6 +316,6 @@ const ProductsMediumTemplate = (product) => {
   );
 };
 
-ProductsMediumTemplate.propTypes = {};
+ProductMediumTemplateSales.propTypes = {};
 
-export default ProductsMediumTemplate;
+export default ProductMediumTemplateSales;
