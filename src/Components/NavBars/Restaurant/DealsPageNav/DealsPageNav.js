@@ -79,6 +79,7 @@ const DealsPageNav = (props) => {
         position: "relative",
         overflow: "hidden",
         height: "48px",
+        px: "40px",
       }}
     >
       <DealsDefinder />

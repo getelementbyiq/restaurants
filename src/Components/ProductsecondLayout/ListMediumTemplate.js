@@ -8,6 +8,7 @@ import {
   setProductFullview,
 } from "../../Redux/slices/productFullView";
 import ProductsMediumTemplate from "../ProductHomePage/ProductsMediumTemplate";
+import ProductMediumTemplateSales from "../ProductHomePage/ProductMediumTemplateSales";
 
 const ListMediumTemplate = ({ size, product }) => {
   const show = useSelector((state) => state.globalStates.menuAddProduct);
@@ -16,6 +17,7 @@ const ListMediumTemplate = ({ size, product }) => {
   const dispatch = useDispatch();
   const productFullView = useSelector((state) => state.productFullView);
   console.log("productFullView", productFullView);
+ 
 
   const handleClickOpen = () => {
     setClicked(true);
@@ -52,6 +54,7 @@ const ListMediumTemplate = ({ size, product }) => {
       }}
     >
       {/* {clicked && <Typography>clicked</Typography>} */}
+
       <ProductsMediumTemplate product={product} />
     </Box>
   );
