@@ -78,12 +78,10 @@ const CreateMenu = () => {
     <Box
       sx={{
         display: "flex",
+        flexGrow: "1",
         borderRadius: "32px",
-        px: "8px",
         flexDirection: "column",
         gap: "8px",
-        flexGrow: "1",
-        // border: "2px solid green",
       }}
     >
       <Box
@@ -131,28 +129,28 @@ const CreateMenu = () => {
             }}
           />
           <IconButton onClick={handleAddCategory}>
-          <svg
-          width="30"
-          height="30"
-          viewBox="0 0 18 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M4.5 9H13.5"
-            stroke="#292D32"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M9 13.5V4.5"
-            stroke="#292D32"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+            <svg
+              width="30"
+              height="30"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.5 9H13.5"
+                stroke="#292D32"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9 13.5V4.5"
+                stroke="#292D32"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </IconButton>
         </Box>
 

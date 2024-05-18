@@ -119,6 +119,22 @@ const Root = createBrowserRouter(
         }
       />
       <Route
+        path="/menu/:categoryState"
+        element={
+          <ProtectedRoute>
+            <Menu />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="menu/:categoryState/:menuId"
+        element={
+          <ProtectedRoute>
+            <Menu />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="menu/:menuId"
         element={
           <ProtectedRoute>

@@ -72,6 +72,7 @@ const MainLayout = (props) => {
         // backgroundRepeat: "no-repeat",
         // backgroundSize: "cover",
         // backgroundPosition: "center",
+        overflow: "hidden",
       }}
     >
       <RestaurantHeaderFromOwner />

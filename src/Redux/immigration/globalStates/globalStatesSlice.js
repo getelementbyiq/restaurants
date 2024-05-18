@@ -5,6 +5,12 @@ const initialState = {
   menuAddProduct: false,
   dealsState: "",
   saleDealValue: null,
+  categoryList: [
+    { name: "calssic", color: "#FF00D6" },
+    { name: "combi", color: "#00D1FF" },
+    { name: "sale", color: "#00FFC2" },
+    { name: "others", color: "#9EFF00" },
+  ],
 };
 
 const globalStateSlice = createSlice({
