@@ -18,12 +18,11 @@ import { useParams } from "react-router-dom";
 import { timeToNumericFormat } from "../AAATimeToNum/TimeToNum";
 
 const SaleTemplate = (props) => {
-  const { dealsId } = useParams();
+  const { menuId } = useParams();
   const dispatch = useDispatch();
   const [value, setValue] = useState();
   const [from, setFrom] = React.useState("");
   const [to, setTo] = React.useState("");
-  const dealsState = useSelector((state) => state.globalStates.dealsState);
 
   // const stringPriceToNumber = (stringPrice) => {
   //   return parseFloat(stringPrice.replace(",", "."));
@@ -40,11 +39,10 @@ const SaleTemplate = (props) => {
   const handleProductClick = async () => {
     try {
       // Referenz zum Menüdokument in der "menus" Collection
-      const menuDocRef = doc(db, "deals", dealsId);
+      const menuDocRef = doc(db, "menus", menuId);
 
       // Aktualisiere das Menüdokument und füge die productId zur productIds-Liste hinzu
       await updateDoc(menuDocRef, {
-        dealsType: dealsState ? dealsState : null,
         discount: value ? value : null,
         offerStart: from,
         offerEnd: to,

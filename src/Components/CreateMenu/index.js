@@ -7,6 +7,7 @@ import { db } from "../../firebase";
 import { fetchMenusData } from "../../Redux/immigration/menusOfRestaurant/menusOfRestaurantSlice";
 
 const CreateMenu = () => {
+  const { categoryState } = useParams();
   const [textFieldValue, setTextFieldValue] = useState("");
   const restaurantsData = useSelector(
     (state) => state.fetchRestaurants?.restaurantsData
@@ -44,26 +45,14 @@ const CreateMenu = () => {
         views: null,
         likes: null,
         productIds: [],
+        categoryType: categoryState,
+        discount: null,
+        offerStart: null,
+        offerEnd: null,
+        newPrice: null,
       });
       console.log("Neues Menü wurde erstellt mit ID: ", newMenuRef.id);
 
-      const menuObject = {
-        id: newMenuRef.id,
-        restaurantId,
-        background: null,
-        name: textFieldValue.trim(),
-        views: null,
-        likes: null,
-        productIds: [],
-      };
-      // Zugriff auf den Local Storage
-      const menusFromLocalStorage =
-        JSON.parse(localStorage.getItem("menus")) || [];
-      // Hinzufügen des neuen Menüs zu den vorhandenen Menüs
-      menusFromLocalStorage.push(menuObject);
-      // Zurückspeichern der aktualisierten Menüs im Local Storage
-      localStorage.setItem("menus", JSON.stringify(menusFromLocalStorage));
-      // Hier kannst du bei Bedarf den Redux-Store aktualisieren oder andere Aktionen ausführen
       setTextFieldValue(""); // Leere das Eingabefeld nach dem Hinzufügen
     } catch (error) {
       console.error("Fehler beim Erstellen des Menüs: ", error);
@@ -71,7 +60,7 @@ const CreateMenu = () => {
   };
 
   const goTo = (menuId) => {
-    navigate(`/menu/${menuId}`);
+    navigate(`/menu/${categoryState}/${menuId}`);
   };
 
   return (
@@ -163,28 +152,31 @@ const CreateMenu = () => {
             py: "16px",
           }}
         >
-          {menus?.map((menu) => (
-            <Box
-              key={menu.id}
-              onClick={() => goTo(menu.id)}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                px: "32px",
-                py: "8px",
-                borderRadius: "8px",
-                backgroundColor: location.pathname.includes(menu.id)
-                  ? "rgba(0,0,0,0.4)"
-                  : "rgba(0,0,0,0.1)",
-                "&&:hover": {
-                  backgroundColor: "rgba(0,0,0,0.2)",
-                },
-                cursor: "pointer",
-              }}
-            >
-              <Typography>{menu.name}</Typography>
-            </Box>
-          ))}
+          {menus?.map(
+            (menu) =>
+              menu.categoryType === categoryState && (
+                <Box
+                  key={menu.id}
+                  onClick={() => goTo(menu.id)}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    px: "32px",
+                    py: "8px",
+                    borderRadius: "8px",
+                    backgroundColor: location.pathname.includes(menu.id)
+                      ? "rgba(0,0,0,0.4)"
+                      : "rgba(0,0,0,0.1)",
+                    "&&:hover": {
+                      backgroundColor: "rgba(0,0,0,0.2)",
+                    },
+                    cursor: "pointer",
+                  }}
+                >
+                  <Typography>{menu.name}</Typography>
+                </Box>
+              )
+          )}
         </Box>
       </Box>
     </Box>

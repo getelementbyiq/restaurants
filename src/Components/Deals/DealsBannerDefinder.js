@@ -4,9 +4,11 @@ import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import CombiDealTemplate from "./CombiDealTemplate";
 import SaleTemplate from "./SaleTemplate";
+import OtherDealTemplate from "./OtherDealTemplate";
+import { useParams } from "react-router-dom";
 
 const DealsBannerDefinder = (props) => {
-  const dealsState = useSelector((state) => state.globalStates.dealsState);
+  const { categoryState } = useParams();
   return (
     <Box
       sx={{
@@ -15,13 +17,9 @@ const DealsBannerDefinder = (props) => {
         border: "1px solid red",
       }}
     >
-      {dealsState === "combi" && <CombiDealTemplate />}
-      {dealsState === "sale" && <SaleTemplate />}
-      {dealsState === "others" && (
-        <Box>
-          <Typography>Others wurde gedrückt</Typography>
-        </Box>
-      )}
+      {categoryState === "combi" && <CombiDealTemplate />}
+      {categoryState === "sale" && <SaleTemplate />}
+      {categoryState === "others" && <OtherDealTemplate />}
     </Box>
   );
 };

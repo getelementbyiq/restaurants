@@ -8,8 +8,13 @@ import { db } from "../../firebase";
 import ProductsRender from "../../Components/Search/Restaurant/ProductsRender";
 import DealsDefinder from "../../Components/Deals/DealsDefinder";
 import CategoryNavigation from "../../Components/CategoryNavigation/CategoryNavigation";
+import CombiDealTemplate from "../../Components/Deals/CombiDealTemplate";
+import { useParams } from "react-router-dom";
+import DealsBannerDefinder from "../../Components/Deals/DealsBannerDefinder";
 
 const Menu = (props) => {
+  const { categoryState } = useParams();
+
   return (
     <Grid
       container
@@ -17,7 +22,7 @@ const Menu = (props) => {
         display: "flex",
         flexGrow: "1",
         // border: "1px solid red",
-        px: "40px",
+        // px: "40px",
         flexDirection: "column",
         gap: "16px",
       }}
@@ -31,8 +36,6 @@ const Menu = (props) => {
       >
         <Grid
           item
-          xs={3}
-          md={3}
           sx={{
             border: "1px solid blue",
             display: "flex",
@@ -41,6 +44,7 @@ const Menu = (props) => {
             pb: "8px",
             // backgroundColor: "red",
             position: "realtive",
+            width: "20%",
           }}
         >
           <Box
@@ -59,16 +63,15 @@ const Menu = (props) => {
         </Grid>
         <Grid
           item
-          xs={9}
-          md={9}
           sx={{
-            // border: "1px solid black",
+            border: "1px solid black",
             display: "flex",
             flexGrow: "1",
             pb: "8px",
             flexDirection: "column",
             // backgroundColor: "green",
             gap: "16px",
+            width: "80%",
           }}
         >
           <Box
@@ -77,6 +80,7 @@ const Menu = (props) => {
             <MenuPageNav />
           </Box>
           <ProductsRender />
+          <DealsBannerDefinder />
         </Grid>
       </Box>
     </Grid>

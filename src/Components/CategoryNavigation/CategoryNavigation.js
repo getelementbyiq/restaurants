@@ -15,13 +15,15 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const CategoryNavigation = (props) => {
   const { categoryState } = useParams();
+  
   const navigate = useNavigate();
-
   const goTo = (txt) => {
     navigate(`/menu/${txt}`);
   };
 
   const categoryList = useSelector((state) => state.globalStates.categoryList);
+
+
 
   return (
     <Box

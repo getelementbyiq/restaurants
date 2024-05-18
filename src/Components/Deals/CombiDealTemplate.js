@@ -7,16 +7,16 @@ import { doc, updateDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 
 const CombiDealTemplate = (props) => {
-  const { dealsId } = useParams();
+  const { menuId } = useParams();
   const [sumeOfProducts, setSumeOfProducts] = useState();
   const [value, setValue] = useState();
   const [differenceInPrecentage, setDifferenceInPrecentage] = useState();
-  const dealsState = useSelector((state) => state.globalStates.dealsState);
+
   const productsOfDeal = useSelector(
     (state) => state.productsFetchSlice.productsOfDeals.data
   );
   const deal = useSelector((state) =>
-    state.fetchDeals.dealsData.find((deal) => deal.id === dealsId)
+    state?.fetchDeals?.dealsData?.find((deal) => deal?.id === menuId)
   );
 
   const stringPriceToNumber = (stringPrice) => {
@@ -47,11 +47,10 @@ const CombiDealTemplate = (props) => {
   const handleProductClick = async () => {
     try {
       // Referenz zum Menüdokument in der "menus" Collection
-      const menuDocRef = doc(db, "deals", dealsId);
+      const menuDocRef = doc(db, "menus", menuId);
 
       // Aktualisiere das Menüdokument und füge die productId zur productIds-Liste hinzu
       await updateDoc(menuDocRef, {
-        dealsType: dealsState ? dealsState : null,
         newPrice: value ? value : null,
       });
       console.log(
@@ -77,7 +76,7 @@ const CombiDealTemplate = (props) => {
       <Typography>{sumeOfProducts}</Typography>
 
       <Input
-        placeholder={deal.newPrice ? `${deal.newPrice}` : "New price"}
+        placeholder={deal?.newPrice ? `${deal?.newPrice}` : "New price"}
         type="number"
         onChange={differenceDefinder}
       />
@@ -87,10 +86,10 @@ const CombiDealTemplate = (props) => {
       {value && sumeOfProducts < value && (
         <Typography>{-(100 - differenceInPrecentage)}</Typography>
       )}
-      {!value && sumeOfProducts > deal.newPrice && (
+      {!value && sumeOfProducts > deal?.newPrice && (
         <Typography>{-100 + differenceInPrecentage}</Typography>
       )}
-      {!value && sumeOfProducts < deal.newPrice && (
+      {!value && sumeOfProducts < deal?.newPrice && (
         <Typography>{-(100 - differenceInPrecentage)}</Typography>
       )}
       {!value && <Typography>100</Typography>}
