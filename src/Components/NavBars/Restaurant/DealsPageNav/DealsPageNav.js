@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Box, IconButton, TextField, Typography } from "@mui/material";
+import { Box, IconButton, Input, TextField, Typography } from "@mui/material";
 import {
   fetchProductsOfOneDeal,
   fetchProductsOfOneMenu,
@@ -14,6 +14,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { setMenuAddProduct } from "../../../../Redux/immigration/globalStates/globalStatesSlice";
 import OnePlusOneDeal from "../../../Deals/OnePlusOneDeal";
 import DealsDefinder from "../../../Deals/DealsDefinder";
+import DealsBannerDefinder from "../../../Deals/DealsBannerDefinder";
 
 const DealsPageNav = (props) => {
   const { dealsId } = useParams();
@@ -77,21 +78,40 @@ const DealsPageNav = (props) => {
         flexGrow: "1",
         justifyContent: "space-between",
         position: "relative",
-        overflow: "hidden",
+        // overflow: "hidden",
         height: "48px",
         px: "40px",
       }}
     >
-      <DealsDefinder />
-      {/* {dealsId &&
-        menu?.map((menu) => (
-          <Box>
-            <Typography>{menu.name}</Typography>
-
-            <Typography> : {menu.productIds.length}</Typography>
-          </Box>
-        ))} */}
-      <TextField
+      <Input
+        fullWidth
+        placeholder="Category name"
+        value={searchTerm}
+        onChange={handleSearch}
+        sx={{
+          fontSize: "16px",
+          color: "#000",
+          transform: "translateX(24px)",
+          width: "180px",
+          position: "absolute",
+          top: "8px",
+          transition: "800ms",
+          right: show ? "32px" : "-350px",
+        }}
+        InputLabelProps={{
+          style: { color: "#000", height: "40px" },
+        }}
+        InputProps={{
+          style: {
+            borderRadius: "32px",
+            fontSize: "16px",
+            background: "rgba(239, 239, 239, 0.2)",
+            backdropFilter: "blur(7.5px)",
+            color: "#000",
+          },
+        }}
+      />
+      {/* <TextField
         size="small"
         sx={{
           width: "260px",
@@ -108,7 +128,7 @@ const DealsPageNav = (props) => {
         }}
         value={searchTerm}
         onChange={handleSearch}
-      />
+      /> */}
 
       <IconButton
         onClick={() => clichOpen(dealsId)}
@@ -117,8 +137,8 @@ const DealsPageNav = (props) => {
           backgroundColor: "#fff",
           transform: show ? "rotate(45deg)" : "rotate(0deg)",
           position: "absolute",
-          top: "4px",
-          right: show ? "286px" : "0px",
+          // top: "4px",
+          right: show ? "200px" : "28px",
         }}
       >
         <svg

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import ListProductTemplate from "../../Templates/ListProductTemplate/ListProductTemplate";
 import { useParams } from "react-router-dom";
@@ -8,20 +8,47 @@ import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import useMobileCheck from "../../MobileCheck";
 import ListMediumTemplate from "../../ProductsecondLayout/ListMediumTemplate";
+import { fetchProductsOfOneMenu } from "../../../Redux/immigration/products/productsFetchSlice";
 
 let productIndex = 0;
 const size = ["small", "medium", "large"];
 
 const ProductRenderInDeals = (props) => {
-  const { dealsId } = useParams();
+  const { menuId } = useParams();
+  const [menu, setMenu] = useState(null);
   const isMobile = useMobileCheck();
 
+  const dispatch = useDispatch();
+  const menuData = useSelector((state) => state.fetchRealTimeMenus?.menusData);
+
   const products = useSelector(
-    (state) => state.productsFetchSlice.productsOfDeals.data
+    (state) => state.productsFetchSlice.productsOfMenu.data
   );
 
   console.log("products menunav", products);
   const show = useSelector((state) => state.globalStates.menuAddProduct);
+
+  useEffect(() => {
+    console.log("menuData", menuData);
+  }, [menuData]);
+
+  useEffect(() => {
+    menuData && setMenu(menuData?.filter((menu) => menu.id === menuId));
+  }, [menuData, menuId]);
+
+  useEffect(() => {
+    if (menuData) {
+      // Filtere das Menü anhand der übergebenen menuId
+      const selectedMenu = menuData?.find((menu) => menu.id === menuId);
+      console.log("selectedMenu", selectedMenu);
+      // Wenn ein Menü mit der entsprechenden ID gefunden wurde
+      if (selectedMenu) {
+        // Rufe die Produkte für das ausgewählte Menü ab
+        console.log("fetchProductsOfOneMenu---");
+        dispatch(fetchProductsOfOneMenu(selectedMenu));
+      }
+    }
+  }, [menuData, menuId, dispatch]);
 
   return (
     <Grid
@@ -76,7 +103,8 @@ const ProductRenderInDeals = (props) => {
             left: "0",
           }}
         >
-          {products &&
+          {menuId &&
+            products &&
             products.map((product, index) => {
               const currentSize = size[productIndex % size.length];
               productIndex++;

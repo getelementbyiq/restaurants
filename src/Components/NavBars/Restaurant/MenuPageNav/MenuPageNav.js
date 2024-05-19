@@ -15,11 +15,15 @@ import { setMenuAddProduct } from "../../../../Redux/immigration/globalStates/gl
 const MenuPageNav = (props) => {
   const { menuId } = useParams();
   const dispatch = useDispatch();
-  const menuData = useSelector((state) => state.fetchMenus?.menusData);
+  const menuData = useSelector((state) => state.fetchRealTimeMenus?.menusData);
   const [searchTerm, setSearchTerm] = useState("");
   const [menus, setMenus] = useState();
   const [menu, setMenu] = useState(null);
   const location = useLocation();
+
+  useEffect(() => {
+    console.log("menuData", menuData);
+  }, [menuData]);
 
   const handleSearch = (event) => {
     const term = event.target.value;
@@ -47,6 +51,7 @@ const MenuPageNav = (props) => {
       // Wenn ein Menü mit der entsprechenden ID gefunden wurde
       if (selectedMenu) {
         // Rufe die Produkte für das ausgewählte Menü ab
+        console.log("fetchProductsOfOneMenu---");
         dispatch(fetchProductsOfOneMenu(selectedMenu));
       }
     }

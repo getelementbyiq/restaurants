@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { fetchMenusData } from "../../Redux/immigration/menusOfRestaurant/menusOfRestaurantSlice";
+import { fetchMenusRealTimeData } from "../../Redux/immigration/menusOfRestaurant/fetchMenusRealTime";
 
 const CreateMenu = () => {
   const { categoryState } = useParams();
@@ -12,9 +13,7 @@ const CreateMenu = () => {
   const restaurantsData = useSelector(
     (state) => state.fetchRestaurants?.restaurantsData
   );
-  const allProductData = useSelector(
-    (state) => state.productsFetchSlice.productsData
-  );
+
   const [menus, setMenus] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,10 +26,10 @@ const CreateMenu = () => {
   }, [restaurantsData]);
 
   useEffect(() => {
-    dispatch(fetchMenusData(restaurantId));
+    dispatch(fetchMenusRealTimeData(restaurantId));
   }, [restaurantId, dispatch]);
 
-  const menusPrev = useSelector((state) => state.fetchMenus?.menusData);
+  const menusPrev = useSelector((state) => state.fetchRealTimeMenus?.menusData);
   useEffect(() => {
     menusPrev && setMenus(menusPrev);
   }, [menusPrev]);

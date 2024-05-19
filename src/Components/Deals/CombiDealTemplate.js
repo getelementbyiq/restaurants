@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { Box, Button, Input, Typography } from "@mui/material";
+import { Box, Button, Input, TextField, Typography } from "@mui/material";
 import { db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
@@ -74,12 +74,21 @@ const CombiDealTemplate = (props) => {
         </Typography>
       ))}
       <Typography>{sumeOfProducts}</Typography>
-
-      <Input
+      <TextField
+        fullWidth
         placeholder={deal?.newPrice ? `${deal?.newPrice}` : "New price"}
         type="number"
         onChange={differenceDefinder}
+        InputProps={{
+          style: { borderRadius: "32px", backgroundColor: "#F4F4F4" },
+        }}
       />
+
+      {/* <Input
+        placeholder={deal?.newPrice ? `${deal?.newPrice}` : "New price"}
+        type="number"
+        onChange={differenceDefinder}
+      /> */}
       {value && sumeOfProducts > value && (
         <Typography>{-100 + differenceInPrecentage}</Typography>
       )}

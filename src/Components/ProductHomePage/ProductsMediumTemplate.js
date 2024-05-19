@@ -22,7 +22,7 @@ import { timeToNumericFormat } from "../AAATimeToNum/TimeToNum";
 
 const ProductsMediumTemplate = (product) => {
   const navigate = useNavigate();
-  const { dealsId } = useParams();
+  const { menuId } = useParams();
   const currentTime = Clock();
   const currentTimeRightFormat = timeToNumericFormat(currentTime);
 
@@ -39,11 +39,11 @@ const ProductsMediumTemplate = (product) => {
   const [settingsOn, setSettingsOn] = useState(false);
   const isMobile = useMobileCheck();
 
-  const restaurantData = useSelector((state) => state.oneRestaurantData);
+  const restaurantData = useSelector((state) => state?.oneRestaurantData);
   const deal = useSelector((state) =>
-    state.fetchDeals.dealsData.find((deal) => deal.id === dealsId)
+    state.fetchRealTimeMenus?.menusData.find((deal) => deal.id === menuId)
   );
-  const dealsState = useSelector((state) => state.globalStates.dealsState);
+  const dealsState = useSelector((state) => state?.globalStates?.dealsState);
 
   useEffect(() => {
     if (value) {

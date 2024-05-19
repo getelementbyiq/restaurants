@@ -19,16 +19,16 @@ import {
 import { db } from "../../../firebase";
 
 const ProductsImageTemplateDealsList = ({ product }) => {
-  const { dealsId } = useParams();
+  const { menuId } = useParams();
   const [choosen, setChoosen] = useState(false);
   const products = useSelector(
-    (state) => state.productsFetchSlice.productsOfDeals.data
+    (state) => state.productsFetchSlice.productsOfMenu.data
   );
   useEffect(() => {
     setChoosen(
       products?.some((selectedProduct) => selectedProduct.id === product.id)
     );
-  }, [dealsId, product.id, products]);
+  }, [menuId, product.id, products]);
   console.log("products from List", product.id);
 
   const addOrDeleteProduct = (productId) => {
@@ -42,7 +42,7 @@ const ProductsImageTemplateDealsList = ({ product }) => {
   const removeFromMenu = async (productId) => {
     try {
       // Referenz zum Menüdokument in der "menus" Collection
-      const menuDocRef = doc(db, "deals", dealsId);
+      const menuDocRef = doc(db, "menus", menuId);
 
       // Abrufen des aktuellen Menüdokuments
       const menuDocSnapshot = await getDoc(menuDocRef);
@@ -72,7 +72,7 @@ const ProductsImageTemplateDealsList = ({ product }) => {
   const handleProductClick = async (productId) => {
     try {
       // Referenz zum Menüdokument in der "menus" Collection
-      const menuDocRef = doc(db, "deals", dealsId);
+      const menuDocRef = doc(db, "menus", menuId);
 
       // Aktualisiere das Menüdokument und füge die productId zur productIds-Liste hinzu
       await updateDoc(menuDocRef, {
@@ -84,7 +84,7 @@ const ProductsImageTemplateDealsList = ({ product }) => {
       const menusFromLocalStorage =
         JSON.parse(localStorage.getItem("menus")) || [];
       const updatedMenus = menusFromLocalStorage.map((menu) => {
-        if (menu.id === dealsId) {
+        if (menu.id === menuId) {
           return { ...menu, productIds: [...menu.productIds, productId] };
         }
         return menu;
@@ -133,12 +133,13 @@ const ProductsImageTemplateDealsList = ({ product }) => {
           right: "20px",
           zIndex: "3010",
           transition: "150ms",
-          backgroundColor: choosen ? "#FFAC9A" : "#fff",
+          backgroundColor: choosen && menuId ? "#FFAC9A" : "#fff",
           // transform: choosen ? "rotate(45deg)" : "rotate(0deg) ",
           "&&:hover": {
-            backgroundColor: choosen
-              ? "rgba(255, 152, 130, 0.68)"
-              : "rgba(225,225,225,0.8)",
+            backgroundColor:
+              choosen && menuId
+                ? "rgba(255, 152, 130, 0.68)"
+                : "rgba(225,225,225,0.8)",
             transform: "scale(1.4)",
           },
         }}
@@ -157,7 +158,7 @@ const ProductsImageTemplateDealsList = ({ product }) => {
             stroke-linecap="round"
             stroke-linejoin="round"
           />
-          {choosen && (
+          {menuId && choosen && (
             <path
               d="M7.75 11.9999L10.58 14.8299L16.25 9.16992"
               stroke="#292D32"
@@ -176,7 +177,8 @@ const ProductsImageTemplateDealsList = ({ product }) => {
           height: "100%",
           top: "0",
           left: "0",
-          backgroundColor: choosen ? "rgba(4, 223, 0, 0.5)" : "rgba(0,0,0,0.5)",
+          backgroundColor:
+            menuId && choosen ? "rgba(4, 223, 0, 0.5)" : "rgba(0,0,0,0.5)",
         }}
       ></Box>
 

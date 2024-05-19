@@ -14,7 +14,7 @@ const DealsBannerDefinder = (props) => {
       sx={{
         display: "flex",
         px: "40px",
-        border: "1px solid red",
+        // border: "1px solid red",
       }}
     >
       {categoryState === "combi" && <CombiDealTemplate />}

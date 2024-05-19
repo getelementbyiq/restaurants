@@ -13,7 +13,7 @@ import ProductsImageTemplateDealsList from "../../Templates/ProductsImageTemplat
 let productIndex = 0;
 const size = ["small", "medium", "large"];
 const ProductAddRight = (props) => {
-  const { dealsId } = useParams();
+  const { menuId } = useParams();
   const isMobile = useMobileCheck();
   const searchValue = useSelector(
     (state) => state.productsFetchSlice.searchResults
@@ -41,7 +41,8 @@ const ProductAddRight = (props) => {
         position: "relative",
         display: "flex",
         transition: "600ms",
-        maxWidth: show ? "36%" : "0px",
+        maxWidth: show ? "100%" : "0px",
+        flexGrow: "1",
         // flexWrap: "wrap",
         // border: "1px solid green",
         // px: "5px",
@@ -51,7 +52,8 @@ const ProductAddRight = (props) => {
       <Box
         sx={{
           display: "flex",
-          //   border: "1px solid blue",
+          // border: "1px solid blue",
+          flexGrow: "1",
           width: show ? "100%" : "0px",
           transition: "600ms",
           position: "absolute",
@@ -75,7 +77,6 @@ const ProductAddRight = (props) => {
               position: "relative",
               display: "flex",
               justifyContent: "center",
-              px: "16px",
               flexGrow: "1",
             }}
           >
