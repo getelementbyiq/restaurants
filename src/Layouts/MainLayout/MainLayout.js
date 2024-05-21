@@ -76,7 +76,7 @@ const MainLayout = (props) => {
       }}
     >
       <RestaurantHeaderFromOwner />
-      <BannerDefinder BG={currentRestaurant?.background} />
+      {/* <BannerDefinder BG={currentRestaurant?.background} /> */}
       <Box
         sx={{
           display: "flex",

@@ -41,7 +41,7 @@ const ProductsMediumTemplate = (product) => {
 
   const restaurantData = useSelector((state) => state?.oneRestaurantData);
   const deal = useSelector((state) =>
-    state.fetchRealTimeMenus?.menusData.find((deal) => deal.id === menuId)
+    state?.fetchRealTimeMenus?.menusData.find((deal) => deal.id === menuId)
   );
   const dealsState = useSelector((state) => state?.globalStates?.dealsState);
 
@@ -209,7 +209,7 @@ const ProductsMediumTemplate = (product) => {
               {product.product.price}$
             </Typography>
             {saleDealValue &&
-              deal.dealsType === "sale" &&
+              deal?.categoryType === "sale" &&
               dealsState === "sale" && (
                 <Box
                   sx={{

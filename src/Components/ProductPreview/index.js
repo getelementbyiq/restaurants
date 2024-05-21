@@ -20,7 +20,7 @@ import { resetCreateProduct } from "../../Redux/slices/createProductSlice";
 
 const ProductPreview = (props) => {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { porductsType } = useParams();
   const [restaurantsId, setRestaurantsId] = useState();
   const restaurantOfUser = useSelector(
     (state) => state.restaurants.userRestaurants
@@ -84,7 +84,6 @@ const ProductPreview = (props) => {
       collectedOfferTime,
       menuDefault,
       menuDeals,
-      tag,
       eventsDate,
     } = product;
 
@@ -124,8 +123,7 @@ const ProductPreview = (props) => {
         collectedOfferTime,
         menuDefault,
         menuDeals,
-        tag,
-        categoryType,
+        tag: porductsType,
         selectedCategoryId,
         eventsDate,
         restaurantsId,

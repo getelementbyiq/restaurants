@@ -13,15 +13,17 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 //   { name: "others", color: "" },
 // ];
 
-const CategoryNavigation = (props) => {
-  const { categoryState } = useParams();
+const ProductsTypeNavigation = (props) => {
+  const { porductsType } = useParams();
 
   const navigate = useNavigate();
   const goTo = (txt) => {
-    navigate(`/menu/${txt}`);
+    navigate(`/products/${txt}`);
   };
 
-  const categoryList = useSelector((state) => state.globalStates.categoryList);
+  const categoryList = useSelector(
+    (state) => state.globalStates.productsTypeList
+  );
 
   return (
     <Box
@@ -53,7 +55,7 @@ const CategoryNavigation = (props) => {
         >
           <Typography
             sx={{
-              color: category.name === categoryState ? "#000" : "#B8B8B8",
+              color: category.name === porductsType ? "#000" : "#B8B8B8",
             }}
           >
             {category.name}
@@ -65,7 +67,7 @@ const CategoryNavigation = (props) => {
               borderRadius: "4px",
               height: "4px",
               backgroundColor:
-                category.name === categoryState ? category.color : "#fff",
+                category.name === porductsType ? category.color : "#fff",
             }}
           ></Box>
         </Box>
@@ -74,6 +76,6 @@ const CategoryNavigation = (props) => {
   );
 };
 
-CategoryNavigation.propTypes = {};
+ProductsTypeNavigation.propTypes = {};
 
-export default CategoryNavigation;
+export default ProductsTypeNavigation;

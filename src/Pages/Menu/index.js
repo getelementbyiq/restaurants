@@ -26,7 +26,7 @@ const Menu = (props) => {
       sx={{
         display: "flex",
         flexGrow: "1",
-        // border: "1px solid red",
+        border: "1px solid red",
         px: "16px",
         flexDirection: "column",
         gap: "16px",

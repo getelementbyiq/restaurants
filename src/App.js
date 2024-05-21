@@ -44,6 +44,7 @@ import LocalsFullViewSecond from "./Pages/LocalsFullViewPageSecond";
 import LayoutDefinder from "./Layouts/LayoutDefinder/LayoutDefinder";
 import ProductsPage from "./Pages/ProductsPage/ProductsPage";
 import { useState } from "react";
+import CreateProductsV2 from "./Pages/CreateProductsV2/CreateProductsV2";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(
@@ -107,6 +108,14 @@ const Root = createBrowserRouter(
         element={
           <ProtectedRoute>
             <ProductsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/products/:porductsType"
+        element={
+          <ProtectedRoute>
+            <CreateProductsV2 />
           </ProtectedRoute>
         }
       />

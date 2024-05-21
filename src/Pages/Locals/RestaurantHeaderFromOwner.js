@@ -171,14 +171,15 @@ const RestaurantHeaderFromOwner = (props) => {
           }}
         >
           <Box
-            onClick={() => goTo("products")}
+            onClick={() => goTo("products/dashboard")}
             sx={{
               display: "flex",
               borderRadius: "32px",
               px: "12px",
               py: "4px",
-              backgroundColor:
-                page === "/products" ? "rgba(0,0,0,0.4)" : "none",
+              backgroundColor: page.includes("/products")
+                ? "rgba(0,0,0,0.4)"
+                : "none",
               "&&:hover": {
                 backgroundColor: "rgba(225,225,225,0.3)",
               },
@@ -188,13 +189,15 @@ const RestaurantHeaderFromOwner = (props) => {
             <Typography sx={{ fontFamily: "Quicksand" }}>Products</Typography>
           </Box>
           <Box
-            onClick={() => goTo("menu")}
+            onClick={() => goTo("menu/dashboard")}
             sx={{
               display: "flex",
               borderRadius: "32px",
               px: "12px",
               py: "4px",
-              backgroundColor: page === "/menu" ? "rgba(0,0,0,0.4)" : "none",
+              backgroundColor: page.includes("/menu")
+                ? "rgba(0,0,0,0.4)"
+                : "none",
               "&&:hover": {
                 backgroundColor: "rgba(225,225,225,0.3)",
               },
@@ -210,7 +213,9 @@ const RestaurantHeaderFromOwner = (props) => {
               borderRadius: "32px",
               px: "12px",
               py: "4px",
-              backgroundColor: page === "/offers" ? "rgba(0,0,0,0.4)" : "none",
+              backgroundColor: page.includes("/offers")
+                ? "rgba(0,0,0,0.4)"
+                : "none",
               "&&:hover": {
                 backgroundColor: "rgba(225,225,225,0.3)",
               },
@@ -226,7 +231,9 @@ const RestaurantHeaderFromOwner = (props) => {
               borderRadius: "32px",
               px: "12px",
               py: "4px",
-              backgroundColor: page === "/team" ? "rgba(0,0,0,0.4)" : "none",
+              backgroundColor: page.includes("/team")
+                ? "rgba(0,0,0,0.4)"
+                : "none",
               "&&:hover": {
                 backgroundColor: "rgba(225,225,225,0.3)",
               },
@@ -242,7 +249,9 @@ const RestaurantHeaderFromOwner = (props) => {
               borderRadius: "32px",
               px: "12px",
               py: "4px",
-              backgroundColor: page === "/contact" ? "rgba(0,0,0,0.4)" : "none",
+              backgroundColor: page.includes("/contact")
+                ? "rgba(0,0,0,0.4)"
+                : "none",
               "&&:hover": {
                 backgroundColor: "rgba(225,225,225,0.3)",
               },
@@ -258,7 +267,9 @@ const RestaurantHeaderFromOwner = (props) => {
               borderRadius: "32px",
               px: "12px",
               py: "4px",
-              backgroundColor: page === "/jobs" ? "rgba(0,0,0,0.4)" : "none",
+              backgroundColor: page.includes("/jobs")
+                ? "rgba(0,0,0,0.4)"
+                : "none",
               "&&:hover": {
                 backgroundColor: "rgba(225,225,225,0.3)",
               },
@@ -274,7 +285,9 @@ const RestaurantHeaderFromOwner = (props) => {
               borderRadius: "32px",
               px: "12px",
               py: "4px",
-              backgroundColor: page === "/rool" ? "rgba(0,0,0,0.4)" : "none",
+              backgroundColor: page.includes("/rool")
+                ? "rgba(0,0,0,0.4)"
+                : "none",
               "&&:hover": {
                 backgroundColor: "rgba(225,225,225,0.3)",
               },

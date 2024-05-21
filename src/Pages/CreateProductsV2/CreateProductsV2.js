@@ -5,124 +5,90 @@ import CreateMenu from "../../Components/CreateMenu";
 import CreateProduct from "../../Components/CreateProduct";
 import ProductPreview from "../../Components/ProductPreview/index";
 import MenuDashboard from "../../Components/MenuDashboard";
+import ProductsTypeNavigation from "../../Components/CategoryNavigation/ProductsNavigation";
+import ProductRenderInDeals from "../../Components/Search/Restaurant/ProductRenderInDeals";
+import AllProductsRender from "../../Components/Search/Restaurant/AllProductsRender";
 
 const CreateProductsV2 = (props) => {
   return (
     <Grid
       container
-      sx={{ display: "flex", flexGrow: "1", px: "40px", minHeight: "500px" }}
+      sx={{
+        display: "flex",
+        // flexGrow: "1",
+        // border: "1px solid red",
+        px: "16px",
+        flexDirection: "column",
+        gap: "16px",
+        height: "100%",
+      }}
     >
+      <ProductsTypeNavigation />
       <Grid
-        item
-        xs={6}
-        md={6}
+        container
         sx={{
-          // border: "1px solid red",
           display: "flex",
           flexGrow: "1",
-          justifyContent: "center",
-          pb: "8px",
         }}
       >
-        <Grid container sx={{ display: "flex" }}>
-          <Grid
-            item
-            xs={6}
-            md={6}
-            sx={{ display: "flex", p: "4px", flexDirection: "column" }}
-          >
-            {/* <Box
-              sx={{
-                display: "flex",
-                // border: "1px solid red",
-                justifyContent: "space-around",
-              }}
-            >
-              <Box
-                onClick={() => open("Info")}
-                sx={{
-                  display: "flex",
-                  // border: "1px solid black",
-                  width: "50%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  backgroundColor:
-                    activestate === "Info"
-                      ? "rgba(0,0,0,0.1)"
-                      : "rgba(0,0,0,0.05)",
-                }}
-              >
-                <Typography>Info</Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    borderRadius: "2px",
-                    height: "2px",
-                    backgroundColor:
-                      activestate === "Info" ? "#FF00D6" : "white",
-                    width: "100%",
-                  }}
-                ></Box>
-              </Box>
-              <Box
-                onClick={() => open("Time")}
-                sx={{
-                  display: "flex",
-                  // border: "1px solid black",
-                  width: "50%",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  visibility: activestate === "Time" ? "100%" : "60%",
-                  backgroundColor:
-                    activestate === "Time"
-                      ? "rgba(0,0,0,0.1)"
-                      : "rgba(0,0,0,0.05)",
-                }}
-              >
-                <Typography>Time</Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    borderRadius: "2px",
-                    height: "2px",
-                    backgroundColor:
-                      activestate === "Time" ? "#FF00D6" : "white",
-                    width: "100%",
-                  }}
-                ></Box>
-              </Box>
-            </Box> */}
-            <CreateProduct />
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            md={6}
+        <Grid
+          item
+          sx={{
+            display: "flex",
+            flexGrow: "1",
+            justifyContent: "center",
+            pb: "8px",
+            // backgroundColor: "red",
+            position: "realtive",
+            width: "20%",
+            borderRadius: "16px",
+            // border: "1px solid red",
+          }}
+        >
+          <Box
             sx={{
+              flexGrow: "1",
               display: "flex",
-              // border: "1px solid orange",
-              flexWrap: "wrap",
-              p: "4px",
+              // border: "1px solid blue",
+              maxHeight: "100%",
             }}
           >
-            <ProductPreview />
-          </Grid>
+            <CreateProduct />
+          </Box>
+        </Grid>
+        <Grid
+          item
+          sx={{
+            // border: "1px solid black",
+            display: "flex",
+            flexGrow: "1",
+            pb: "8px",
+            flexDirection: "column",
+            // backgroundColor: "green",
+            gap: "16px",
+            transition: "600ms",
+            width: "60%",
+          }}
+        >
+          {/* <AllProductsRender /> */}
+        </Grid>
+        <Grid
+          item
+          sx={{
+            // border: "1px solid blue",
+            display: "flex",
+            flexGrow: "1",
+            justifyContent: "center",
+            pb: "8px",
+            // backgroundColor: "red",
+            transition: "600ms",
+            width: "20%",
+            flexDirection: "column",
+          }}
+        >
+          <ProductPreview />
         </Grid>
       </Grid>
-      <Grid
-        item
-        xs={6}
-        md={6}
-        sx={{
-          border: "1px solid red",
-          display: "flex",
-          flexGrow: "1",
-          justifyContent: "center",
-          pb: "8px",
-        }}
-      ></Grid>
     </Grid>
   );
 };

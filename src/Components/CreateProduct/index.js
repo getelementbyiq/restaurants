@@ -321,205 +321,123 @@ const CreateProduct = (props) => {
         flexDirection: "column",
         // border: "1px solid blue",
         flexGrow: "1",
-        borderRadius: "32px",
+        borderRadius: "16px",
         p: "8px",
         background: "#FAFAFA",
+        maxHeight: "75vh",
+        overflow: "auto",
+        scrollbarWidth: "none", // Macht den Scrollbalken schmaler in Firefox
+        "&::-webkit-scrollbar": {
+          //   width: "2px", // Macht den Scrollbalken schmaler in Webkit-Browsern
+          display: "none", // Für Webkit-Browser (Chrome, Safari, Edge)
+        },
       }}
     >
-      {!nav && (
+      <Box
+        sx={{
+          display: "flex",
+          flexGrow: "1",
+          flexDirection: "column",
+          gap: "16px",
+        }}
+      >
+        <TextField
+          name="name"
+          fullWidth
+          size="small"
+          placeholder={product.name ? `${product.name}` : "Name of product"}
+          sx={{ fontSize: "16px" }}
+          InputLabelProps={{
+            style: { color: "#444444" },
+          }}
+          InputProps={{
+            style: {
+              borderRadius: "32px",
+              background: "#fff",
+              fontSize: "16px",
+              background: "#fff",
+              // backdropFilter: "blur(7.5px)",
+              color: "#444444",
+            },
+          }}
+          onChange={(e) => handleFieldChange("name", e.target.value)}
+        />
+        <TextField
+          name="price"
+          fullWidth
+          size="small"
+          placeholder={product.price ? `${product.price}` : "Price"}
+          sx={{ fontSize: "16px" }}
+          InputLabelProps={{
+            style: { color: "#444444" },
+          }}
+          InputProps={{
+            style: {
+              borderRadius: "32px",
+              background: "#fff",
+              fontSize: "16px",
+              background: "#fff",
+              // backdropFilter: "blur(7.5px)",
+              color: "#444444",
+            },
+          }}
+          onChange={(e) => handleFieldChange("price", e.target.value)}
+        />
+        <TextField
+          name="description"
+          fullWidth
+          multiline
+          rows={3}
+          size="small"
+          placeholder={
+            product.description ? `${product.description}` : "Description"
+          }
+          sx={{ fontSize: "16px" }}
+          InputLabelProps={{
+            style: { color: "#444444" },
+          }}
+          InputProps={{
+            style: {
+              borderRadius: "16px",
+              background: "#fff",
+              fontSize: "16px",
+              background: "#fff",
+              // backdropFilter: "blur(7.5px)",
+              color: "#444444",
+            },
+          }}
+          onChange={(e) => handleFieldChange("description", e.target.value)}
+        />
+
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            flexGrow: "1",
-            // border: "1px solid red",
-            gap: "8px",
-            pt: "16px",
+            width: "100%",
+            border: "1px solid rgba(0,0,0,0.2)",
+            height: "40px",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "40px",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              gap: "8px",
-              // border: "1px solid red",
-              justifyContent: "center",
-              mb: "16px",
-              cursor: "pointer",
-            }}
-          >
-            <Box
-              onClick={() => chooseTag("food")}
-              sx={{
-                px: "16px",
-                py: "2px",
-                borderRadius: "32px",
-                backgroundColor: prodTag === "food" ? "#FFBAF4" : "#fff",
-              }}
-            >
-              <Typography sx={{ fontFamily: "Quicksand", fontSize: "12px" }}>
-                Food
-              </Typography>
-            </Box>
-            <Box
-              onClick={() => chooseTag("drink")}
-              sx={{
-                px: "16px",
-                py: "2px",
-                borderRadius: "32px",
-                backgroundColor: prodTag === "drink" ? "#FFBAF4" : "#fff",
-                cursor: "pointer",
-              }}
-            >
-              <Typography sx={{ fontFamily: "Quicksand", fontSize: "12px" }}>
-                Drink
-              </Typography>
-            </Box>
-            <Box
-              onClick={() => chooseTag("event")}
-              sx={{
-                px: "16px",
-                py: "2px",
-                borderRadius: "32px",
-                backgroundColor: prodTag === "event" ? "#FFBAF4" : "#fff",
-                cursor: "pointer",
-              }}
-            >
-              <Typography sx={{ fontFamily: "Quicksand", fontSize: "12px" }}>
-                Event
-              </Typography>
-            </Box>
-          </Box>
-          <TextField
-            name="name"
-            fullWidth
-            size="small"
-            placeholder={product.name ? `${product.name}` : "Name of product"}
-            sx={{ fontSize: "16px" }}
-            InputLabelProps={{
-              style: { color: "#444444" },
-            }}
-            InputProps={{
-              style: {
-                borderRadius: "32px",
-                background: "#fff",
-                fontSize: "16px",
-                background: "#fff",
-                // backdropFilter: "blur(7.5px)",
-                color: "#444444",
-              },
-            }}
-            onChange={(e) => handleFieldChange("name", e.target.value)}
+          <input
+            type="file"
+            accept=".png, .jpg, .jpeg, .gif"
+            onChange={handleFileSelect}
+            style={{ display: "none", cursor: "pointer" }}
+            id="productBackground"
           />
-          <TextField
-            name="price"
-            fullWidth
-            size="small"
-            placeholder={product.price ? `${product.price}` : "Price"}
-            sx={{ fontSize: "16px" }}
-            InputLabelProps={{
-              style: { color: "#444444" },
-            }}
-            InputProps={{
-              style: {
-                borderRadius: "32px",
-                background: "#fff",
-                fontSize: "16px",
-                background: "#fff",
-                // backdropFilter: "blur(7.5px)",
-                color: "#444444",
-              },
-            }}
-            onChange={(e) => handleFieldChange("price", e.target.value)}
-          />
-          <TextField
-            name="description"
-            fullWidth
-            multiline
-            rows={3}
-            size="small"
-            placeholder={
-              product.description ? `${product.description}` : "Description"
-            }
-            sx={{ fontSize: "16px" }}
-            InputLabelProps={{
-              style: { color: "#444444" },
-            }}
-            InputProps={{
-              style: {
-                borderRadius: "16px",
-                background: "#fff",
-                fontSize: "16px",
-                background: "#fff",
-                // backdropFilter: "blur(7.5px)",
-                color: "#444444",
-              },
-            }}
-            onChange={(e) => handleFieldChange("description", e.target.value)}
-          />
-
-          <Box
-            sx={{
-              display: "flex",
-              width: "100%",
-              border: "1px solid rgba(0,0,0,0.2)",
-              height: "40px",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "40px",
-            }}
-          >
-            <input
-              type="file"
-              accept=".png, .jpg, .jpeg, .gif"
-              onChange={handleFileSelect}
-              style={{ display: "none", cursor: "pointer" }}
-              id="productBackground"
-            />
-            <label htmlFor="productBackground">
-              {selectedFile ? (
-                <p>
-                  {firstThreeChars}...{lastFourChars}
-                </p>
-              ) : (
-                <p style={{ color: "rgba(0,0,0,0.3)" }}>
-                  Select your Background
-                </p>
-              )}
-            </label>
-          </Box>
-          <Box sx={{ display: "flex", flexGrow: "1" }}></Box>
-          <Button
-            onClick={nextBtn}
-            variant="contained"
-            fullWidth
-            type="submit"
-            sx={{
-              py: "16px",
-              borderRadius: "32px",
-              backgroundColor: "#F4F4F4",
-              color: "rgba(0,0,0,0.4)",
-              mb: "16px",
-              "&&:hover": {
-                backgroundColor: "#000",
-                color: "#EBFF00",
-              },
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "16px",
-                fontFamily: "Knewave, system-ui",
-                fontWeight: "400",
-                fontStyle: "normal",
-                lineHeight: "90%",
-              }}
-            >
-              Next
-            </Typography>
-          </Button>
+          <label htmlFor="productBackground">
+            {selectedFile ? (
+              <p>
+                {firstThreeChars}...{lastFourChars}
+              </p>
+            ) : (
+              <p style={{ color: "rgba(0,0,0,0.3)" }}>Select your Background</p>
+            )}
+          </label>
         </Box>
-      )}
-      {nav && (
+        <Box sx={{ display: "flex", flexGrow: "1" }}></Box>
         <Box
           sx={{
             display: "flex",
@@ -758,11 +676,11 @@ const CreateProduct = (props) => {
                 lineHeight: "90%",
               }}
             >
-              Back
+              upload
             </Typography>
           </Button>
         </Box>
-      )}
+      </Box>
     </Box>
   );
 };

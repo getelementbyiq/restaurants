@@ -6,11 +6,21 @@ const initialState = {
   dealsState: "",
   saleDealValue: null,
   categoryList: [
+    { name: "dashboard", color: "#00D1FF" },
     { name: "combi", color: "#00D1FF" },
     { name: "calssic", color: "#FF00D6" },
     { name: "sale", color: "#00FFC2" },
     { name: "daysplan", color: "#9EFF00" },
     { name: "weekly", color: "#9EFF00" },
+    { name: "others", color: "#9EFF00" },
+  ],
+  productsTypeList: [
+    { name: "dashboard", color: "#00D1FF" },
+    { name: "food", color: "#00D1FF" },
+    { name: "drink", color: "#FF00D6" },
+    { name: "dip", color: "#00FFC2" },
+    { name: "dressing", color: "#9EFF00" },
+    { name: "event", color: "#9EFF00" },
     { name: "others", color: "#9EFF00" },
   ],
 };
