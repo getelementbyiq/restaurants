@@ -65,16 +65,6 @@ const ProductHomePage = (product) => {
 
   const [isHovered, setHovered] = useState(false);
 
-  const onClickProduct = (product) => {
-    if (id.id === product.product.id) {
-      navigate("/");
-    } else {
-      navigate(
-        `/${product.product.restaurantsId}/${product.product.categoryType}/${product.product.selectedCategoryId}/${product.product.id}`
-      );
-    }
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       const restaurantRef = doc(

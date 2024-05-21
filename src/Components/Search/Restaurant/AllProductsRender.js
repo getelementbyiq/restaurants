@@ -14,41 +14,11 @@ let productIndex = 0;
 const size = ["small", "medium", "large"];
 
 const AllProductsRender = (props) => {
-  const { porductsType } = useParams();
-  const [menu, setMenu] = useState(null);
   const isMobile = useMobileCheck();
-
-  const dispatch = useDispatch();
-  // const menuData = useSelector((state) => state.fetchRealTimeMenus?.menusData);
 
   const products = useSelector(
     (state) => state.productsFetchSlice.productsData
   );
-
-  console.log("products menunav", products);
-  const show = useSelector((state) => state.globalStates.menuAddProduct);
-
-  // useEffect(() => {
-  //   console.log("menuData", menuData);
-  // }, [menuData]);
-
-  // useEffect(() => {
-  //   menuData && setMenu(menuData?.filter((menu) => menu.id === menuId));
-  // }, [menuData, menuId]);
-
-  // useEffect(() => {
-  //   if (menuData) {
-  //     // Filtere das Menü anhand der übergebenen menuId
-  //     const selectedMenu = menuData?.find((menu) => menu.id === menuId);
-  //     console.log("selectedMenu", selectedMenu);
-  //     // Wenn ein Menü mit der entsprechenden ID gefunden wurde
-  //     if (selectedMenu) {
-  //       // Rufe die Produkte für das ausgewählte Menü ab
-  //       console.log("fetchProductsOfOneMenu---");
-  //       dispatch(fetchProductsOfOneMenu(selectedMenu));
-  //     }
-  //   }
-  // }, [menuData, menuId, dispatch]);
 
   return (
     <Grid
@@ -103,13 +73,13 @@ const AllProductsRender = (props) => {
             left: "0",
           }}
         >
-          {porductsType === "dashboard" &&
-            products &&
+          {products &&
             products.map((product, index) => {
               const currentSize = size[productIndex % size.length];
               productIndex++;
               return (
                 <ListMediumTemplate
+                  className="productsCard"
                   key={product.id}
                   size={currentSize}
                   product={product}

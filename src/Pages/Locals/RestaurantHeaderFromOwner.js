@@ -51,11 +51,12 @@ const RestaurantHeaderFromOwner = (props) => {
         justifyContent: "center",
         px: "40px",
         flexGrow: "1",
-        backgroundColor: "rgba(0,0,0,0.2)",
+        backgroundColor: "rgba(225,225,225,0.1)",
         postion: "relative",
         zIndex: "5000",
         heigth: "60px",
-        backdropFilter: "blur(1px)",
+        backdropFilter: "blur(10px)",
+        py: "8px",
       }}
     >
       <Grid

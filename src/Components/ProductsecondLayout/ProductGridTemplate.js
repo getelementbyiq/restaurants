@@ -8,11 +8,14 @@ import {
   setProductFullview,
 } from "../../Redux/slices/productFullView";
 import ProductsMediumTemplate from "../ProductHomePage/ProductsMediumTemplate";
-import ProductMediumTemplateSales from "../ProductHomePage/ProductMediumTemplateSales";
-import ProductHomePage from "../ProductHomePage";
 
-const ListMediumTemplate = ({ size, product }) => {
+const ProductGridTemplate = ({ size, product }) => {
+  const [clicked, setClicked] = useState(false);
   const isMobile = useMobileCheck();
+  const dispatch = useDispatch();
+  const productFullView = useSelector(
+    (state) => state.productsFetchSlice.productsData
+  );
 
   const styles = {
     productStyle: {
@@ -23,10 +26,10 @@ const ListMediumTemplate = ({ size, product }) => {
       display: "flex",
     },
     small: {
-      gridRowEnd: isMobile ? "span 12" : "span 14",
+      gridRowEnd: isMobile ? "span 12" : "span 12",
     },
     medium: {
-      gridRowEnd: isMobile ? "span 8" : "span 10",
+      gridRowEnd: isMobile ? "span 8" : "span 12",
     },
     large: {
       gridRowEnd: isMobile ? "span 10" : "span 12",
@@ -39,12 +42,12 @@ const ListMediumTemplate = ({ size, product }) => {
         ...styles[size],
       }}
     >
-      {/* <ProductsMediumTemplate product={product} /> */}
-      <ProductHomePage product={product} />
+      {/* {clicked && <Typography>clicked</Typography>} */}
+      <ProductsMediumTemplate product={product} />
     </Box>
   );
 };
 
-ListMediumTemplate.propTypes = {};
+ProductGridTemplate.propTypes = {};
 
-export default ListMediumTemplate;
+export default ProductGridTemplate;
