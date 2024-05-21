@@ -13,8 +13,9 @@ const ProductSecondLayout = ({ size, product }) => {
   const [clicked, setClicked] = useState(false);
   const isMobile = useMobileCheck();
   const dispatch = useDispatch();
-  const productFullView = useSelector((state) => state.productFullView);
-  console.log("productFullView", productFullView);
+  const productFullView = useSelector(
+    (state) => state.productsFetchSlice.productsData
+  );
 
   const handleClickOpen = () => {
     setClicked(true);

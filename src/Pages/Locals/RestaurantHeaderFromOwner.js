@@ -52,7 +52,6 @@ const RestaurantHeaderFromOwner = (props) => {
         px: "40px",
         flexGrow: "1",
         backgroundColor: "rgba(0,0,0,0.2)",
-        py: "8px",
         postion: "relative",
         zIndex: "5000",
         heigth: "60px",
@@ -206,24 +205,7 @@ const RestaurantHeaderFromOwner = (props) => {
           >
             <Typography sx={{ fontFamily: "Quicksand" }}>Menu</Typography>
           </Box>
-          <Box
-            onClick={() => goTo("/offers")}
-            sx={{
-              display: "flex",
-              borderRadius: "32px",
-              px: "12px",
-              py: "4px",
-              backgroundColor: page.includes("/offers")
-                ? "rgba(0,0,0,0.4)"
-                : "none",
-              "&&:hover": {
-                backgroundColor: "rgba(225,225,225,0.3)",
-              },
-              cursor: "pointer",
-            }}
-          >
-            <Typography sx={{ fontFamily: "Quicksand" }}>Deals</Typography>
-          </Box>
+
           <Box
             onClick={() => goTo("team")}
             sx={{

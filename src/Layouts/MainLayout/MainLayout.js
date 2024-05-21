@@ -47,7 +47,7 @@ const MainLayout = (props) => {
     dispatch(fetchRestaurantsData(userId));
   }, [userId, dispatch]);
 
-  console.log("localsID", restaurantId);
+  console.log("currentRestaurant", currentRestaurant);
 
   useEffect(() => {
     if (restaurantId !== null) {
@@ -67,16 +67,15 @@ const MainLayout = (props) => {
         height: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
         // backgroundImage: `url(${currentRestaurant.background})`,
         // backgroundRepeat: "no-repeat",
         // backgroundSize: "cover",
         // backgroundPosition: "center",
-        overflow: "hidden",
+        overflow: "auto",
       }}
     >
       <RestaurantHeaderFromOwner />
-      {/* <BannerDefinder BG={currentRestaurant?.background} /> */}
+      <BannerDefinder BG={currentRestaurant?.background} />
       <Box
         sx={{
           display: "flex",

@@ -21,7 +21,7 @@ const BannerDefinder = (BG) => {
   const { pathname } = useLocation();
   return (
     <Box>
-      {pathname === `/${restaurantId}` && <RestaurantBannerMain />}
+      {pathname === `/` && <RestaurantBannerMain />}
       {pathname === "/products" && <RestaurantProductsBanner BG={BG} />}
     </Box>
   );

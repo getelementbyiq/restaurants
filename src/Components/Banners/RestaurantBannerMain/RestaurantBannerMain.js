@@ -42,11 +42,13 @@ const RestaurantBannerMain = (props) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const [currentRestaurant, setCurrentRestaurant] = useState();
+
   const [scrolled, setScrolled] = useState(false);
   const scrollState = useSelector((state) => state.scrollState);
   const swiperIndex = useSelector((state) => state.swiperIndex);
-  const restaurantOfUser = useSelector(
-    (state) => state.restaurants.userRestaurants
+  const restaurantsData = useSelector(
+    (state) => state.fetchRestaurants?.restaurantsData
   );
   console.log("scrollState", scrollState);
   const handleScroll = () => {
@@ -80,10 +82,9 @@ const RestaurantBannerMain = (props) => {
   const [toRenderRestaurant, setToRenderRestaurant] = useState(null);
 
   useEffect(() => {
-    if (restaurantOfUser) {
-      setToRenderRestaurant(restaurantOfUser[0]);
-    }
-  }, [restaurantOfUser]);
+    restaurantsData &&
+      restaurantsData.map((restaurant) => setCurrentRestaurant(restaurant));
+  }, [restaurantsData]);
 
   return (
     <Grid
@@ -124,7 +125,7 @@ const RestaurantBannerMain = (props) => {
             zIndex: "1200",
             clipPath: isMobile
               ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
-              : "polygon(0 0, 100% 0, 100% 88%, 0 100%)",
+              : "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
             height: isMobile ? "100vh" : "85vh",
           }}
         ></Box>
@@ -139,11 +140,11 @@ const RestaurantBannerMain = (props) => {
 
             clipPath: isMobile
               ? "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
-              : "polygon(0 0, 100% 0, 100% 88%, 0 100%)",
+              : "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
             height: isMobile ? "100vh" : "85vh",
 
-            backgroundImage: toRenderRestaurant
-              ? `url(${toRenderRestaurant.background})`
+            backgroundImage: currentRestaurant
+              ? `url(${currentRestaurant.background})`
               : null,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
