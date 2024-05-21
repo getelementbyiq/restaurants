@@ -185,7 +185,7 @@ const ProductsRender = (props) => {
             }}
           >
             {searchTerm && searchValue.length === 0 ? (
-              <Typography>Es wurde für {searchTerm} nichts gefunden</Typography>
+              <Typography>Es wurde für {searchTerm} keine Produkte gefunden</Typography>
             ) : searchValue.length === 0 ? (
               allProductData?.map((product) => (
                 <Box
