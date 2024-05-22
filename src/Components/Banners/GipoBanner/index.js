@@ -77,6 +77,7 @@ const GipoBanner = (props) => {
         display: "flex",
         height: scrolled ? "30vh" : isMobile ? "100vh" : "85vh",
         opacity: scrolled ? 0 : 1,
+
         transition: isMobile
           ? "height 100ms ease, opacity 120ms ease"
           : "height 250ms ease, opacity 300ms ease",

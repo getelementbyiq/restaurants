@@ -25,9 +25,9 @@ const CreateMenu = () => {
     restaurantsData && setRestaurantId(restaurantsData[0].id);
   }, [restaurantsData]);
 
-  useEffect(() => {
-    dispatch(fetchMenusRealTimeData(restaurantId));
-  }, [restaurantId, dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchMenusRealTimeData(restaurantId));
+  // }, [restaurantId, dispatch]);
 
   const menusPrev = useSelector((state) => state.fetchRealTimeMenus?.menusData);
   useEffect(() => {
