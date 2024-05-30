@@ -83,7 +83,7 @@ const RestaurantBannerMain = (props) => {
 
   useEffect(() => {
     restaurantsData &&
-      restaurantsData.map((restaurant) => setCurrentRestaurant(restaurant));
+      restaurantsData?.map((restaurant) => setCurrentRestaurant(restaurant));
   }, [restaurantsData]);
 
   return (
@@ -144,7 +144,7 @@ const RestaurantBannerMain = (props) => {
             height: isMobile ? "100vh" : "85vh",
 
             backgroundImage: currentRestaurant
-              ? `url(${currentRestaurant.background})`
+              ? `url(${currentRestaurant?.background})`
               : null,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
@@ -196,7 +196,7 @@ const RestaurantBannerMain = (props) => {
                   fontSize: "128px",
                 }}
               >
-                {currentRestaurant.name.toUpperCase()}
+                {currentRestaurant?.name?.toUpperCase()}
               </Typography>
             </Box>
             <Box
