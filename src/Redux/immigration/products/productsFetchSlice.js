@@ -166,6 +166,31 @@ export const fetchProductsOfOneDeal = createAsyncThunk(
   }
 );
 
+export const fetchDrinksData = createAsyncThunk(
+  "productsFetchSlice/fetchDrinksData",
+  async (restaurantId, { dispatch }) => {
+    try {
+      const productsQuery = query(
+        collection(db, "products"),
+        where("restaurantsId", "==", restaurantId),
+        where("tag", "==", "drink")
+      );
+
+      const querySnapshot = await getDocs(productsQuery);
+      const productsData = [];
+
+      querySnapshot.forEach((doc) => {
+        // Füge die Produkt-Daten zusammen mit der Produkt-ID zum Array hinzu
+        productsData.push({ id: doc.id, ...doc.data() });
+      });
+      return productsData;
+    } catch (error) {
+      // Handle Fehler, z.B. Anzeigen einer Fehlermeldung
+      console.error("Fehler beim Abrufen des Products:", error);
+    }
+  }
+);
+
 const fetchProductsSlice = createSlice({
   name: "productsFetchSlice",
   initialState: {
@@ -181,6 +206,48 @@ const fetchProductsSlice = createSlice({
       error: null,
     },
     productsOfDeals: {
+      data: null,
+      loading: "",
+      error: null,
+    },
+    productsForMainRestaurantPage: {
+      viralProducts: {
+        data: null,
+        loading: "",
+        error: null,
+      },
+      // combiMenus: {
+      //   data: null,
+      //   loading: "",
+      //   error: null,
+      // },
+      // saleMenus: {
+      //   data: null,
+      //   loading: "",
+      //   error: null,
+      // },
+      combiProducts: {
+        data: null,
+        loading: "",
+        error: null,
+      },
+      saleProducts: {
+        data: null,
+        loading: "",
+        error: null,
+      },
+      // weeklyMenus: {
+      //   data: null,
+      //   loading: "",
+      //   error: null,
+      // },
+      weeklyProducts: {
+        data: null,
+        loading: "",
+        error: null,
+      },
+    },
+    drinks: {
       data: null,
       loading: "",
       error: null,
@@ -266,6 +333,19 @@ const fetchProductsSlice = createSlice({
       .addCase(fetchProductsOfOneDeal.rejected, (state, action) => {
         state.productsOfDeals.loading = "rejected";
         state.productsOfDeals.error = action.payload;
+      })
+      .addCase(fetchDrinksData.pending, (state) => {
+        state.drinks.loading = "loading";
+        state.drinks.error = null;
+      })
+      .addCase(fetchDrinksData.fulfilled, (state, action) => {
+        state.drinks.loading = "fulfilled";
+        state.drinks.data = action.payload;
+        state.drinks.error = null;
+      })
+      .addCase(fetchDrinksData.rejected, (state, action) => {
+        state.drinks.loading = "rejected";
+        state.drinks.error = action.payload;
       });
   },
 });

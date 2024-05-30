@@ -9,7 +9,7 @@ import {
 import MainLayout from "./Layouts/MainLayout/MainLayout";
 import SignIn from "./Auth/SignIn";
 import Signup from "./Auth/SignUp";
-import { Provider } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./Redux/store";
 import Main from "./Pages/Main";
 import ProtectedRoute from "./Protection/ProtectedRoute/index";
@@ -43,8 +43,13 @@ import HomePageMobile from "./Pages/HomePageMobile";
 import LocalsFullViewSecond from "./Pages/LocalsFullViewPageSecond";
 import LayoutDefinder from "./Layouts/LayoutDefinder/LayoutDefinder";
 import ProductsPage from "./Pages/ProductsPage/ProductsPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateProductsV2 from "./Pages/CreateProductsV2/CreateProductsV2";
+import {
+  fetchProductsOfSaleMenu,
+  fetchSaleMenus,
+  selectSaleMenus,
+} from "./Redux/immigration/products/productsForMainRestaurantPageSales";
 
 const Root = createBrowserRouter(
   createRoutesFromElements(

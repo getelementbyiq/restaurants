@@ -39,6 +39,8 @@ import globalStateSlice from "./immigration/globalStates/globalStatesSlice";
 import dealsOfRestaurantSlice from "./immigration/menusOfRestaurant/dealsOfRestaurantSlice";
 import restaurantFetchSlice from "./immigration/restaurants/restaurantFetchSlice";
 import RealTimeMenusOfRestaurantSlice from "./immigration/menusOfRestaurant/fetchMenusRealTime";
+import viralProductsReducer from "./immigration/products/productsForMainRestaurantPage";
+import saleProductsSlice from "./immigration/products/productsForMainRestaurantPageSales";
 
 const store = configureStore(
   {
@@ -84,6 +86,8 @@ const store = configureStore(
       globalStates: globalStateSlice,
       fetchDeals: dealsOfRestaurantSlice,
       fetchRealTimeMenus: RealTimeMenusOfRestaurantSlice,
+      viralProducts: viralProductsReducer,
+      saleProducts: saleProductsSlice,
     },
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

@@ -16,7 +16,11 @@ import RestaurantBannerMain from "../../Components/Banners/RestaurantBannerMain/
 import BannerDefinder from "../../Components/Banners/BannerDefinder/BannerDefinder";
 import { fetchProducts, filterBy } from "../../app/features/ProductsSlice";
 import { fetchRestaurantsData } from "../../Redux/immigration/restaurants/restaurantFetchSlice";
-import { fetchProductsData, fetchProductsOfOneMenu } from "../../Redux/immigration/products/productsFetchSlice";
+import {
+  fetchDrinksData,
+  fetchProductsData,
+  fetchProductsOfOneMenu,
+} from "../../Redux/immigration/products/productsFetchSlice";
 import { fetchMenusRealTimeData } from "../../Redux/immigration/menusOfRestaurant/fetchMenusRealTime";
 import { getTodayWeekday } from "../../Components/GetDay/GetDay";
 
@@ -55,6 +59,7 @@ const MainLayout = (props) => {
     if (restaurantId !== null) {
       dispatch(fetchProductsData(restaurantId));
       dispatch(fetchMenusRealTimeData(restaurantId));
+      dispatch(fetchDrinksData(restaurantId));
     }
   }, [restaurantId, dispatch]);
 
@@ -62,7 +67,6 @@ const MainLayout = (props) => {
     restaurantsData &&
       restaurantsData.map((restaurant) => setCurrentRestaurant(restaurant));
   }, [restaurantsData]);
-
 
   const realTimeMenus = useSelector(
     (state) => state.fetchRealTimeMenus.menusData

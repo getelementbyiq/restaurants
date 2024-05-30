@@ -1,29 +1,62 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import AllProductsRender from "../../Components/Search/Restaurant/AllProductsRender";
 import { useDispatch, useSelector } from "react-redux";
-import {fetchProductsOfOneMenu } from "../../Redux/immigration/products/productsFetchSlice";
+import { fetchProductsOfOneMenu } from "../../Redux/immigration/products/productsFetchSlice";
 import ProductsForWeekly from "../../Components/Search/Restaurant/ProductsForWeekly";
 import { getTodayWeekday } from "../../Components/GetDay/GetDay";
 import ProductsForSale from "../../Components/Search/Restaurant/ProductsForSale";
+import {
+  fetchViralProductsAsync,
+  selectViralError,
+  selectViralLoading,
+  selectViralProducts,
+} from "../../Redux/immigration/products/productsForMainRestaurantPage";
+import ViralProducts from "../../Components/ViralProducts/ViralProducts";
+import SaleProducts from "../../Components/ViralProducts/SaleProducts";
+import {
+  fetchProductsOfSaleMenu,
+  fetchSaleMenus,
+  selectSaleMenus,
+} from "../../Redux/immigration/products/productsForMainRestaurantPageSales";
+import HorizontalSwiper from "../../Components/ProductHorizontalSwiper/HorizontalSwiper";
 
 const HomePageNewOwner = (props) => {
   const dispatch = useDispatch();
   const scrollRef = useRef();
+
   const realTimeMenus = useSelector(
     (state) => state.fetchRealTimeMenus.menusData
   );
 
-  
   const getProductsOfMenu = (menu) => {
     dispatch(fetchProductsOfOneMenu(menu));
   };
 
+  // const saleMenus = useSelector(selectSaleMenus);
+  const products = useSelector(selectViralProducts);
+  const loading = useSelector(selectViralLoading);
+  const error = useSelector(selectViralError);
 
- 
+  useEffect(() => {
+    dispatch(fetchViralProductsAsync());
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(fetchSaleMenus());
+  // }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchProductsOfSaleMenu(saleMenus[0]));
+  // }, [dispatch, saleMenus]);
+
+  console.log("products Homepage", products);
+
   return (
     <Box>
-      {/* Weekly/Dayly Bereich */}
+      <ViralProducts />
+      <HorizontalSwiper />
+      <SaleProducts />
+      {/* Weekly/Dayly Bereich
       <Box
         ref={scrollRef}
         sx={{
@@ -83,8 +116,7 @@ const HomePageNewOwner = (props) => {
                 menu.categoryType === "weekly" && (
                   <Typography
                     sx={{
-                      color:
-                        getTodayWeekday() === menu.name ? "#fff" : "#000",
+                      color: getTodayWeekday() === menu.name ? "#fff" : "#000",
                       fontSize: "20px",
                       fontFamily: "Knewave, system-ui",
                       fontWeight: "10",
@@ -141,12 +173,8 @@ const HomePageNewOwner = (props) => {
         </Box>
       </Box>
 
-
-
-
-
       {/* Sale Bereich */}
-      <Box
+      {/* <Box
         ref={scrollRef}
         sx={{
           display: "flex",
@@ -216,7 +244,6 @@ const HomePageNewOwner = (props) => {
                     onClick={() => getProductsOfMenu(menu)}
                   >
                     {menu.name}
-                    
                   </Typography>
                 )
             )}
@@ -259,17 +286,12 @@ const HomePageNewOwner = (props) => {
             transform: "translateX(-50%) scale(1)",
           }}
         >
-
-
-
-
-
           <ProductsForSale />
         </Box>
-      </Box>
+      </Box> */}
 
       {/* Deals Bereich */}
-      <Box
+      {/* <Box
         ref={scrollRef}
         sx={{
           display: "flex",
@@ -343,10 +365,10 @@ const HomePageNewOwner = (props) => {
         >
           <AllProductsRender />
         </Box>
-      </Box>
+      </Box> */}
 
       {/* Menu Bereich */}
-      <Box
+      {/* <Box
         ref={scrollRef}
         sx={{
           display: "flex",
@@ -419,7 +441,7 @@ const HomePageNewOwner = (props) => {
         >
           <AllProductsRender />
         </Box>
-      </Box>
+      </Box>  */}
     </Box>
   );
 };

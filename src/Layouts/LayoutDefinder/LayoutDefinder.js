@@ -11,6 +11,12 @@ import { fetchProductsAsync } from "../../Redux/immigration/products/productsFor
 import Clock from "../../Components/Clock/Clock";
 import { fetchUserRestaurants } from "../../Redux/immigration/restaurants/fetchRestaurantSlice";
 import { useLocation } from "react-router-dom";
+import {
+  fetchProductsOfSaleMenu,
+  fetchSaleMenus,
+  selectLastDocument,
+  selectSaleMenus,
+} from "../../Redux/immigration/products/productsForMainRestaurantPageSales";
 
 const LayoutDefinder = (props) => {
   const dispatch = useDispatch();
@@ -77,6 +83,22 @@ const LayoutDefinder = (props) => {
       <CircularProgress />
     </Box>;
   }
+
+  const saleMenus = useSelector(selectSaleMenus);
+  const lastDocument = useSelector(selectLastDocument);
+  useEffect(() => {
+    dispatch(fetchSaleMenus());
+  }, []);
+  useEffect(() => {
+    if (saleMenus.length > 0) {
+      dispatch(
+        fetchProductsOfSaleMenu({
+          menu: saleMenus[0],
+          startAfterDocument: lastDocument,
+        })
+      );
+    }
+  }, [dispatch, saleMenus]);
 
   return (
     <Box

@@ -1,6 +1,6 @@
 // productsAPI.js
 import "firebase/firestore";
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { db } from "../../../firebase";
 import {
   collection,
@@ -39,17 +39,24 @@ export const fetchProducts = async (currentTime, startAfterDocument) => {
   };
 };
 
-// productsSlice.js
-
-export const productsForMainSlice = createSlice({
-  name: "productsForMain",
-  initialState: {
-    productsList: [],
+const initialState = {
+  productsList: [],
+  lastDocument: null,
+  hasMore: true,
+  loading: false,
+  error: null,
+  viralProducts: {
+    data: null,
     lastDocument: null,
     hasMore: true,
     loading: false,
     error: null,
   },
+};
+
+export const productsForMainSlice = createSlice({
+  name: "productsForMain",
+  initialState,
   reducers: {
     fetchProductsStart: (state) => {
       state.loading = true;
@@ -71,6 +78,9 @@ export const productsForMainSlice = createSlice({
       state.hasMore = true;
       state.loading = false;
       state.error = null;
+    },
+    setLastDocumentViral: (state, action) => {
+      state.viralProducts.lastDocument = action.payload;
     },
   },
 });
@@ -98,5 +108,11 @@ export const fetchProductsAsync =
 export const selectProducts = (state) => state.products.productsList;
 export const selectLoading = (state) => state.products.loading;
 export const selectError = (state) => state.products.error;
+export const selectViralProducts = (state) =>
+  state.productsForMain.viralProducts.data;
+export const selectViralLoading = (state) =>
+  state.productsForMain.viralProducts.loading;
+export const selectViralError = (state) =>
+  state.productsForMain.viralProducts.error;
 
 export default productsForMainSlice.reducer;
